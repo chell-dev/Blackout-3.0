@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "blackout",
+  "version": "${version}",
+  "name": "Blackout",
+  "description": "block game cheat",
+  "authors": [
+    "chell"
+  ],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/blackout/icon.png",
+  "environment": "client",
+  "mixins": [
+    "blackout.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.14",
+    "minecraft": ["1.19.2", "1.19.3"]
+  }
+}
