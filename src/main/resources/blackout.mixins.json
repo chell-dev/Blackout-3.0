@@ -4,9 +4,9 @@
   "package": "me.chell.blackout.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MinecraftClientMixin",
     "ClientPlayerEntityMixin",
-    "KeyboardMixin"
+    "KeyboardMixin",
+    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1
