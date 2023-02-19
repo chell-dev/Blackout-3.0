@@ -17,7 +17,7 @@ Blackout !!!!!!!!!!! 3.0 ???!?!?!?!??!! for 1.19 ???????
 
 ## Installation
 
-iDownload the installer [here](https://github.com/2qb/Blackout-3.0-Installer/releases/latest)
+Download the installer [here](https://github.com/2qb/Blackout-3.0-Installer/releases/latest)
 
 <details>
 <summary>Manual installation</summary>
