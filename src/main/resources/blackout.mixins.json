@@ -6,6 +6,7 @@
   "mixins": [
     "ClientPlayerEntityMixin",
     "KeyboardMixin",
+    "LightmapTextureManagerMixin",
     "MinecraftClientMixin"
   ],
   "injectors": {
