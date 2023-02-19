@@ -12,6 +12,8 @@ const val modVersion = "3.0"
 
 val eventManager get() = Blackout.instance.eventManager
 
+val featureManager get() = Blackout.instance.featureManager
+
 val mc get() = MinecraftClient.getInstance()!!
 
 val player: ClientPlayerEntity get() = mc.player!!

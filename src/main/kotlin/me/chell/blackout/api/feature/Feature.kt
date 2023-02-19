@@ -30,11 +30,11 @@ abstract class ToggleFeature(name: String, category: Category, enabled: Boolean)
 
 annotation class NoRegister
 
-enum class Category(icon: Identifier) {
-    Combat(Identifier(modId, "ui/combat.png")),
-    Render(Identifier(modId, "ui/render.png")),
-    PLayer(Identifier(modId, "ui/player.png")),
-    Movement(Identifier(modId, "ui/movement.png")),
-    Misc(Identifier(modId, "ui/misc.png")),
-    Client(Identifier(modId, "ui/client.png"))
+enum class Category(val icon: Identifier, val focusedIcon: Identifier) {
+    Combat(Identifier(modId, "textures/gui/categories/combat.png"), Identifier(modId, "textures/gui/categories/combat_focused.png")),
+    Render(Identifier(modId, "textures/gui/categories/render.png"), Identifier(modId, "textures/gui/categories/render_focused.png")),
+    PLayer(Identifier(modId, "textures/gui/categories/player.png"), Identifier(modId, "textures/gui/categories/player_focused.png")),
+    Movement(Identifier(modId, "textures/gui/categories/movement.png"), Identifier(modId, "textures/gui/categories/movement_focused.png")),
+    Misc(Identifier(modId, "textures/gui/categories/misc.png"), Identifier(modId, "textures/gui/categories/misc_focused.png")),
+    Client(Identifier(modId, "textures/gui/categories/client.png"), Identifier(modId, "textures/gui/categories/client_focused.png"))
 }

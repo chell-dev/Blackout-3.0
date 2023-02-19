@@ -5,7 +5,7 @@ import org.reflections.scanners.Scanners
 
 class FeatureManager {
 
-    private val features = mutableListOf<Feature>()
+    val features = mutableListOf<Feature>()
 
     init {
         registerFeatures()

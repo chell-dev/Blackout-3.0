@@ -18,11 +18,12 @@ class Blackout {
     }
 
     lateinit var eventManager: EventManager
+    lateinit var featureManager: FeatureManager
 
     fun init() {
         instance = this
 
         eventManager = EventManager()
-        FeatureManager()
+        featureManager = FeatureManager()
     }
 }
