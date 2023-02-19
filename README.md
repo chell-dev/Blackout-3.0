@@ -1,7 +1,9 @@
-![Logo](blackoutlogo.png)
+# [Under Construction]
+This mod is very early in development, come back later if you want to use it!
+
+![Logo](src/main/resources/assets/blackout/textures/gui/banner.png)
 
 ![Downloads](https://img.shields.io/github/downloads/chell-dev/Blackout-3.0/total)
-![Top language](https://img.shields.io/github/languages/top/chell-dev/Blackout-3.0)
 ![Lines of code](https://img.shields.io/tokei/lines/github/chell-dev/Blackout-3.0)
 
 Blackout !!!!!!!!!!! 3.0 ???!?!?!?!??!! for 1.19 ???????
@@ -15,12 +17,18 @@ Blackout !!!!!!!!!!! 3.0 ???!?!?!?!??!! for 1.19 ???????
 
 ## Installation
 
-1. Install [Fabric](https://fabricmc.net/use/installer/) (Fabric API is **not** required)
+1. Install [Fabric](https://fabricmc.net/use/installer/) for Minecraft 1.19.3 (Fabric API is **not** required)
 2. Download the latest release [here](https://github.com/chell-dev/Blackout-3.0/releases)
 3. Put the downloaded .jar file in your `.minecraft/mods` folder
 
+### Recommended mods
+
+- [MultiConnect](https://github.com/Earthcomputer/multiconnect/releases) to play on servers that use an older minecraft version
+
+## Building
+
 <details>
-<summary style="font-size: 18pt; font-weight: bold;">Building</summary>
+<summary>click here</summary>
 
 `git clone https://github.com/chell-dev/Blackout-3.0.git` or download the repository
 
@@ -42,6 +50,6 @@ After building, the output `.jar` will be in `build/libs/`
 
 ## Credits
 
-[Fabric](https://fabricmc.net/)
+- [Fabric](https://fabricmc.net/)
 
-[Reflections](https://github.com/ronmamo/reflections)
+- [Reflections](https://github.com/ronmamo/reflections)
