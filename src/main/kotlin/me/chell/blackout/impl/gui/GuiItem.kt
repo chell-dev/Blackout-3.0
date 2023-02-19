@@ -5,7 +5,7 @@ import net.minecraft.client.gui.DrawableHelper
 abstract class GuiItem: DrawableHelper() {
 
     companion object {
-        const val height = 30
+        const val height = 32
         const val margin = 5
     }
 

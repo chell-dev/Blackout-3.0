@@ -17,8 +17,8 @@ class BooleanButton(parent: GuiItem, private val setting: Value<Boolean>, expand
     private val on = Identifier(modId, "textures/gui/button_on.png")
     private val off = Identifier(modId, "textures/gui/button_off.png")
 
-    override val width = 30
-    override val height = 15
+    override val width = 32
+    override val height = 16
 
     override val x = parent.x + parent.width - GuiItem.margin - width
     override val y = parent.y + (GuiItem.height / 2) - (height / 2)

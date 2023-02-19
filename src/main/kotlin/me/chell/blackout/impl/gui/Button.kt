@@ -6,7 +6,7 @@ import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 
-abstract class Button(private val parent: GuiItem, private val expandable: Boolean) {
+abstract class Button(val parent: GuiItem, private val expandable: Boolean) {
 
     abstract val x: Int
     abstract val y: Int
