@@ -2,16 +2,12 @@ package me.chell.blackout.api.event
 
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
-import kotlin.reflect.full.createType
 import kotlin.reflect.full.declaredFunctions
-import kotlin.reflect.full.superclasses
 import kotlin.reflect.jvm.jvmErasure
 
 class EventManager {
 
     private val registered = mutableMapOf<KClass<out Event>, MutableList<Pair<Any, KFunction<*>>>>()
-
-    private val eventType = Event::class.createType()
 
     @Suppress("unchecked_cast")
     fun register(obj: Any) {
