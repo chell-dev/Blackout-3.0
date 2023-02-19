@@ -11,7 +11,7 @@ Blackout !!!!!!!!!!! 3.0 ???!?!?!?!??!! for 1.19 ???????
 <details>
 <summary>Screenshots</summary>
 
-![GUI](gui.png)
+![GUI](assets/gui.gif)
 
 </details>
 
