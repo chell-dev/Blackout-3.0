@@ -17,9 +17,16 @@ Blackout !!!!!!!!!!! 3.0 ???!?!?!?!??!! for 1.19 ???????
 
 ## Installation
 
+iDownload the installer [here](https://github.com/2qb/Blackout-3.0-Installer/releases/latest)
+
+<details>
+<summary>Manual installation</summary>
+
 1. Install [Fabric](https://fabricmc.net/use/installer/) for Minecraft 1.19.3 (Fabric API is **not** required)
 2. Download the latest release [here](https://github.com/chell-dev/Blackout-3.0/releases)
 3. Put the downloaded .jar file in your `.minecraft/mods` folder
+
+</details>
 
 ### Recommended mods
 
@@ -28,7 +35,7 @@ Blackout !!!!!!!!!!! 3.0 ???!?!?!?!??!! for 1.19 ???????
 ## Building
 
 <details>
-<summary>click here</summary>
+<summary>Click here</summary>
 
 `git clone https://github.com/chell-dev/Blackout-3.0.git` or download the repository
 
@@ -50,6 +57,8 @@ After building, the output `.jar` will be in `build/libs/`
 
 ## Credits
 
-- [Fabric](https://fabricmc.net/)
+- [Fabric](https://fabricmc.net/) mod loader
 
-- [Reflections](https://github.com/ronmamo/reflections)
+- [Reflections](https://github.com/ronmamo/reflections) API
+
+- [popbob](https://github.com/2qb) for the [installer](https://github.com/2qb/Blackout-3.0-Installer)
