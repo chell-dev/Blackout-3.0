@@ -6,6 +6,12 @@ import net.minecraft.util.Identifier
 
 abstract class Feature(val name: String, val category: Category) {
     abstract val mainValue: Value<*>
+    val values = mutableListOf<Value<*>>()
+
+    fun <T> register(value: Value<T>): Value<T> {
+        values.add(value)
+        return value
+    }
 }
 
 @NoRegister

@@ -11,7 +11,7 @@ import net.minecraft.entity.effect.StatusEffects
 
 class Sprint: ToggleFeature("Sprint", Category.Movement, false) {
 
-    private val legit = Value("Legit", false)
+    private val legit = register(Value("Legit", false))
 
     override fun onEnable() {
         eventManager.register(this)
