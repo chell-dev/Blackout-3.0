@@ -1,12 +1,12 @@
-# [Under Construction]
-This mod is very early in development, come back later if you want to use it!
+<h1 align="center">[Under Construction]</h1>
+<p align="center">This mod is very early in development, come back later if you want to use it!</p>
 
 ![Logo](src/main/resources/assets/blackout/textures/gui/banner.png)
 
+## Minecraft client for Fabric 1.19.3
+
 ![Downloads](https://img.shields.io/github/downloads/chell-dev/Blackout-3.0/total)
 ![Lines of code](https://img.shields.io/tokei/lines/github/chell-dev/Blackout-3.0)
-
-Blackout !!!!!!!!!!! 3.0 ???!?!?!?!??!! for 1.19 ???????
 
 <details>
 <summary>Screenshots</summary>
