@@ -21,7 +21,7 @@ class BooleanButton(parent: GuiItem, private val setting: Value<Boolean>, expand
     override val height = 16
 
     override val x = parent.x + parent.width - GuiItem.margin - width
-    override val y = parent.y + (GuiItem.height / 2) - (height / 2)
+    override val y = parent.y + (parent.height / 2) - (height / 2)
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         if (setting.value) RenderSystem.setShaderTexture(0, on)

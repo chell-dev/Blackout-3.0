@@ -25,8 +25,9 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
 
         for(feature in featureManager.features) {
             if(feature.category == category) {
-                features.add(FeatureItem(feature, size+1+GuiItem.margin, bY))
-                bY += GuiItem.height + GuiItem.margin
+                val item = FeatureItem(feature, size+1+GuiItem.margin, bY, this)
+                features.add(item)
+                bY += item.height + GuiItem.margin
             }
         }
     }
@@ -61,6 +62,15 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
         }
 
         return false
+    }
+
+    fun updateItems() {
+        var itemY = parent.bannerHeight+1+GuiItem.margin
+
+        for(item in features) {
+            item.y = itemY
+            itemY += item.fullHeight + margin
+        }
     }
 
 }

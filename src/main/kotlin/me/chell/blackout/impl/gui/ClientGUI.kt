@@ -113,11 +113,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     override fun resize(client: MinecraftClient?, width: Int, height: Int) {
     }
 
-    /**
-     * @param a = point A
-     * @param b = point B
-     * @param t = elapsed time (0.0 .. 1.0)
-     */
+    override fun shouldPause() = false
+
     private fun lerp(a: Float, b: Float, t: Float) = a * (1 - t) + b * t
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -150,9 +147,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         super.renderBackground(matrices)
     }
 
-    override fun shouldPause(): Boolean {
-        return super.shouldPause()
-    }
+
 
     override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
         return super.mouseReleased(mouseX, mouseY, button)
