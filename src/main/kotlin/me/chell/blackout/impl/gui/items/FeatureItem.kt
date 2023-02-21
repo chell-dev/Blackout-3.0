@@ -3,7 +3,7 @@ package me.chell.blackout.impl.gui.items
 import com.mojang.logging.LogUtils
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.util.mc
-import me.chell.blackout.api.value.Setting
+import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.CategoryTab
 import me.chell.blackout.impl.gui.GuiItem

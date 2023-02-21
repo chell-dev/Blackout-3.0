@@ -8,7 +8,7 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modName
 import me.chell.blackout.api.util.player
-import me.chell.blackout.api.value.Setting
+import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.ClientGUI
 import net.minecraft.client.util.InputUtil
 

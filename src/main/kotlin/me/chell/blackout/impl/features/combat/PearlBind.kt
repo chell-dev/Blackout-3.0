@@ -8,7 +8,7 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.interactionManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
-import me.chell.blackout.api.value.Setting
+import me.chell.blackout.api.setting.Setting
 import net.minecraft.client.util.InputUtil
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.Items

@@ -1,4 +1,4 @@
-package me.chell.blackout.api.value
+package me.chell.blackout.api.setting
 
 open class Setting<T>(val name: String, value: T) {
 

@@ -3,7 +3,7 @@ package me.chell.blackout.impl.gui.buttons
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modId
-import me.chell.blackout.api.value.Setting
+import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
 import net.minecraft.client.gui.DrawableHelper

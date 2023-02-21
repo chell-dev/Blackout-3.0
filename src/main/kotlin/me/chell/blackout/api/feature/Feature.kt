@@ -1,7 +1,7 @@
 package me.chell.blackout.api.feature
 
 import me.chell.blackout.api.util.modId
-import me.chell.blackout.api.value.Setting
+import me.chell.blackout.api.setting.Setting
 import net.minecraft.util.Identifier
 
 abstract class Feature(val name: String, val category: Category) {
