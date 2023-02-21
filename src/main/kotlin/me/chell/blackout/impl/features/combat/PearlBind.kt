@@ -8,14 +8,14 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.interactionManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
-import me.chell.blackout.api.value.Value
+import me.chell.blackout.api.value.Setting
 import net.minecraft.client.util.InputUtil
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.Items
 import net.minecraft.util.Hand
 
 class PearlBind: Feature("Pearl Bind", Category.Combat) {
-    override val mainValue = Value("Activate", InputUtil.fromKeyCode(InputUtil.GLFW_KEY_R, -1))
+    override val mainSetting = Setting("Activate", InputUtil.fromKeyCode(InputUtil.GLFW_KEY_R, -1))
 
     init {
         eventManager.register(this)
@@ -23,7 +23,7 @@ class PearlBind: Feature("Pearl Bind", Category.Combat) {
 
     @EventHandler
     fun onKeyPressed(event: KeyPressedEvent) {
-        if(event.key != mainValue.value || event.action != 1) return
+        if(event.key != mainSetting.value || event.action != 1) return
 
         mc.player ?: return
 

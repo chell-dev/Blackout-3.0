@@ -3,7 +3,7 @@ package me.chell.blackout.impl.gui.items
 import com.mojang.logging.LogUtils
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.util.mc
-import me.chell.blackout.api.value.Value
+import me.chell.blackout.api.value.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.CategoryTab
 import me.chell.blackout.impl.gui.GuiItem
@@ -19,14 +19,14 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
     override val height = 32
     var fullHeight = height
 
-    private val expandable = feature.values.isNotEmpty()
+    private val expandable = feature.settings.isNotEmpty()
     private var expanded = false
     private val expandedHeight: Int
 
-    private val settings = mutableListOf<ValueItem>()
+    private val settings = mutableListOf<SettingItem>()
 
-    override val button = when(feature.mainValue.value) {
-        is Boolean -> BooleanButton(this, feature.mainValue as Value<Boolean>, expandable)
+    override val button = when(feature.mainSetting.value) {
+        is Boolean -> BooleanButton(this, feature.mainSetting as Setting<Boolean>, expandable)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for feature ${feature.name}")
             object : Button(this, false) {
@@ -40,8 +40,8 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
     init {
         var sY = y + height + margin
-        for(setting in feature.values) {
-            val i = ValueItem(setting, x + ValueItem.offset, sY)
+        for(setting in feature.settings) {
+            val i = SettingItem(setting, x + SettingItem.offset, sY)
             settings.add(i)
             sY += i.height + margin
         }

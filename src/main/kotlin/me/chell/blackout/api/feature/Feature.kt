@@ -1,23 +1,23 @@
 package me.chell.blackout.api.feature
 
 import me.chell.blackout.api.util.modId
-import me.chell.blackout.api.value.Value
+import me.chell.blackout.api.value.Setting
 import net.minecraft.util.Identifier
 
 abstract class Feature(val name: String, val category: Category) {
-    abstract val mainValue: Value<*>
-    val values = mutableListOf<Value<*>>()
+    abstract val mainSetting: Setting<*>
+    val settings = mutableListOf<Setting<*>>()
 
-    fun <T> register(value: Value<T>): Value<T> {
-        values.add(value)
-        return value
+    fun <T> register(setting: Setting<T>): Setting<T> {
+        settings.add(setting)
+        return setting
     }
 }
 
 @NoRegister
 abstract class ToggleFeature(name: String, category: Category, enabled: Boolean): Feature(name, category) {
 
-    override val mainValue: Value<Boolean> = object: Value<Boolean>("Enabled", enabled) {
+    override val mainSetting: Setting<Boolean> = object: Setting<Boolean>("Enabled", enabled) {
         override fun onValueChanged(oldValue: Boolean, newValue: Boolean) {
             if(newValue) onEnable()
             else onDisable()

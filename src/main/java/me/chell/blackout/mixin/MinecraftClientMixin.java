@@ -15,8 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.Objects;
-
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
 
@@ -29,7 +27,7 @@ public class MinecraftClientMixin {
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 2, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void getWindowTitle(CallbackInfoReturnable<String> cir, StringBuilder stringBuilder) {
-        if(titleFeature.getMainValue().getValue())
+        if(titleFeature.getMainSetting().getValue())
             FunctionsKt.setString(stringBuilder, titleFeature.getTitle());
     }
 

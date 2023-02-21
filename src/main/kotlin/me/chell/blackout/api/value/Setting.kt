@@ -1,6 +1,6 @@
 package me.chell.blackout.api.value
 
-open class Value<T>(val name: String, value: T) {
+open class Setting<T>(val name: String, value: T) {
 
     var value = value
         set(newValue) {

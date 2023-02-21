@@ -2,14 +2,14 @@ package me.chell.blackout.impl.gui.items
 
 import com.mojang.logging.LogUtils
 import me.chell.blackout.api.util.mc
-import me.chell.blackout.api.value.Value
+import me.chell.blackout.api.value.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.buttons.BooleanButton
 import net.minecraft.client.util.math.MatrixStack
 
 @Suppress("unchecked_cast")
-class ValueItem(val value: Value<*>, override var x: Int, override var y: Int): GuiItem() {
+class SettingItem(private val setting: Setting<*>, override var x: Int, override var y: Int): GuiItem() {
 
     companion object {
         const val offset = 10
@@ -18,10 +18,10 @@ class ValueItem(val value: Value<*>, override var x: Int, override var y: Int): 
     override val width = 229
     override val height = 26
 
-    override val button = when(value.value) {
-        is Boolean -> BooleanButton(this, value as Value<Boolean>, false)
+    override val button = when(setting.value) {
+        is Boolean -> BooleanButton(this, setting as Setting<Boolean>, false)
         else -> {
-            LogUtils.getLogger().warn("Cannot create button for setting ${value.name}")
+            LogUtils.getLogger().warn("Cannot create button for setting ${setting.name}")
             object : Button(this, false) {
                 override val x = 0
                 override val y = 0
@@ -35,7 +35,7 @@ class ValueItem(val value: Value<*>, override var x: Int, override var y: Int): 
         super.render(matrices, mouseX, mouseY, delta)
 
         val center = y.toFloat() + (height /2) - (mc.textRenderer.fontHeight/2)
-        mc.textRenderer.drawWithShadow(matrices, value.name, x + margin.toFloat(), center, -1)
+        mc.textRenderer.drawWithShadow(matrices, setting.name, x + margin.toFloat(), center, -1)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

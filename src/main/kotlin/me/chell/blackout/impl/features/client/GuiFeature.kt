@@ -8,12 +8,12 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modName
 import me.chell.blackout.api.util.player
-import me.chell.blackout.api.value.Value
+import me.chell.blackout.api.value.Setting
 import me.chell.blackout.impl.gui.ClientGUI
 import net.minecraft.client.util.InputUtil
 
 class GuiFeature: Feature("Open $modName GUI", Category.Client) {
-    override val mainValue = Value("Open", InputUtil.fromKeyCode(InputUtil.GLFW_KEY_BACKSLASH, -1))
+    override val mainSetting = Setting("Open", InputUtil.fromKeyCode(InputUtil.GLFW_KEY_BACKSLASH, -1))
 
     init {
         eventManager.register(this)
@@ -21,7 +21,7 @@ class GuiFeature: Feature("Open $modName GUI", Category.Client) {
 
     @EventHandler
     fun onKeyPressed(event: KeyPressedEvent) {
-        if (event.key == mainValue.value && event.action == 1 && mc.currentScreen == null && mc.player != null && !player.isDead) {
+        if (event.key == mainSetting.value && event.action == 1 && mc.currentScreen == null && mc.player != null && !player.isDead) {
             mc.setScreen(ClientGUI())
         }
     }

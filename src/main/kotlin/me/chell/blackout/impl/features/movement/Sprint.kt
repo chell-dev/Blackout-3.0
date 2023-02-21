@@ -6,12 +6,12 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.player
-import me.chell.blackout.api.value.Value
+import me.chell.blackout.api.value.Setting
 import net.minecraft.entity.effect.StatusEffects
 
 class Sprint: ToggleFeature("Sprint", Category.Movement, false) {
 
-    private val legit = register(Value("Legit", false))
+    private val legit = register(Setting("Legit", false))
 
     override fun onEnable() {
         eventManager.register(this)
