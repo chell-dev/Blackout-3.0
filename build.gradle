@@ -12,6 +12,7 @@ group = project.maven_group
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -20,9 +21,13 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+
     implementation 'org.reflections:reflections:0.10.2'
     include 'org.reflections:reflections:0.10.2'
     include 'org.javassist:javassist:3.28.0-GA'
+
+    implementation 'com.github.Vatuu:discord-rpc:1.6.2'
+    include 'com.github.Vatuu:discord-rpc:1.6.2'
 }
 
 processResources {

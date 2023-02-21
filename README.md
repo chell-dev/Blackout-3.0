@@ -11,7 +11,13 @@
 <details>
 <summary>Screenshots</summary>
 
+GUI
+
 ![GUI](assets/gui.gif)
+
+Discord RPC
+
+![RPC](assets/discord.png)
 
 </details>
 
