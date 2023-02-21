@@ -2,5 +2,5 @@
 .gradle/
 build/
 run/
-*.ai
-*.psd
+out/
+ignore/
