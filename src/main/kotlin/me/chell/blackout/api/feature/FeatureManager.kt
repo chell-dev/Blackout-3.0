@@ -11,7 +11,7 @@ class FeatureManager {
 
     val features = mutableListOf<Feature>()
 
-    init {
+    fun init() {
         registerFeatures()
         eventManager.register(this)
     }

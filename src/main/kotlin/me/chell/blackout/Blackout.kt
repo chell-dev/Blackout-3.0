@@ -5,14 +5,6 @@ import me.chell.blackout.api.feature.FeatureManager
 
 class Blackout {
 
-    /*
-        modules
-        hud
-        fov slider
-        gui
-        waypoints
-    */
-
     companion object {
         lateinit var instance: Blackout
     }
@@ -25,5 +17,6 @@ class Blackout {
 
         eventManager = EventManager()
         featureManager = FeatureManager()
+        featureManager.init()
     }
 }
