@@ -1,10 +1,12 @@
 package me.chell.blackout.impl.gui.items
 
 import com.mojang.logging.LogUtils
+import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
+import me.chell.blackout.impl.gui.buttons.ActionBindButton
 import me.chell.blackout.impl.gui.buttons.BooleanButton
 import net.minecraft.client.util.math.MatrixStack
 
@@ -20,12 +22,13 @@ class SettingItem(private val setting: Setting<*>, override var x: Int, override
 
     override val button = when(setting.value) {
         is Boolean -> BooleanButton(this, setting as Setting<Boolean>, false)
+        is Bind.Action -> ActionBindButton(this, setting as Setting<Bind.Action>, false)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for setting ${setting.name}")
             object : Button(this, false) {
                 override val x = 0
                 override val y = 0
-                override val width = 0
+                override var width = 0
                 override val height = 0
             }
         }
@@ -39,7 +42,15 @@ class SettingItem(private val setting: Setting<*>, override var x: Int, override
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        return false
+        return this.button.mouseClicked(mouseX, mouseY, button)
+    }
+
+    override fun onClose() {
+        button.onClose()
+    }
+
+    override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+        return this.button.keyPressed(keyCode, scanCode, modifiers)
     }
 
 }

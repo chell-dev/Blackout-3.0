@@ -5,13 +5,16 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modId
 import me.chell.blackout.api.util.modName
+import me.chell.blackout.impl.features.client.GuiFeature
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.sound.PositionedSoundInstance
+import net.minecraft.client.util.InputUtil
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
+import org.lwjgl.glfw.GLFW
 import java.awt.Color
 
 class ClientGUI: Screen(Text.literal("$modName GUI")) {
@@ -76,7 +79,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         }
 
         // line next to icons
-        drawVerticalLine(matrices, CategoryTab.size, bannerHeight + 1, y + uiHeight, color)
+        drawVerticalLine(matrices, CategoryTab.size, bannerHeight, y + uiHeight, color)
 
         disableScissor()
     }
@@ -88,6 +91,18 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
             if(tab.mouseClicked(mouseX, mouseY, button)) return true
         }
 
+        return false
+    }
+
+    override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+        for(tab in tabs) {
+            if(tab.keyPressed(keyCode, scanCode, modifiers)) return true
+        }
+
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            close()
+            return true
+        }
         return false
     }
 
@@ -105,6 +120,13 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     }
 
     override fun close() {
+        for(tab in tabs) {
+            tab.onClose()
+        }
+
+        if(GuiFeature.instance.mainSetting.value.key.code == GLFW.GLFW_KEY_UNKNOWN)
+            GuiFeature.instance.mainSetting.value.setKey(InputUtil.GLFW_KEY_BACKSLASH, InputUtil.Type.KEYSYM)
+
         closing = true
         animationTicks = animationLength
         mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_TOAST_OUT, 1.0f, 1.0f))
@@ -118,10 +140,6 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     private fun lerp(a: Float, b: Float, t: Float) = a * (1 - t) + b * t
 
     ////////////////////////////////////////////////////////////////////////////////////////
-
-    override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        return super.keyPressed(keyCode, scanCode, modifiers)
-    }
 
     override fun charTyped(chr: Char, modifiers: Int): Boolean {
         return super.charTyped(chr, modifiers)

@@ -26,7 +26,16 @@ class FeatureManager {
     }
 
     @EventHandler
-    fun onInput(event: InputEvent) {
+    fun onKeyboard(event: InputEvent.Keyboard) {
+        onEvent(event)
+    }
+
+    @EventHandler
+    fun onMouse(event: InputEvent.Mouse) {
+        onEvent(event)
+    }
+
+    private fun onEvent(event: InputEvent) {
         for(f in features) {
 
             if(f.mainSetting.value is Bind) {

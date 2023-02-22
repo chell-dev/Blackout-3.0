@@ -50,6 +50,7 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
 
     fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         if(parent.currentTab != this && mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
+            parent.currentTab.onClose()
             parent.currentTab = this
             mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
             return true
@@ -62,6 +63,22 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
         }
 
         return false
+    }
+
+    fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+        if(parent.currentTab == this) {
+            for(item in features) {
+                if(item.keyPressed(keyCode, scanCode, modifiers)) return true
+            }
+        }
+
+        return false
+    }
+
+    fun onClose() {
+        for(item in features) {
+            item.onClose()
+        }
     }
 
     fun updateItems() {

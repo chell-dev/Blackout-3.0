@@ -10,7 +10,7 @@ abstract class Button(parent: GuiItem, private val expandable: Boolean) {
 
     abstract val x: Int
     abstract val y: Int
-    abstract val width: Int
+    abstract var width: Int
     abstract val height: Int
 
     private val icon = Identifier(modId, "textures/gui/settings.png")
@@ -29,8 +29,10 @@ abstract class Button(parent: GuiItem, private val expandable: Boolean) {
         }
     }
 
-    open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        return false
-    }
+    open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean = false
+
+    open fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean = false
+
+    open fun onClose() {}
 
 }

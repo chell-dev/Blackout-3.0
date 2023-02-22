@@ -37,7 +37,7 @@ class EventManager {
         }
     }
 
-    fun post(event: Event) {
+    fun post(event: Event) { // TODO include subclasses
         val list = registered[event::class]?.toList() ?: return
 
         for(pair in list) {

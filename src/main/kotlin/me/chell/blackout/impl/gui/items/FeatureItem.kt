@@ -2,11 +2,13 @@ package me.chell.blackout.impl.gui.items
 
 import com.mojang.logging.LogUtils
 import me.chell.blackout.api.feature.Feature
+import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.CategoryTab
 import me.chell.blackout.impl.gui.GuiItem
+import me.chell.blackout.impl.gui.buttons.ActionBindButton
 import me.chell.blackout.impl.gui.buttons.BooleanButton
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.math.MatrixStack
@@ -27,12 +29,13 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
     override val button = when(feature.mainSetting.value) {
         is Boolean -> BooleanButton(this, feature.mainSetting as Setting<Boolean>, expandable)
+        is Bind.Action -> ActionBindButton(this, feature.mainSetting as Setting<Bind.Action>, expandable)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for feature ${feature.name}")
             object : Button(this, false) {
                 override val x = 0
                 override val y = 0
-                override val width = 0
+                override var width = 0
                 override val height = 0
             }
         }
@@ -85,4 +88,20 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         return this.button.mouseClicked(mouseX, mouseY, button)
     }
 
+    override fun onClose() {
+        button.onClose()
+        for(item in settings) {
+            item.onClose()
+        }
+    }
+
+    override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+        if(expanded) {
+            for(item in settings) {
+                if(item.keyPressed(keyCode, scanCode, modifiers)) return true
+            }
+        }
+
+        return this.button.keyPressed(keyCode, scanCode, modifiers)
+    }
 }

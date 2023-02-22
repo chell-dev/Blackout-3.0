@@ -14,10 +14,10 @@ import net.minecraft.util.Identifier
 
 class BooleanButton(parent: GuiItem, private val setting: Setting<Boolean>, expandable: Boolean): Button(parent, expandable) {
 
-    private val on = Identifier(modId, "textures/gui/button_on.png")
-    private val off = Identifier(modId, "textures/gui/button_off.png")
+    val on = Identifier(modId, "textures/gui/button_on.png")
+    val off = Identifier(modId, "textures/gui/button_off.png")
 
-    override val width = 32
+    override var width = 32
     override val height = 16
 
     override val x = parent.x + parent.width - GuiItem.margin - width
@@ -37,7 +37,7 @@ class BooleanButton(parent: GuiItem, private val setting: Setting<Boolean>, expa
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(button == 0 && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + width) {
+        if(button == 0 && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
             setting.value = !setting.value
             mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
             return true
