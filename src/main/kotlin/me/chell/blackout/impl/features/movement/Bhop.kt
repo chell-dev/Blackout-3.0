@@ -3,18 +3,22 @@ package me.chell.blackout.impl.features.movement
 import me.chell.blackout.api.event.EventHandler
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Category
-import me.chell.blackout.api.feature.ToggleFeature
+import me.chell.blackout.api.feature.Feature
+import me.chell.blackout.api.setting.Bind
+import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
 
-class Bhop: ToggleFeature("Bhop", Category.Movement, false) {
+class Bhop: Feature("Bhop", Category.Movement) {
 
-    override fun onEnable() {
+    override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = { onEnable() }, onDisable = { onDisable() }))
+
+    private fun onEnable() {
         eventManager.register(this)
     }
 
-    override fun onDisable() {
+    private fun onDisable() {
         eventManager.unregister(this)
     }
 
