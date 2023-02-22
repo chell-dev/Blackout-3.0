@@ -11,13 +11,13 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import org.lwjgl.glfw.GLFW
 
-class ActionBindButton(private val parent: GuiItem, private val setting: Setting<Bind.Action>, expandable: Boolean): Button(parent, expandable) {
+class ActionBindButton(private val parent: GuiItem, setting: Setting<Bind.Action>, expandable: Boolean): Button(parent, expandable) {
 
-    override var width = 32
+    override var width = 0
     override val height = mc.textRenderer.fontHeight
 
-    override val x get() = parent.x + parent.width - (GuiItem.margin*2) - width
-    override val y = parent.y + (parent.height / 2) - (height / 2)
+    override val x get() = parent.x + parent.width - GuiItem.margin - width
+    override val y get() = parent.y + (parent.height / 2) - (height / 2)
 
     private val bind = setting.value
 
@@ -27,7 +27,7 @@ class ActionBindButton(private val parent: GuiItem, private val setting: Setting
         var text = if(listening) "[ . . . ]" else "[ ${bind.key.localizedText.string} ]"
         if(text.length == 5) text = text.uppercase()
         width = mc.textRenderer.getWidth(text)
-        mc.textRenderer.drawWithShadow(matrices, text, x + GuiItem.margin.toFloat(), y.toFloat(), -1) // 0xa100ff
+        mc.textRenderer.drawWithShadow(matrices, text, x.toFloat(), y.toFloat(), -1) // 0xa100ff
 
         super.render(matrices, mouseX, mouseY, delta)
     }

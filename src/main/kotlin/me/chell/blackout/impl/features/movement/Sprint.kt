@@ -20,21 +20,17 @@ class Sprint: Feature("Sprint", Category.Movement) {
         eventManager.register(this)
     }
 
-    fun onDisable() {
+    private fun onDisable() {
         eventManager.unregister(this)
     }
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {
-        player.isSprinting =
-            (player.hungerManager.foodLevel > 6 || player.abilities.allowFlying) &&
-
+        player.isSprinting = (player.hungerManager.foodLevel > 6 || player.abilities.allowFlying) &&
             if(legit.value) player.forwardSpeed > 0f
-                    && !player.isSprinting
                     && (!player.isTouchingWater || player.isSubmergedInWater)
                     && !player.isUsingItem
                     && !player.hasStatusEffect(StatusEffects.BLINDNESS)
-
             else player.forwardSpeed != 0f || player.sidewaysSpeed != 0f
     }
 

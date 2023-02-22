@@ -24,36 +24,37 @@ abstract class Bind(var key: InputUtil.Key) {
     }
 
     class Toggle(key: InputUtil.Key = InputUtil.Type.KEYSYM.createFromCode(GLFW_KEY_UNKNOWN),
-                 var enabled: Boolean = false, var mode: Mode = Mode.TOGGLE,
+                 enabled: Boolean = false, var mode: Mode = Mode.Toggle,
                  private val onEnable: () -> Unit, private val onDisable: () -> Unit): Bind(key) {
 
-        constructor(keyCode: Int, type: InputUtil.Type, enabled: Boolean = false, mode: Mode = Mode.TOGGLE, onEnable: () -> Unit, onDisable: () -> Unit) : this(type.createFromCode(keyCode), enabled, mode, onEnable, onDisable)
+        var enabled = enabled
+        set(value) {
+            if(value) {
+                onEnable()
+                field = value
+            } else {
+                field = value
+                onDisable()
+            }
+        }
+
+        constructor(keyCode: Int, type: InputUtil.Type, enabled: Boolean = false, mode: Mode = Mode.Toggle, onEnable: () -> Unit, onDisable: () -> Unit) : this(type.createFromCode(keyCode), enabled, mode, onEnable, onDisable)
 
         override fun onKey(event: InputEvent) {
             when(event.action) {
                 1 -> {
                     if(key.code != GLFW_KEY_UNKNOWN && event.key == key
-                        && mc.currentScreen == null) toggle()
+                        && mc.currentScreen == null) enabled = !enabled
                 }
                 0 -> {
                     if(key.code != GLFW_KEY_UNKNOWN && event.key == key
-                        && mode == Mode.HOLD) toggle()
+                        && mode == Mode.Hold) enabled = !enabled
                 }
             }
         }
 
-        private fun toggle() {
-            if (enabled) {
-                enabled = false
-                onDisable()
-            } else {
-                onEnable()
-                enabled = true
-            }
-        }
-
-        enum class Mode { // TODO don't show or change in gui if key is UNKNOWN
-            TOGGLE, HOLD
+        enum class Mode {
+            Toggle, Hold
         }
     }
 

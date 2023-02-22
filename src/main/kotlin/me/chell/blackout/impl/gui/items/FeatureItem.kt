@@ -8,8 +8,7 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.CategoryTab
 import me.chell.blackout.impl.gui.GuiItem
-import me.chell.blackout.impl.gui.buttons.ActionBindButton
-import me.chell.blackout.impl.gui.buttons.BooleanButton
+import me.chell.blackout.impl.gui.buttons.*
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
@@ -30,6 +29,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
     override val button = when(feature.mainSetting.value) {
         is Boolean -> BooleanButton(this, feature.mainSetting as Setting<Boolean>, expandable)
         is Bind.Action -> ActionBindButton(this, feature.mainSetting as Setting<Bind.Action>, expandable)
+        is Bind.Toggle -> ToggleBindButton(this, feature.mainSetting as Setting<Bind.Toggle>, expandable)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for feature ${feature.name}")
             object : Button(this, false) {

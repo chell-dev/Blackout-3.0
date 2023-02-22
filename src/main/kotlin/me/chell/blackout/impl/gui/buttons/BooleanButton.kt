@@ -12,16 +12,18 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 
-class BooleanButton(parent: GuiItem, private val setting: Setting<Boolean>, expandable: Boolean): Button(parent, expandable) {
+class BooleanButton(private val parent: GuiItem, private val setting: Setting<Boolean>, expandable: Boolean): Button(parent, expandable) {
 
-    val on = Identifier(modId, "textures/gui/button_on.png")
-    val off = Identifier(modId, "textures/gui/button_off.png")
+    companion object {
+        val on = Identifier(modId, "textures/gui/button_on.png")
+        val off = Identifier(modId, "textures/gui/button_off.png")
+    }
 
     override var width = 32
     override val height = 16
 
-    override val x = parent.x + parent.width - GuiItem.margin - width
-    override val y = parent.y + (parent.height / 2) - (height / 2)
+    override val x get() = parent.x + parent.width - GuiItem.margin - width
+    override val y get() = parent.y + (parent.height / 2) - (height / 2)
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         if (setting.value) RenderSystem.setShaderTexture(0, on)
