@@ -8,7 +8,8 @@
     "KeyboardMixin",
     "LightmapTextureManagerMixin",
     "MinecraftClientMixin",
-    "MouseMixin"
+    "MouseMixin",
+    "accessors.MinecraftClientAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
