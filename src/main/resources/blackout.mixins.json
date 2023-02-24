@@ -9,6 +9,7 @@
     "LightmapTextureManagerMixin",
     "MinecraftClientMixin",
     "MouseMixin",
+    "SoundManagerMixin",
     "accessors.MinecraftClientAccessor"
   ],
   "injectors": {
