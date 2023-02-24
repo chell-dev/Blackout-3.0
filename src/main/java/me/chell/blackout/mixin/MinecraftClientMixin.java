@@ -18,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
 
-    private final WindowTitle titleFeature = new WindowTitle();
-
     @Inject(method = "<init>", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"))
     public void init(RunArgs args, CallbackInfo ci) {
         new Blackout().init();
@@ -27,8 +25,9 @@ public class MinecraftClientMixin {
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 2, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void getWindowTitle(CallbackInfoReturnable<String> cir, StringBuilder stringBuilder) {
-        if(titleFeature.getMainSetting().getValue())
-            FunctionsKt.setString(stringBuilder, titleFeature.getTitle());
+        if(WindowTitle.instance != null && WindowTitle.instance.getMainSetting().getValue()) {
+            FunctionsKt.setString(stringBuilder, WindowTitle.instance.getTitle());
+        }
     }
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 4, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
