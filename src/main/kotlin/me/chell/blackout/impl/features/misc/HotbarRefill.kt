@@ -13,7 +13,7 @@ import net.minecraft.screen.slot.SlotActionType
 
 class HotbarRefill: ToggleFeature("Hotbar Refill", Category.Misc, false) {
 
-    private val whitelist = Setting("Whitelist", mutableListOf(Items.EXPERIENCE_BOTTLE))
+    private val whitelist = register(Setting("Whitelist", mutableListOf(Items.EXPERIENCE_BOTTLE)))
 
     override fun onEnable() {
         eventManager.register(this)

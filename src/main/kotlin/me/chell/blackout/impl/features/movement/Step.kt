@@ -9,7 +9,7 @@ import me.chell.blackout.api.util.mc
 class Step: Feature("Step", Category.Movement) {
     override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
 
-    private val height = Setting("Height", 2.1f)
+    private val height = register(Setting("Height", 2.2f))
 
     private fun onEnable() {
         mc.player?.stepHeight = height.value
