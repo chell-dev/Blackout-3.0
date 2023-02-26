@@ -2,6 +2,7 @@ package me.chell.blackout.impl.gui
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.feature.Category
+import me.chell.blackout.api.util.drawTrimmedWithShadow
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modId
 import me.chell.blackout.api.util.modName
@@ -36,6 +37,10 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     private val uiWidth = 300
     private val uiHeight get() = mc.window.scaledHeight
     val bannerHeight = 75
+
+    private val descX get() = x + CategoryTab.size
+    private val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 2) - (descPadding * 2)
+    private val descPadding = 5
 
     init {
         var tabY = bannerHeight+1
@@ -80,6 +85,10 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
         // line next to icons
         drawVerticalLine(matrices, CategoryTab.size, bannerHeight, y + uiHeight, color)
+
+        drawHorizontalLine(matrices, descX, x + width, descY, color)
+
+        mc.textRenderer.drawTrimmedWithShadow("A very long description of the feature that the mouse cursor is currently hovering over.", descX + descPadding, descY + descPadding, width - CategoryTab.size - 1 - descPadding - descPadding, -1)
 
         disableScissor()
     }
