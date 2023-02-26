@@ -5,8 +5,8 @@
 
 ## Minecraft client for Fabric 1.19.3
 
-![Downloads](https://img.shields.io/github/downloads/chell-dev/Blackout-3.0/total)
-![Lines of code](https://img.shields.io/tokei/lines/github/chell-dev/Blackout-3.0)
+![Downloads](https://img.shields.io/github/downloads/chell-dev/Blackout-3.0/total?style=flat-square)
+![Lines of code](https://img.shields.io/tokei/lines/github/chell-dev/Blackout-3.0?label=Lines%20of%20code&style=flat-square&color=blueviolet)
 
 <details>
 <summary>Screenshots</summary>
