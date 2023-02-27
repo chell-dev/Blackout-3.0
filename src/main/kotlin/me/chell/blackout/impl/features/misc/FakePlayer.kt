@@ -27,7 +27,7 @@ class FakePlayer: ToggleFeature("Fake Player", Category.Misc, false) {
     }
 
     override fun onDisable() {
-        id = -1
         mc.world?.removeEntity(id, Entity.RemovalReason.DISCARDED)
+        id = -1
     }
 }
