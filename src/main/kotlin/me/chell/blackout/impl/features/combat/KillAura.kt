@@ -49,7 +49,7 @@ class KillAura: Feature("KillAura", Category.Combat) {
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {
-        if(delay.value && player.getAttackCooldownProgress(0f) != 0f) return
+        if(delay.value && player.getAttackCooldownProgress(0.0f) != 1f) return
         if(weaponOnly.value && (player.mainHandStack.item !is SwordItem && player.mainHandStack.item !is AxeItem)) return
         if(!using.value && player.isUsingItem) return
 
@@ -80,7 +80,7 @@ class KillAura: Feature("KillAura", Category.Combat) {
                 player.isSprinting = false
             }
 
-            player.attack(target)
+            mc.interactionManager!!.attackEntity(player, target)
             player.swingHand(Hand.MAIN_HAND)
 
             player.yaw = yaw
