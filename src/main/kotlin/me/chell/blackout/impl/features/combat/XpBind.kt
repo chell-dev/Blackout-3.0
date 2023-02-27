@@ -41,28 +41,31 @@ class XpBind: Feature("XP Bind", Category.Combat) {
         if(!fast.value && accessor.itemUseCooldown > 0) return
 
         if(player.inventory.mainHandStack.item == Items.EXPERIENCE_BOTTLE) {
-            mc.interactionManager!!.interactItem(player, Hand.MAIN_HAND)
-            if(!fast.value) accessor.itemUseCooldown = 4
+            throwXp(Hand.MAIN_HAND)
         } else if(player.inventory.offHand[0].item == Items.EXPERIENCE_BOTTLE) {
-            mc.interactionManager!!.interactItem(player, Hand.OFF_HAND)
-            if(!fast.value) accessor.itemUseCooldown = 4
+            throwXp(Hand.OFF_HAND)
         } else {
             val currentSlot = player.inventory.selectedSlot
-            val currentPitch = player.pitch
 
             for(i in 0 until 9) {
                 if(player.inventory.getStack(i).item == Items.EXPERIENCE_BOTTLE) {
                     player.inventory.selectedSlot = i
-                    if(feet.value) player.pitch = 90f
-                    mc.interactionManager!!.interactItem(player, Hand.MAIN_HAND)
-                    if(!fast.value) accessor.itemUseCooldown = 4
-                    player.pitch = currentPitch
+                    throwXp(Hand.MAIN_HAND)
                     player.inventory.selectedSlot = currentSlot
                     return
                 }
             }
         }
 
+    }
+
+    private fun throwXp(hand: Hand) {
+        val currentPitch = player.pitch
+        if(feet.value) player.pitch = 90f
+        mc.interactionManager!!.interactItem(player, hand)
+        player.swingHand(hand)
+        if(!fast.value) accessor.itemUseCooldown = 4
+        player.pitch = currentPitch
     }
 
 }
