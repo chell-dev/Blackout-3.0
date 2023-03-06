@@ -6,7 +6,6 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
-import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.InputUtil
 import net.minecraft.client.util.math.MatrixStack
@@ -47,7 +46,7 @@ class ToggleBindButton(private val parent: GuiItem, setting: Setting<Bind.Toggle
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        DrawableHelper.drawTexture(matrices, x + bindWidth + GuiItem.margin, y, 0f, 0f, buttonWidth, height, buttonWidth, height)
+        drawTexture(matrices, x + bindWidth + GuiItem.margin, y, 0f, 0f, buttonWidth, height, buttonWidth, height)
 
         super.render(matrices, mouseX, mouseY, delta)
     }

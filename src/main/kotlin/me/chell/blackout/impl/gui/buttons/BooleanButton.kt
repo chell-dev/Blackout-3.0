@@ -6,7 +6,6 @@ import me.chell.blackout.api.util.modId
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
-import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
@@ -33,7 +32,7 @@ class BooleanButton(private val parent: GuiItem, private val setting: Setting<Bo
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        DrawableHelper.drawTexture(matrices, x, y, 0f, 0f, width, height, width, height)
+        drawTexture(matrices, x, y, 0f, 0f, width, height, width, height)
 
         super.render(matrices, mouseX, mouseY, delta)
     }

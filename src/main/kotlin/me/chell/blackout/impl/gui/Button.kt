@@ -6,7 +6,7 @@ import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 
-abstract class Button(parent: GuiItem, private val expandable: Boolean) {
+abstract class Button(parent: GuiItem, private val expandable: Boolean): DrawableHelper() {
 
     abstract val x: Int
     abstract val y: Int
@@ -25,7 +25,7 @@ abstract class Button(parent: GuiItem, private val expandable: Boolean) {
             RenderSystem.enableBlend()
             RenderSystem.defaultBlendFunc()
             RenderSystem.enableDepthTest()
-            DrawableHelper.drawTexture(matrices, iconX, iconY, 0f, 0f, iconSize, iconSize, iconSize, iconSize)
+            drawTexture(matrices, iconX, iconY, 0f, 0f, iconSize, iconSize, iconSize, iconSize)
         }
     }
 
