@@ -39,6 +39,8 @@ abstract class GuiItem: DrawableHelper() {
 
     open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean = false
 
+    open  fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean = false
+
     open fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean = false
 
     open fun onClose() {}

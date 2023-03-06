@@ -17,7 +17,7 @@ import net.minecraft.sound.SoundEvents
 class FeatureItem(val feature: Feature, override var x: Int, override var y: Int, private val parent: CategoryTab): GuiItem() {
 
     override val width = 239// 300-50-1-5-5
-    override val height = 32
+    override val height = 28
     var fullHeight = height
 
     private val expandable = feature.settings.isNotEmpty()
@@ -30,6 +30,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         is Boolean -> BooleanButton(this, feature.mainSetting as Setting<Boolean>, expandable)
         is Bind.Action -> ActionBindButton(this, feature.mainSetting as Setting<Bind.Action>, expandable)
         is Bind.Toggle -> ToggleBindButton(this, feature.mainSetting as Setting<Bind.Toggle>, expandable)
+        is Number -> SliderButton(this, feature.mainSetting as Setting<Number>, expandable)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for feature ${feature.name}")
             object : Button(this, false) {
@@ -86,6 +87,16 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         }
 
         return this.button.mouseClicked(mouseX, mouseY, button)
+    }
+
+    override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
+        if(expanded) {
+            for(item in settings) {
+                if(item.mouseReleased(mouseX, mouseY, button)) return true
+            }
+        }
+
+        return this.button.mouseReleased(mouseX, mouseY, button)
     }
 
     override fun onClose() {

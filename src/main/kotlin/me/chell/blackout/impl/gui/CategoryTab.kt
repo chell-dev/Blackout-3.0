@@ -65,6 +65,16 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
         return false
     }
 
+    fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
+        if(parent.currentTab == this) {
+            for(item in features) {
+                if(item.mouseReleased(mouseX, mouseY, button)) return true
+            }
+        }
+
+        return false
+    }
+
     fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
         if(parent.currentTab == this) {
             for(item in features) {

@@ -39,8 +39,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     val bannerHeight = 75
 
     private val descX get() = x + CategoryTab.size
-    private val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 2) - (descPadding * 2)
-    private val descPadding = 5
+    private val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
+    private val descPadding = 5f
 
     init {
         var tabY = bannerHeight+1
@@ -86,9 +86,9 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         // line next to icons
         drawVerticalLine(matrices, CategoryTab.size, bannerHeight, y + uiHeight, color)
 
-        drawHorizontalLine(matrices, descX, x + width, descY, color)
+        drawHorizontalLine(matrices, descX, x + width, descY.toInt(), color)
 
-        mc.textRenderer.drawTrimmedWithShadow("A very long description of the feature that the mouse cursor is currently hovering over.", descX + descPadding, descY + descPadding, width - CategoryTab.size - 1 - descPadding - descPadding, -1)
+        mc.textRenderer.drawTrimmedWithShadow(matrices, "A very long description of the feature that the mouse cursor is currently hovering over.", descX + descPadding, descY + descPadding, (uiWidth - CategoryTab.size - 1 - descPadding - descPadding).toInt(), -1)
 
         disableScissor()
     }
@@ -100,6 +100,13 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
             if(tab.mouseClicked(mouseX, mouseY, button)) return true
         }
 
+        return false
+    }
+
+    override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
+        for(tab in tabs) {
+            if(tab.mouseReleased(mouseX, mouseY, button)) return true
+        }
         return false
     }
 
@@ -172,12 +179,6 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
     override fun renderBackground(matrices: MatrixStack?) {
         super.renderBackground(matrices)
-    }
-
-
-
-    override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        return super.mouseReleased(mouseX, mouseY, button)
     }
 
     override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {

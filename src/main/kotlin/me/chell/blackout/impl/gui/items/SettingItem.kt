@@ -23,6 +23,7 @@ class SettingItem(private val setting: Setting<*>, override var x: Int, override
         is Boolean -> BooleanButton(this, setting as Setting<Boolean>, false)
         is Bind.Action -> ActionBindButton(this, setting as Setting<Bind.Action>, false)
         is Bind.Toggle -> ToggleBindButton(this, setting as Setting<Bind.Toggle>, false)
+        is Number -> SliderButton(this, setting as Setting<Number>, false)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for setting ${setting.name}")
             object : Button(this, false) {
@@ -43,6 +44,10 @@ class SettingItem(private val setting: Setting<*>, override var x: Int, override
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         return this.button.mouseClicked(mouseX, mouseY, button)
+    }
+
+    override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
+        return this.button.mouseReleased(mouseX, mouseY, button)
     }
 
     override fun onClose() {
