@@ -52,6 +52,14 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         expandedHeight = sY - y - margin
     }
 
+    fun updateItems() {
+        var itemY = y + height + margin
+        for(item in settings) {
+            item.y = itemY
+            itemY += item.height + margin
+        }
+    }
+
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
         super.render(matrices, mouseX, mouseY, delta)
 

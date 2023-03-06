@@ -9,6 +9,8 @@ import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
+import kotlin.math.max
+import kotlin.math.min
 
 class CategoryTab(val category: Category, var x: Int, var y: Int, private val parent: ClientGUI): DrawableHelper() {
 
@@ -19,6 +21,8 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
     private val margin = 5
 
     val features = mutableListOf<FeatureItem>()
+
+    private var scrollAmount = 0
 
     init {
         var bY = parent.bannerHeight+1+GuiItem.margin
@@ -42,9 +46,11 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
         drawTexture(matrices, x+margin, y+margin, 0f, 0f, size-(margin*2), size-(margin*2), size-(margin*2), size-(margin*2))
 
         if(parent.currentTab == this) {
+            enableScissor(size + 1, parent.bannerHeight + 1, x + parent.uiWidth, parent.descY.toInt())
             for(item in features) {
                 item.render(matrices, mouseX, mouseY, delta)
             }
+            disableScissor()
         }
     }
 
@@ -85,6 +91,16 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
         return false
     }
 
+    fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
+        if(parent.currentTab == this) {
+            scrollAmount += amount.toInt() * 10
+            scrollAmount = min(200, scrollAmount)
+            updateItems()
+            return true
+        }
+        return false
+    }
+
     fun onClose() {
         for(item in features) {
             item.onClose()
@@ -92,11 +108,12 @@ class CategoryTab(val category: Category, var x: Int, var y: Int, private val pa
     }
 
     fun updateItems() {
-        var itemY = parent.bannerHeight+1+GuiItem.margin
+        var itemY = parent.bannerHeight+1+GuiItem.margin + scrollAmount
 
         for(item in features) {
             item.y = itemY
             itemY += item.fullHeight + margin
+            item.updateItems()
         }
     }
 

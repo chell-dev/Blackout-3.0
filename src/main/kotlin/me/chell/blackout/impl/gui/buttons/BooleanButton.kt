@@ -32,7 +32,7 @@ class BooleanButton(private val parent: GuiItem, private val setting: Setting<Bo
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        drawTexture(matrices, x, y, 0f, 0f, width, height, width, height)
+        drawTexture(matrices, x, (parent.y + (parent.height / 2) - (height / 2)), 0f, 0f, width, height, width, height)
 
         super.render(matrices, mouseX, mouseY, delta)
     }

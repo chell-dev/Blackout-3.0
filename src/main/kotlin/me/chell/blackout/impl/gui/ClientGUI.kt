@@ -34,12 +34,12 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
     private val x = 0
     private val y = 0
-    private val uiWidth = 300
+    val uiWidth = 300
     private val uiHeight get() = mc.window.scaledHeight
     val bannerHeight = 75
 
     private val descX get() = x + CategoryTab.size
-    private val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
+    val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
     private val descPadding = 5f
 
     init {
@@ -86,7 +86,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         // line next to icons
         drawVerticalLine(matrices, CategoryTab.size, bannerHeight, y + uiHeight, color)
 
-        drawHorizontalLine(matrices, descX, x + width, descY.toInt(), color)
+        drawHorizontalLine(matrices, descX, x + uiWidth, descY.toInt(), color)
 
         mc.textRenderer.drawTrimmedWithShadow(matrices, "A very long description of the feature that the mouse cursor is currently hovering over.", descX + descPadding, descY + descPadding, (uiWidth - CategoryTab.size - 1 - descPadding - descPadding).toInt(), -1)
 
@@ -118,6 +118,13 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             close()
             return true
+        }
+        return false
+    }
+
+    override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
+        for(tab in tabs) {
+            if(tab.mouseScrolled(mouseX, mouseY, amount)) return true
         }
         return false
     }
@@ -183,10 +190,6 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
     override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY)
-    }
-
-    override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
-        return super.mouseScrolled(mouseX, mouseY, amount)
     }
 
     override fun keyReleased(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {

@@ -6,7 +6,7 @@ import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 
-abstract class Button(parent: GuiItem, private val expandable: Boolean): DrawableHelper() {
+abstract class Button(private val parent: GuiItem, private val expandable: Boolean): DrawableHelper() {
 
     abstract val x: Int
     abstract val y: Int
@@ -16,7 +16,7 @@ abstract class Button(parent: GuiItem, private val expandable: Boolean): Drawabl
     private val icon = Identifier(modId, "textures/gui/settings.png")
     private val iconSize = parent.height / 2
     private val iconX get() = x - iconSize - GuiItem.margin
-    private val iconY = parent.y + (parent.height / 2) - (iconSize / 2)
+    private val iconY get() = parent.y + (parent.height / 2) - (iconSize / 2)
 
     open fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
         if(expandable) {
