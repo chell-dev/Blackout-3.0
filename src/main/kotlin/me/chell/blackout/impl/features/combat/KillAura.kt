@@ -6,10 +6,10 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
+import me.chell.blackout.api.util.attackEntity
 import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
-import net.minecraft.command.argument.EntityAnchorArgumentType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.mob.HostileEntity
@@ -17,7 +17,6 @@ import net.minecraft.entity.passive.PassiveEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.AxeItem
 import net.minecraft.item.SwordItem
-import net.minecraft.util.Hand
 
 class KillAura: Feature("KillAura", Category.Combat) {
 
@@ -68,11 +67,6 @@ class KillAura: Feature("KillAura", Category.Combat) {
         if(target != null) {
             val ground = player.isOnGround
             val sprint = player.isSprinting
-            val yaw = player.yaw
-            val pitch = player.pitch
-
-            if(rotate.value)
-                player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, target.eyePos)
 
             if(crits.value && !player.isClimbing && !player.isTouchingWater && !player.hasStatusEffect(StatusEffects.BLINDNESS) && !player.hasVehicle()) {
                 if(player.fallDistance <= 0.0f) player.fallDistance = 0.01f
@@ -80,11 +74,8 @@ class KillAura: Feature("KillAura", Category.Combat) {
                 player.isSprinting = false
             }
 
-            mc.interactionManager!!.attackEntity(player, target)
-            player.swingHand(Hand.MAIN_HAND)
+            player.attackEntity(target, rotate.value)
 
-            player.yaw = yaw
-            player.pitch = pitch
             player.isOnGround = ground
             player.isSprinting = sprint
         }

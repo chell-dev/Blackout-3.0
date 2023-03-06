@@ -6,9 +6,8 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.eventManager
-import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
-import net.minecraft.text.Text
+import me.chell.blackout.api.util.world
 import net.minecraft.world.RaycastContext
 
 class PullDown: ToggleFeature("PullDown", Category.Movement, false) {
@@ -28,7 +27,7 @@ class PullDown: ToggleFeature("PullDown", Category.Movement, false) {
     fun onPlayerTick(event: PlayerTickEvent) {
         if(!player.isOnGround || player.isTouchingWater) return
 
-        val ray = mc.world!!.raycast(RaycastContext(player.pos, player.pos.add(0.0, -maxHeight.value - 1, 0.0), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.ANY, player))
+        val ray = world.raycast(RaycastContext(player.pos, player.pos.add(0.0, -maxHeight.value - 1, 0.0), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.ANY, player))
 
         val distance = player.pos.y - ray.pos.y
         if(distance >= minHeight.value && distance <= maxHeight.value) {

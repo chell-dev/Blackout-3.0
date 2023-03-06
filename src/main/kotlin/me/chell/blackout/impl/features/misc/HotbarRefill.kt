@@ -5,15 +5,15 @@ import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
+import me.chell.blackout.api.util.clickSlot
 import me.chell.blackout.api.util.eventManager
-import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
 import net.minecraft.item.Items
 import net.minecraft.screen.slot.SlotActionType
 
 class HotbarRefill: ToggleFeature("Hotbar Refill", Category.Misc, false) {
 
-    private val whitelist = register(Setting("Whitelist", mutableListOf(Items.EXPERIENCE_BOTTLE)))
+    private val whitelist = register(Setting("Whitelist", mutableListOf(Items.EXPERIENCE_BOTTLE, Items.ENCHANTED_GOLDEN_APPLE)))
 
     override fun onEnable() {
         eventManager.register(this)
@@ -29,8 +29,8 @@ class HotbarRefill: ToggleFeature("Hotbar Refill", Category.Misc, false) {
             val stack = player.inventory.getStack(i)
             if(stack.count < stack.maxCount && whitelist.value.contains(stack.item)) {
                 for(slot in 9 until player.inventory.main.size) {
-                    if(player.inventory.getStack(slot).item == stack.item) {
-                        mc.interactionManager!!.clickSlot(player.currentScreenHandler.syncId, slot, 0, SlotActionType.QUICK_MOVE, player)
+                    if(player.inventory.getStack(slot).item == stack.item && player.inventory.getStack(slot).nbt?.equals(stack.nbt) == true) {
+                        clickSlot(slot, SlotActionType.QUICK_MOVE)
                         return
                     }
                 }

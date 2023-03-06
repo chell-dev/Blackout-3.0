@@ -6,9 +6,7 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.eventManager
-import me.chell.blackout.api.util.mc
-import me.chell.blackout.api.util.player
+import me.chell.blackout.api.util.*
 import me.chell.blackout.mixin.accessors.MinecraftClientAccessor
 import net.minecraft.item.Items
 import net.minecraft.util.Hand
@@ -47,13 +45,11 @@ class XpBind: Feature("XP Bind", Category.Combat) {
         } else {
             val currentSlot = player.inventory.selectedSlot
 
-            for(i in 0 until 9) {
-                if(player.inventory.getStack(i).item == Items.EXPERIENCE_BOTTLE) {
-                    player.inventory.selectedSlot = i
-                    throwXp(Hand.MAIN_HAND)
-                    player.inventory.selectedSlot = currentSlot
-                    return
-                }
+            val xp = player.inventory.findItemInHotbar(Items.EXPERIENCE_BOTTLE)
+            if(xp != -1) {
+                player.inventory.selectedSlot = xp
+                throwXp(Hand.MAIN_HAND)
+                player.inventory.selectedSlot = currentSlot
             }
         }
 
@@ -62,8 +58,7 @@ class XpBind: Feature("XP Bind", Category.Combat) {
     private fun throwXp(hand: Hand) {
         val currentPitch = player.pitch
         if(feet.value) player.pitch = 90f
-        mc.interactionManager!!.interactItem(player, hand)
-        player.swingHand(hand)
+        player.useItem(hand)
         if(!fast.value) accessor.itemUseCooldown = 4
         player.pitch = currentPitch
     }

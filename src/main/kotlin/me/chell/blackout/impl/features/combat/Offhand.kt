@@ -6,9 +6,7 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.eventManager
-import me.chell.blackout.api.util.mc
-import me.chell.blackout.api.util.player
+import me.chell.blackout.api.util.*
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen
 import net.minecraft.item.Items
 import net.minecraft.item.PickaxeItem
@@ -42,14 +40,11 @@ class Offhand: ToggleFeature("Offhand", Category.Combat, false) {
 
         if(player.offHandStack.item == item || mc.currentScreen is AbstractInventoryScreen<*>) return
 
-        for(i in 0 until player.inventory.main.size) {
-            if(player.inventory.getStack(i).item == item) {
-                val slot = if(i < 9) i + 36 else i
-                mc.interactionManager!!.clickSlot(player.currentScreenHandler.syncId, slot, 0, SlotActionType.PICKUP, player)
-                mc.interactionManager!!.clickSlot(player.currentScreenHandler.syncId, 45, 0, SlotActionType.PICKUP, player)
-                mc.interactionManager!!.clickSlot(player.currentScreenHandler.syncId, slot, 0, SlotActionType.PICKUP, player)
-                break
-            }
+        val slot = player.inventory.findItem(item)
+        if(slot != -1) {
+            clickSlot(slot, SlotActionType.PICKUP)
+            clickSlot(45, SlotActionType.PICKUP)
+            clickSlot(slot, SlotActionType.PICKUP)
         }
     }
 

@@ -10,7 +10,7 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
 
-class Bhop: Feature("Bhop", Category.Movement) {
+class Bhop: Feature("Auto Jump", Category.Movement) {
 
     override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = { onEnable() }, onDisable = { onDisable() }))
 

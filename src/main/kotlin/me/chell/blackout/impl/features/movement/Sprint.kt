@@ -33,7 +33,7 @@ class Sprint: Feature("Sprint", Category.Movement) {
                     && !player.isUsingItem
                     && !player.hasStatusEffect(StatusEffects.BLINDNESS))
                 player.isSprinting = true
-        } else if(mode.value == Mode.Rage) {
+        } else {
             if(player.forwardSpeed != 0f || player.sidewaysSpeed != 0f) player.isSprinting = true
         }
     }

@@ -7,6 +7,7 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.eventManager
+import me.chell.blackout.api.util.interactionManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
 import net.minecraft.command.argument.EntityAnchorArgumentType
@@ -52,7 +53,7 @@ class AutoFish: ToggleFeature("Auto Fish", Category.PLayer, false) {
         val pitch = player.pitch
         if(player.fishHook != null && rotate.value) player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, player.fishHook!!.pos)
 
-        mc.interactionManager!!.interactItem(player, hand)
+        interactionManager.interactItem(player, hand)
         interact--
 
         player.yaw = yaw
