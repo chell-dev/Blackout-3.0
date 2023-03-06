@@ -20,7 +20,7 @@ class Offhand: ToggleFeature("Offhand", Category.Combat, false) {
     private val swordGapple = register(Setting("Right click gapple with Sword", false))
     private val pickaxeGapple = register(Setting("Right click gapple with Pickaxe", false))
 
-    private val health = register(Setting("Totem HP", 16.0))
+    private val health = register(Setting("Totem HP", 16.0, 0.0, 40.0))
 
     override fun onEnable() {
         eventManager.register(this)

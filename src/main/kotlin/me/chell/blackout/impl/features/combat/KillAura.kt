@@ -33,8 +33,8 @@ class KillAura: Feature("KillAura", Category.Combat) {
 
     private val priority = register(Setting("Priority", Priority.Health))
 
-    private val range = register(Setting("Range", 6.0))
-    private val wallRange = register(Setting("Wall Range", 6.0))
+    private val range = register(Setting("Range", 6.0, 3.0, 8.0))
+    private val wallRange = register(Setting("Wall Range", 6.0, 3.0, 8.0))
 
     private val weaponOnly = register(Setting("Sword/Axe Only", false))
 

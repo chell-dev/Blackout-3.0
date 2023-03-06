@@ -12,8 +12,8 @@ import net.minecraft.world.RaycastContext
 
 class PullDown: ToggleFeature("PullDown", Category.Movement, false) {
 
-    private val maxHeight = register(Setting("Max Height", 4.0))
-    private val minHeight = register(Setting("Min Height", 0.1))
+    private val maxHeight = register(Setting("Max Height", 4.0, 0.1, 5.0))
+    private val minHeight = register(Setting("Min Height", 0.1, 0.01, 2.0))
 
     override fun onEnable() {
         eventManager.register(this)
