@@ -8,6 +8,7 @@
     "KeyboardMixin",
     "LightmapTextureManagerMixin",
     "MinecraftClientMixin",
+    "MixinHeldItemRenderer",
     "MouseMixin",
     "SoundManagerMixin",
     "accessors.MinecraftClientAccessor"
