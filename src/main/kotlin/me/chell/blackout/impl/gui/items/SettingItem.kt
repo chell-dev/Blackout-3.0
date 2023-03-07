@@ -10,7 +10,7 @@ import me.chell.blackout.impl.gui.buttons.*
 import net.minecraft.client.util.math.MatrixStack
 
 @Suppress("unchecked_cast")
-class SettingItem(private val setting: Setting<*>, override var x: Int, override var y: Int): GuiItem() {
+class SettingItem(val setting: Setting<*>, override var x: Int, override var y: Int): GuiItem() {
 
     companion object {
         const val offset = 10

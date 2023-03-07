@@ -52,13 +52,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         expandedHeight = sY - y - margin
     }
 
-    fun updateItems() {
-        var itemY = y + height + margin
-        for(item in settings) {
-            item.y = itemY
-            itemY += item.height + margin
-        }
-    }
+    fun updateItems() {}
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
         super.render(matrices, mouseX, mouseY, delta)
@@ -67,8 +61,12 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         mc.textRenderer.drawWithShadow(matrices, feature.name, x + margin.toFloat(), center, -1)
 
         if(expanded) {
+            var itemY = y + height + margin
             for(item in settings) {
+                if(!item.setting.visible.test(null)) continue
+                item.y = itemY
                 item.render(matrices, mouseX, mouseY, delta)
+                itemY += item.height + margin
             }
         }
     }

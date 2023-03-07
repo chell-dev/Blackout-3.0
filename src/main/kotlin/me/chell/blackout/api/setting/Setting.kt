@@ -1,6 +1,8 @@
 package me.chell.blackout.api.setting
 
-open class Setting<T>(val name: String, value: T, val min: T? = null, val max: T? = null) {
+import java.util.function.Predicate
+
+open class Setting<T>(val name: String, value: T, val min: T? = null, val max: T? = null, val visible: Predicate<Any?> = Predicate{true}) {
 
     var value = value
         set(newValue) {
