@@ -2,6 +2,7 @@ package me.chell.blackout
 
 import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.feature.FeatureManager
+import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.gui.ClientGUI
 
 class Blackout {
@@ -20,6 +21,15 @@ class Blackout {
         eventManager = EventManager()
         featureManager = FeatureManager()
         featureManager.init()
+
+        readFeatures(readClientFile())
+
         clientGUI = ClientGUI()
+
+        Runtime.getRuntime().addShutdownHook(Thread{
+            println("Saving config")
+            writeClientFile()
+            writeFeatures(readClientFile())
+        })
     }
 }

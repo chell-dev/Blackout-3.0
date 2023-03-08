@@ -25,6 +25,13 @@ class FeatureManager {
         }
     }
 
+    fun getFeatureByName(name: String): Feature? {
+        for(feature in features) {
+            if(feature.name == name) return feature
+        }
+        return null
+    }
+
     @EventHandler
     fun onKeyboard(event: InputEvent.Keyboard) {
         onEvent(event)

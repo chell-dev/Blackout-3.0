@@ -12,6 +12,13 @@ abstract class Feature(val name: String, val category: Category) {
         settings.add(setting)
         return setting
     }
+
+    fun getSettingByName(name: String): Setting<*>? {
+        for(setting in settings) {
+            if(setting.name == name) return setting
+        }
+        return null
+    }
 }
 
 @NoRegister
