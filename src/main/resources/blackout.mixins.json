@@ -7,8 +7,8 @@
     "ClientPlayerEntityMixin",
     "ExplosionMixin",
     "GameRendererMixin",
-    "InGameOverlayRendererMixin",
     "InGameHudMixin",
+    "InGameOverlayRendererMixin",
     "KeyboardMixin",
     "LightmapTextureManagerMixin",
     "LivingEntityMixin",
@@ -17,6 +17,7 @@
     "MouseMixin",
     "ParticleManagerMixin",
     "SoundManagerMixin",
+    "WorldRendererMixin",
     "accessors.MinecraftClientAccessor"
   ],
   "injectors": {
