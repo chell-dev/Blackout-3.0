@@ -21,6 +21,7 @@ class FakePlayer: ToggleFeature("Fake Player", Category.Misc, false) {
         val entity = OtherClientPlayerEntity(world, GameProfile(uuid, "FakePlayer"))
         entity.setPosition(player.pos)
         entity.inventory.clone(player.inventory)
+        entity.attributes.setFrom(player.attributes)
 
         id = entity.id
         world.addEntity(id, entity)
