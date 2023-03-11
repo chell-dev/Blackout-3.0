@@ -32,6 +32,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         is Bind.Toggle -> ToggleBindButton(this, feature.mainSetting as Setting<Bind.Toggle>, expandable)
         is Number -> SliderButton(this, feature.mainSetting as Setting<Number>, expandable)
         is Enum<*> -> EnumButton(this, feature.mainSetting as Setting<Enum<*>>, expandable)
+        is Runnable -> RunnableButton(this, feature.mainSetting as Setting<Runnable>, expandable)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for feature ${feature.name}")
             object : Button(this, false) {

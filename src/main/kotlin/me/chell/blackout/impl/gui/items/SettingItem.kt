@@ -25,6 +25,7 @@ class SettingItem(val setting: Setting<*>, override var x: Int, override var y: 
         is Bind.Toggle -> ToggleBindButton(this, setting as Setting<Bind.Toggle>, false)
         is Number -> SliderButton(this, setting as Setting<Number>, false)
         is Enum<*> -> EnumButton(this, setting as Setting<Enum<*>>, false)
+        is Runnable -> RunnableButton(this, setting as Setting<Runnable>, false)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for setting ${setting.name}")
             object : Button(this, false) {
