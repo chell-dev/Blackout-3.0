@@ -1,8 +1,11 @@
 package me.chell.blackout.impl.gui
 
+import me.chell.blackout.Blackout
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.util.featureManager
+import me.chell.blackout.api.util.mc
+import me.chell.blackout.impl.features.client.HudEditorFeature
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
@@ -13,6 +16,7 @@ class HudEditor: Screen(Text.of("Blackout HUD Editor")) {
 
     init {
         for(feature in featureManager.features) {
+            if(feature::class == HudEditorFeature::class) continue
             if(feature.category == Category.Hud) widgets.add(feature as Widget)
         }
     }
@@ -41,7 +45,7 @@ class HudEditor: Screen(Text.of("Blackout HUD Editor")) {
         for(w in widgets) {
             w.mouseReleased()
         }
-        super.close()
+        mc.setScreen(Blackout.instance.clientGUI)
     }
 
     override fun shouldPause() = false
