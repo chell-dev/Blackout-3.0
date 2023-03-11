@@ -3,6 +3,7 @@ package me.chell.blackout.api.event
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.declaredFunctions
+import kotlin.reflect.full.superclasses
 import kotlin.reflect.jvm.jvmErasure
 
 class EventManager {
@@ -37,10 +38,18 @@ class EventManager {
         }
     }
 
-    fun post(event: Event) { // TODO include subclasses
-        val list = registered[event::class]?.toList() ?: return
+    fun post(event: Event) {
+        val list = mutableListOf<Pair<Any, KFunction<*>>>()
 
-        for(pair in list) {
+        val main = registered[event::class]
+        if(main != null) list.addAll(main)
+
+        for(clazz in event::class.superclasses) {
+            val l = registered[clazz]
+            if(l != null) list.addAll(l)
+        }
+
+        for(pair in list.toList()) {
             pair.second.call(pair.first, event)
         }
     }

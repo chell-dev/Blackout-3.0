@@ -37,16 +37,6 @@ class FeatureManager {
     }
 
     @EventHandler
-    fun onKeyboard(event: InputEvent.Keyboard) {
-        onEvent(event)
-    }
-
-    @EventHandler
-    fun onMouse(event: InputEvent.Mouse) {
-        onEvent(event)
-    }
-
-    @EventHandler
     fun onRenderHud(event: RenderHudEvent.Post) {
         if(mc.currentScreen is HudEditor) return
         for(widget in Blackout.instance.hudEditor.widgets) {
@@ -55,7 +45,8 @@ class FeatureManager {
         }
     }
 
-    private fun onEvent(event: InputEvent) {
+    @EventHandler
+    fun onInput(event: InputEvent) {
         for(f in features) {
 
             if(f.mainSetting.value is Bind) {

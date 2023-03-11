@@ -48,44 +48,19 @@ class NoRender: ToggleFeature("NoRender", Category.Render, false) {
     }
 
     @EventHandler
-    fun onRenderOverlay(event: RenderHudEvent.Overlay) {
-        if(pumpkin.value && event.id.path == "textures/misc/pumpkinblur.png") event.canceled = true
-        if(snowOverlay.value && event.id.path == "textures/misc/powder_snow_outline.png") event.canceled = true
-    }
+    fun onRenderHud(event: RenderHudEvent) {
+        event.canceled = when(event) {
+            is RenderHudEvent.Overlay -> (pumpkin.value && event.id.path == "textures/misc/pumpkinblur.png") || (snowOverlay.value && event.id.path == "textures/misc/powder_snow_outline.png")
+            is RenderHudEvent.Portal -> portalOverlay.value
+            is RenderHudEvent.Tooltip -> tooltip.value
+            is RenderHudEvent.OnFire -> fire.value
+            is RenderHudEvent.InWall -> inWall.value
+            is RenderHudEvent.Underwater -> waterOverlay.value
+            is RenderHudEvent.Totem -> totemOverlay.value
+            is RenderHudEvent.Hurt -> hurtCam.value
+            else -> false
+        }
 
-    @EventHandler
-    fun onRenderPortal(event: RenderHudEvent.Portal) {
-        if(portalOverlay.value) event.canceled = true
-    }
-
-    @EventHandler
-    fun onRenderTooltip(event: RenderHudEvent.Tooltip) {
-        if(tooltip.value) event.canceled = true
-    }
-
-    @EventHandler
-    fun onRenderFire(event: RenderHudEvent.OnFire) {
-        if(fire.value) event.canceled = true
-    }
-
-    @EventHandler
-    fun onRenderInWall(event: RenderHudEvent.InWall) {
-        if(inWall.value) event.canceled = true
-    }
-
-    @EventHandler
-    fun onRenderUnderwater(event: RenderHudEvent.Underwater) {
-        if(waterOverlay.value) event.canceled = true
-    }
-
-    @EventHandler
-    fun onRenderTotem(event: RenderHudEvent.Totem) {
-        if(totemOverlay.value) event.canceled = true
-    }
-
-    @EventHandler
-    fun onRenderHurt(event: RenderHudEvent.Hurt) {
-        if(hurtCam.value) event.canceled = true
     }
 
 }

@@ -37,32 +37,15 @@ class DiscordActivity: ToggleFeature("Discord RPC", Category.Client, false) {
     }
 
     @EventHandler
-    fun onMultiPlayer(event: ServerEvent.MultiPlayer) {
-        rpc.details = "Playing Multiplayer"
-        if(shouldUpdate) DiscordRPC.discordUpdatePresence(rpc)
-    }
+    fun onMultiPlayer(event: ServerEvent) {
+        rpc.details = when(event) {
+            is ServerEvent.MultiPlayer -> "Playing Multiplayer"
+            is ServerEvent.SinglePlayer -> "Playing Singleplayer"
+            is ServerEvent.Lan -> "Playing LAN"
+            is ServerEvent.Realms -> "Playing Realms"
+            else -> "Main Menu"
+        }
 
-    @EventHandler
-    fun onSinglePlayer(event: ServerEvent.SinglePlayer) {
-        rpc.details = "Playing Singleplayer"
-        if(shouldUpdate) DiscordRPC.discordUpdatePresence(rpc)
-    }
-
-    @EventHandler
-    fun onLan(event: ServerEvent.Lan) {
-        rpc.details = "Playing LAN"
-        if(shouldUpdate) DiscordRPC.discordUpdatePresence(rpc)
-    }
-
-    @EventHandler
-    fun onRealms(event: ServerEvent.Realms) {
-        rpc.details = "Playing Realms"
-        if(shouldUpdate) DiscordRPC.discordUpdatePresence(rpc)
-    }
-
-    @EventHandler
-    fun onDisconnect(event: ServerEvent.Disconnect) {
-        rpc.details = "Main Menu"
         if(shouldUpdate) DiscordRPC.discordUpdatePresence(rpc)
     }
 }
