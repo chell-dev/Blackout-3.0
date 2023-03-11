@@ -43,5 +43,6 @@ enum class Category(val icon: Identifier, val focusedIcon: Identifier) {
     PLayer(Identifier(modId, "textures/gui/categories/player.png"), Identifier(modId, "textures/gui/categories/player_focused.png")),
     Movement(Identifier(modId, "textures/gui/categories/movement.png"), Identifier(modId, "textures/gui/categories/movement_focused.png")),
     Misc(Identifier(modId, "textures/gui/categories/misc.png"), Identifier(modId, "textures/gui/categories/misc_focused.png")),
-    Client(Identifier(modId, "textures/gui/categories/client.png"), Identifier(modId, "textures/gui/categories/client_focused.png"))
+    Client(Identifier(modId, "textures/gui/categories/client.png"), Identifier(modId, "textures/gui/categories/client_focused.png")),
+    Hud(Identifier(modId, "textures/gui/categories/misc.png"), Identifier(modId, "textures/gui/categories/misc_focused.png"))
 }
