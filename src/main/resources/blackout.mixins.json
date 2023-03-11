@@ -6,6 +6,9 @@
   "mixins": [
     "ClientPlayerEntityMixin",
     "ExplosionMixin",
+    "GameRendererMixin",
+    "InGameOverlayRendererMixin",
+    "InGameHudMixin",
     "KeyboardMixin",
     "LightmapTextureManagerMixin",
     "LivingEntityMixin",
@@ -14,7 +17,6 @@
     "MouseMixin",
     "ParticleManagerMixin",
     "SoundManagerMixin",
-    "InGameHudMixin",
     "accessors.MinecraftClientAccessor"
   ],
   "injectors": {
