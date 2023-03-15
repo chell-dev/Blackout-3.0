@@ -17,7 +17,8 @@
     "ParticleManagerMixin",
     "SoundManagerMixin",
     "WorldRendererMixin",
-    "accessors.MinecraftClientAccessor"
+    "accessors.MinecraftClientAccessor",
+    "ClientPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
