@@ -28,18 +28,22 @@ public abstract class MixinHeldItemRenderer {
 
         Arm arm = (hand == Hand.MAIN_HAND) ? player.getMainArm() : player.getMainArm().getOpposite();
 
-        RenderArmEvent event = new RenderArmEvent(arm == Arm.RIGHT ? RenderArmEvent.Type.RightArm : RenderArmEvent.Type.LeftArm, matrices, equipProgress);
+        RenderArmEvent event = new RenderArmEvent(arm == Arm.RIGHT ? RenderArmEvent.Type.RightArm : RenderArmEvent.Type.LeftArm, matrices, equipProgress, false);
         GlobalsKt.getEventManager().post(event);
 
-        renderArmHoldingItem(matrices, vertexConsumers, light, event.getEquipProgress(), swingProgress, arm);
-
-        matrices.pop();
+        if(!event.getCanceled()) {
+            renderArmHoldingItem(matrices, vertexConsumers, light, event.getEquipProgress(), swingProgress, arm);
+            matrices.pop();
+        }
     }
 
-    @Inject(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"))
+    @Inject(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
     public void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        if(renderMode.isFirstPerson())
-            GlobalsKt.getEventManager().post(new RenderArmEvent(leftHanded ? RenderArmEvent.Type.LeftItem : RenderArmEvent.Type.RightItem, matrices, -1f));
+        if(renderMode.isFirstPerson()) {
+            RenderArmEvent event = new RenderArmEvent(leftHanded ? RenderArmEvent.Type.LeftItem : RenderArmEvent.Type.RightItem, matrices, -1f, false);
+            GlobalsKt.getEventManager().post(event);
+            if(event.getCanceled()) ci.cancel();
+        }
     }
 
     @Inject(method = "applyEquipOffset", at = @At("HEAD"), cancellable = true)
@@ -48,7 +52,7 @@ public abstract class MixinHeldItemRenderer {
 
         boolean right = arm == Arm.RIGHT;
 
-        RenderArmEvent event = new RenderArmEvent(right ? RenderArmEvent.Type.RightItemEquip : RenderArmEvent.Type.LeftItemEquip, matrices, equipProgress);
+        RenderArmEvent event = new RenderArmEvent(right ? RenderArmEvent.Type.RightItemEquip : RenderArmEvent.Type.LeftItemEquip, matrices, equipProgress, false);
         GlobalsKt.getEventManager().post(event);
 
         matrices.translate((right ? 1f : -1f) * 0.56f, -0.52f + event.getEquipProgress() * -0.6f, -0.72f);

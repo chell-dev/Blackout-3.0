@@ -4,8 +4,12 @@
   "package": "me.chell.blackout.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractClientPlayerEntityMixin",
+    "BackgroundRendererMixin",
     "ClientPlayerEntityMixin",
+    "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "ClientWorldMixin",
     "GameRendererMixin",
     "InGameHudMixin",
     "InGameOverlayRendererMixin",
@@ -17,8 +21,9 @@
     "ParticleManagerMixin",
     "SoundManagerMixin",
     "WorldRendererMixin",
-    "accessors.MinecraftClientAccessor",
-    "ClientPlayerInteractionManagerMixin"
+    "CameraMixin",
+    "PlayerEntityRendererMixin",
+    "accessors.MinecraftClientAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
