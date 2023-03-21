@@ -26,7 +26,7 @@ class Blackout {
 
         val files = readClientFile()
         readFeatures(files[0])
-        readFeatures(files[1])
+        readFriends(files[1])
 
         clientGUI = ClientGUI()
         hudEditor = HudEditor()
