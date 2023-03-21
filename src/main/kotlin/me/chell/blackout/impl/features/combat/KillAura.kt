@@ -6,10 +6,7 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.attackEntity
-import me.chell.blackout.api.util.eventManager
-import me.chell.blackout.api.util.mc
-import me.chell.blackout.api.util.player
+import me.chell.blackout.api.util.*
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.mob.HostileEntity
@@ -57,6 +54,7 @@ class KillAura: Feature("KillAura", Category.Combat) {
             .filter { player.distanceTo(it) <= if (player.canSee(it)) range.value else wallRange.value }
             .filter { (players.value && it is PlayerEntity) || (hostile.value && it is HostileEntity) || (passive.value && it is PassiveEntity) }
             .filter { it != player }
+            .filter { if(it is PlayerEntity) !it.isFriend() else true }
             .filter { it as LivingEntity; !it.isDead && it.health > 0 }
             .minByOrNull {
                 it as LivingEntity

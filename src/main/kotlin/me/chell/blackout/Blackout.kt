@@ -24,7 +24,9 @@ class Blackout {
         featureManager = FeatureManager()
         featureManager.init()
 
-        readFeatures(readClientFile())
+        val files = readClientFile()
+        readFeatures(files[0])
+        readFeatures(files[1])
 
         clientGUI = ClientGUI()
         hudEditor = HudEditor()
@@ -32,7 +34,9 @@ class Blackout {
         Runtime.getRuntime().addShutdownHook(Thread{
             println("Saving config")
             writeClientFile()
-            writeFeatures(readClientFile())
+            val f = readClientFile()
+            writeFeatures(f[0])
+            writeFriends(f[1])
         })
     }
 }

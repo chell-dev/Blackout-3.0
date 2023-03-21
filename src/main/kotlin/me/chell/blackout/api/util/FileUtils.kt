@@ -8,19 +8,21 @@ import java.io.File
 
 val clientFile = mc.runDirectory.absolutePath + "/$modName/Client.txt"
 val defaultConfig = mc.runDirectory.absolutePath + "/$modName/Config.txt"
+val defaultFriends = mc.runDirectory.absolutePath + "/$modName/Friends.txt"
 
 fun writeClientFile() {
     val file = File(clientFile)
     file.parentFile.mkdirs()
     file.createNewFile()
 
-    file.writeText(defaultConfig)
+    file.writeText("$defaultConfig\r\n$defaultFriends")
 }
 
-fun readClientFile(): String {
+fun readClientFile(): List<String> {
     val file = File(clientFile)
 
-    return if(file.exists()) file.readText() else defaultConfig
+    return if(file.exists()) file.readLines()
+    else listOf(defaultConfig, defaultFriends)
 }
 
 @Suppress("unchecked_cast")
@@ -126,4 +128,24 @@ fun parseValue(setting: Setting<*>, text: String) {
     } catch (e: Exception) {
         error = true
     }
+}
+
+fun writeFriends(fileName: String) {
+    val file = File(fileName)
+    file.parentFile.mkdirs()
+    file.createNewFile()
+
+    val sb = StringBuilder()
+
+    for(f in friends) sb.append("$f\r\n")
+
+    file.writeText(sb.toString())
+}
+
+fun readFriends(fileName: String) {
+    val file = File(fileName)
+    if(!file.exists()) return
+
+    friends.clear()
+    friends.addAll(file.readLines())
 }

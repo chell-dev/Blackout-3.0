@@ -167,7 +167,7 @@ class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
             }
         }
 
-        val target = player.getClosestEntity(PlayerEntity::class.java, playerRange.value){ it != player } as PlayerEntity?
+        val target = player.getClosestEntity(PlayerEntity::class.java, playerRange.value){ it != player && !player.isFriend() } as PlayerEntity?
         if(target == null || player.distanceTo(target) > playerRange.value) return
 
         val range = max(placeRange.value, placeWallRange.value).toInt()
