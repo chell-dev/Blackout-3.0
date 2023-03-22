@@ -12,6 +12,7 @@ import me.chell.blackout.impl.gui.buttons.*
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
+import java.io.File
 
 @Suppress("unchecked_cast")
 class FeatureItem(val feature: Feature, override var x: Int, override var y: Int, private val parent: CategoryTab): GuiItem() {
@@ -33,6 +34,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         is Number -> SliderButton(this, feature.mainSetting as Setting<Number>, expandable)
         is Enum<*> -> EnumButton(this, feature.mainSetting as Setting<Enum<*>>, expandable)
         is Runnable -> RunnableButton(this, feature.mainSetting as Setting<Runnable>, expandable)
+        is File -> FileButton(this, feature.mainSetting as Setting<File>, expandable)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for feature ${feature.name}")
             object : Button(this, false) {
