@@ -1,6 +1,5 @@
 package me.chell.blackout.mixin;
 
-import me.chell.blackout.api.events.RenderNametagEvent;
 import me.chell.blackout.api.util.GlobalsKt;
 import me.chell.blackout.impl.features.render.FirstPersonBody;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
