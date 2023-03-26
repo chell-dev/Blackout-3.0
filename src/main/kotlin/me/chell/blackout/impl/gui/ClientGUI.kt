@@ -7,6 +7,7 @@ import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modId
 import me.chell.blackout.api.util.modName
 import me.chell.blackout.impl.features.client.GuiFeature
+import me.chell.blackout.impl.gui.tabs.CategoryTab
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.sound.PositionedSoundInstance
@@ -25,8 +26,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     private val background: Int = Color(100, 100, 100, 150).rgb
     private val color = Color(161, 0, 255).rgb
 
-    private val tabs = mutableListOf<CategoryTab>()
-    var currentTab: CategoryTab
+    private val tabs = mutableListOf<Tab>()
+    var currentTab: Tab
 
     private var animationTicks = 0
     private val animationLength = 5
@@ -38,7 +39,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     private val uiHeight get() = mc.window.scaledHeight
     val bannerHeight = 75
 
-    private val descX get() = x + CategoryTab.size
+    private val descX get() = x + Tab.size
     val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
     private val descPadding = 5f
 
@@ -47,7 +48,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
         for(category in Category.values()) {
             tabs.add(CategoryTab(category, 0, tabY, this))
-            tabY += CategoryTab.size
+            tabY += Tab.size
         }
 
         currentTab = tabs[0]
@@ -84,11 +85,11 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         }
 
         // line next to icons
-        drawVerticalLine(matrices, CategoryTab.size, bannerHeight, y + uiHeight, color)
+        drawVerticalLine(matrices, Tab.size, bannerHeight, y + uiHeight, color)
 
         drawHorizontalLine(matrices, descX, x + uiWidth, descY.toInt(), color)
 
-        mc.textRenderer.drawTrimmedWithShadow(matrices, "A very long description of the feature that the mouse cursor is currently hovering over.", descX + descPadding, descY + descPadding, (uiWidth - CategoryTab.size - 1 - descPadding - descPadding).toInt(), -1)
+        mc.textRenderer.drawTrimmedWithShadow(matrices, "A very long description of the feature that the mouse cursor is currently hovering over.", descX + descPadding, descY + descPadding, (uiWidth - Tab.size - 1 - descPadding - descPadding).toInt(), -1)
 
         disableScissor()
     }
