@@ -8,6 +8,7 @@ import me.chell.blackout.api.util.modId
 import me.chell.blackout.api.util.modName
 import me.chell.blackout.impl.features.client.GuiFeature
 import me.chell.blackout.impl.gui.tabs.CategoryTab
+import me.chell.blackout.impl.gui.tabs.FriendsTab
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.sound.PositionedSoundInstance
@@ -50,6 +51,9 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
             tabs.add(CategoryTab(category, 0, tabY, this))
             tabY += Tab.size
         }
+
+        tabs.add(FriendsTab(0, tabY, this))
+        tabY += Tab.size
 
         currentTab = tabs[0]
     }
@@ -123,6 +127,14 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         return false
     }
 
+    override fun charTyped(chr: Char, modifiers: Int): Boolean {
+        for(tab in tabs) {
+            if(tab.charTyped(chr, modifiers)) return true
+        }
+
+        return false
+    }
+
     override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
         for(tab in tabs) {
             if(tab.mouseScrolled(mouseX, mouseY, amount)) return true
@@ -164,10 +176,6 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     private fun lerp(a: Float, b: Float, t: Float) = a * (1 - t) + b * t
 
     ////////////////////////////////////////////////////////////////////////////////////////
-
-    override fun charTyped(chr: Char, modifiers: Int): Boolean {
-        return super.charTyped(chr, modifiers)
-    }
 
     override fun isMouseOver(mouseX: Double, mouseY: Double): Boolean {
         return super.isMouseOver(mouseX, mouseY)

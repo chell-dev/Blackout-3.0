@@ -76,6 +76,14 @@ open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifi
         return false
     }
 
+    open fun charTyped(chr: Char, modifiers: Int): Boolean {
+        for(item in items) {
+            if(item.charTyped(chr, modifiers)) return true
+        }
+
+        return false
+    }
+
     open fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
         if(parent.currentTab == this) {
             scrollAmount += amount.toInt() * 10

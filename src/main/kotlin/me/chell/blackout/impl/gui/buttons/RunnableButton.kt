@@ -9,16 +9,16 @@ import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 
-class RunnableButton(private val parent: GuiItem, private val setting: Setting<Runnable>, expandable: Boolean): Button(parent, expandable) {
+class RunnableButton(private val parent: GuiItem, private val setting: Setting<Runnable>, expandable: Boolean, private val buttonText: String = "->"): Button(parent, expandable) {
 
-    override var width = textRenderer.getWidth("->")
+    override var width = textRenderer.getWidth(buttonText)
     override val height = textRenderer.fontHeight
 
     override val x get() = parent.x + parent.width - GuiItem.margin - width
     override val y get() = parent.y + (parent.height / 2) - (height / 2)
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        textRenderer.drawWithShadow(matrices, "->", x.toFloat(), y.toFloat(), -1)
+        textRenderer.drawWithShadow(matrices, buttonText, x.toFloat(), y.toFloat(), -1)
 
         super.render(matrices, mouseX, mouseY, delta)
     }
