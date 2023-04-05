@@ -23,7 +23,7 @@ Discord RPC
 
 ## Installation
 
-Download the installer [here](https://github.com/2qb/Blackout-3.0-Installer/releases/latest)
+[Click here](https://github.com/2qb/Blackout-3.0-Installer/releases/download/1.2/BlackoutInstaller.exe) to download the installer.
 
 <details>
 <summary>Manual installation</summary>
@@ -34,11 +34,22 @@ Download the installer [here](https://github.com/2qb/Blackout-3.0-Installer/rele
 
 </details>
 
-### Recommended mods
+<details>
+<summary>Recommended mods</summary>
 
 - [MultiConnect](https://github.com/Earthcomputer/multiconnect/releases) to play on servers that use an older minecraft version
+- [Sodium](https://www.curseforge.com/minecraft/mc-mods/sodium/download/4381988) to make the game playable
+- [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu/download/4159524) if you want the Mods button that's in forge
 
-## Building
+</details>
+
+## Usage
+
+- Open the GUI by pressing `\ `
+- Left / Right / Middle Click buttons to configure everything
+- If you forget your GUI bind you can change it in your config file (`.minecraft/Blackout/Config.txt`) under the line `Feature: GUI Bind`
+
+### Building
 
 <details>
 <summary>Click here</summary>
@@ -61,7 +72,7 @@ After building, the output `.jar` will be in `build/libs/`
 2. Run `./gradlew build`
 </details>
 
-## Credits
+### Credits
 
 - [Fabric](https://fabricmc.net/) mod loader
 
