@@ -45,7 +45,7 @@ Discord RPC
 
 ## Usage
 
-- Open the GUI by pressing `\ `
+- Open the GUI by pressing the `\` key
 - Left / Right / Middle Click buttons to configure everything
 - If you forget your GUI bind you can change it in your config file (`.minecraft/Blackout/Config.txt`) under the line `Feature: GUI Bind`
 
