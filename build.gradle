@@ -1,6 +1,6 @@
 plugins {
     id 'fabric-loom' version '1.1-SNAPSHOT'
-    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id "org.jetbrains.kotlin.jvm" version "${kotlin_version}"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -20,14 +20,17 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+    include(implementation('org.jetbrains.kotlin:kotlin-stdlib'))
+    //include(implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8'))
+    //include(implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7'))
+    include(implementation('org.jetbrains.kotlin:kotlin-reflect'))
+    //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core'))
+    //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm'))
+    //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8'))
 
-    implementation 'org.reflections:reflections:0.10.2'
-    include 'org.reflections:reflections:0.10.2'
-    include 'org.javassist:javassist:3.28.0-GA'
-
-    implementation 'com.github.Vatuu:discord-rpc:1.6.2'
-    include 'com.github.Vatuu:discord-rpc:1.6.2'
+    include(implementation('com.github.Vatuu:discord-rpc:1.6.2'))
+    include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
+    include(implementation('org.reflections:reflections:0.10.2')); include 'org.javassist:javassist:3.28.0-GA'
 }
 
 processResources {
