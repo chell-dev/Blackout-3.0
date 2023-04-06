@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "blackout",
-  "version": "${version}",
+  "version": "3.0",
   "name": "Blackout",
   "description": "block game cheat",
   "authors": [
@@ -19,5 +19,10 @@
   "depends": {
     "fabricloader": ">=0.14.14",
     "minecraft": "1.19.3"
+  },
+  "entrypoints": {
+    "modmenu": [
+      "me.chell.blackout.impl.gui.ModMenu"
+    ]
   }
 }

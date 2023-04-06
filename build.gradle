@@ -13,6 +13,7 @@ group = project.maven_group
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.terraformersmc.com/releases' }
 }
 
 dependencies {
@@ -31,6 +32,8 @@ dependencies {
     include(implementation('com.github.Vatuu:discord-rpc:1.6.2'))
     include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
     include(implementation('org.reflections:reflections:0.10.2')); include 'org.javassist:javassist:3.28.0-GA'
+
+    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {
