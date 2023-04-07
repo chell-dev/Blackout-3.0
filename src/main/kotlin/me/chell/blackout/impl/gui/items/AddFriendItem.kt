@@ -5,13 +5,14 @@ import me.chell.blackout.api.util.friends
 import me.chell.blackout.api.util.isFriend
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.impl.gui.GuiItem
+import me.chell.blackout.impl.gui.Tab
 import me.chell.blackout.impl.gui.buttons.RunnableButton
 import net.minecraft.client.util.math.MatrixStack
 import org.lwjgl.glfw.GLFW
 
 class AddFriendItem(override var x: Int, override var y: Int): GuiItem() {
 
-    override val width = 239// 300-50-1-5-5
+    override val width = 300 - Tab.size - 1 - margin - margin
     override val height = 28
 
     private var input = ""

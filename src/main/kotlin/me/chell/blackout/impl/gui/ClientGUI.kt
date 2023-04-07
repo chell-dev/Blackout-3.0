@@ -53,6 +53,11 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         tabs.add(FriendsTab(0, tabY, this))
         tabY += Tab.size
 
+        tabs.add(Tab(0, tabY, this, Category.Misc.icon)) // waypoints
+        tabY += Tab.size
+        tabs.add(Tab(0, tabY, this, Category.Misc.icon)) // macros
+        tabY += Tab.size
+
         currentTab = tabs[0]
     }
 

@@ -6,6 +6,7 @@ import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
+import me.chell.blackout.impl.gui.Tab
 import me.chell.blackout.impl.gui.buttons.*
 import net.minecraft.client.util.math.MatrixStack
 import java.awt.Color
@@ -18,7 +19,7 @@ class SettingItem(val setting: Setting<*>, override var x: Int, override var y: 
         const val offset = 10
     }
 
-    override val width = 229
+    override val width = 300 - Tab.size - 1 - margin - margin - offset
     override val height = 26
 
     override val button = when(setting.value) {

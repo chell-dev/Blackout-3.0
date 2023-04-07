@@ -13,7 +13,7 @@ import kotlin.math.min
 open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifier): DrawableHelper() {
 
     companion object {
-        const val size = 50
+        const val size = 43
     }
 
     protected val margin = 5
