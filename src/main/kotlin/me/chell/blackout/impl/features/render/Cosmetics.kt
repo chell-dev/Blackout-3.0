@@ -7,6 +7,9 @@ import me.chell.blackout.api.util.isFriend
 import me.chell.blackout.api.util.player
 
 class Cosmetics: ToggleFeature("Cosmetics", Category.Render, false) {
+
+    override var description = "Client-side player cosmetics"
+
     private val cape = register(Setting("Cape", true))
     private val ears = register(Setting("Ears", false))
     private val mode = register(Setting("Mode", Mode.Self))

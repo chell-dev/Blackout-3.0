@@ -8,6 +8,7 @@ import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.buttons.*
 import net.minecraft.client.util.math.MatrixStack
+import java.awt.Color
 import java.io.File
 
 @Suppress("unchecked_cast")
@@ -28,6 +29,7 @@ class SettingItem(val setting: Setting<*>, override var x: Int, override var y: 
         is Enum<*> -> EnumButton(this, setting as Setting<Enum<*>>, false)
         is Runnable -> RunnableButton(this, setting as Setting<Runnable>, false)
         is File -> FileButton(this, setting as Setting<File>, false)
+        is Color -> ColorButton(this, setting as Setting<Color>, true)
         else -> {
             LogUtils.getLogger().warn("Cannot create button for setting ${setting.name}")
             object : Button(this, false) {

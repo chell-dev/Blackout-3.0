@@ -17,6 +17,8 @@ import net.minecraft.util.math.Vec3d
 
 class AutoFish: ToggleFeature("Auto Fish", Category.PLayer, false) {
 
+    override var description = "Automatically recasts when you catch a fish"
+
     private val rotate = register(Setting("Rotate", false))
 
     private var interact = 0

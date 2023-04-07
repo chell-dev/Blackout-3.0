@@ -2,10 +2,7 @@ package me.chell.blackout.impl.gui
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.feature.Category
-import me.chell.blackout.api.util.drawTrimmedWithShadow
-import me.chell.blackout.api.util.mc
-import me.chell.blackout.api.util.modId
-import me.chell.blackout.api.util.modName
+import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.features.client.GuiFeature
 import me.chell.blackout.impl.gui.tabs.CategoryTab
 import me.chell.blackout.impl.gui.tabs.FriendsTab
@@ -40,6 +37,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     private val uiHeight get() = mc.window.scaledHeight
     val bannerHeight = 75
 
+    var hoveredItem: Description? = null
     private val descX get() = x + Tab.size
     val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
     private val descPadding = 5f
@@ -67,6 +65,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
             uiWidth
         }
 
+        hoveredItem = null
+
         enableScissor(x, y, x + scissorWidth, y + uiHeight)
 
         // background
@@ -83,9 +83,18 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         // line under banner
         drawHorizontalLine(matrices, x, x + uiWidth, bannerHeight, color)
 
+        val mouseTab = mouseX <= x + Tab.size
+
         // tabs
         for(tab in tabs) {
             tab.render(matrices, mouseX, mouseY, delta)
+
+            if(mouseTab && tab is CategoryTab && mouseY >= tab.y && mouseY <= tab.y + Tab.size)
+                hoveredItem = tab.category
+        }
+
+        if(!mouseTab) {
+
         }
 
         // line next to icons
@@ -93,7 +102,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
         drawHorizontalLine(matrices, descX, x + uiWidth, descY.toInt(), color)
 
-        mc.textRenderer.drawTrimmedWithShadow(matrices, "A very long description of the feature that the mouse cursor is currently hovering over.", descX + descPadding, descY + descPadding, (uiWidth - Tab.size - 1 - descPadding - descPadding).toInt(), -1)
+        mc.textRenderer.drawTrimmedWithShadow(matrices, hoveredItem?.description ?: "Hover over an item to see it's description.", descX + descPadding, descY + descPadding, (uiWidth - Tab.size - 1 - descPadding - descPadding).toInt(), -1)
 
         disableScissor()
     }

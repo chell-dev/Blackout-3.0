@@ -10,6 +10,9 @@ import me.chell.blackout.api.util.player
 import net.minecraft.text.Text
 
 class AutoLog: ToggleFeature("AutoLog", Category.Combat, false) {
+
+    override var description = "Disconnect when your health goes below the threshold"
+
     private val health = register(Setting("Health", 13.0f, 0.0f, 36.0f))
 
     override fun onEnable() {

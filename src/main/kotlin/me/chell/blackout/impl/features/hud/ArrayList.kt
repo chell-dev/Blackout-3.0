@@ -9,6 +9,8 @@ import net.minecraft.client.util.math.MatrixStack
 
 class ArrayList: Widget("ArrayList") {
 
+    override var description = "List enabled toggleable features"
+
     override var width = 50
     override var height = 9
 

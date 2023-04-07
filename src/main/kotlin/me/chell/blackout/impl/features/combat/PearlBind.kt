@@ -12,6 +12,8 @@ import net.minecraft.util.Hand
 
 class PearlBind: Feature("Pearl Bind", Category.Combat) {
 
+    override var description = "Keybind to throw an Ender Pearl from your hotbar"
+
     override val mainSetting = Setting("Activate", Bind.Action(action = { activate() }))
 
     private fun activate() {

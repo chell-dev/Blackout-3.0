@@ -8,6 +8,8 @@ import me.chell.blackout.api.util.eventManager
 
 class Velocity: ToggleFeature("Velocity", Category.Movement, false) {
 
+    override var description = "Anti knockback"
+
     override fun onEnable() {
         eventManager.register(this)
     }

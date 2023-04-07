@@ -13,6 +13,8 @@ import net.minecraft.screen.slot.SlotActionType
 
 class HotbarRefill: ToggleFeature("Hotbar Refill", Category.Misc, false) {
 
+    override var description = "Refills stacks in your hotbar"
+
     private val whitelist = register(Setting("Whitelist", mutableListOf(Items.EXPERIENCE_BOTTLE, Items.ENCHANTED_GOLDEN_APPLE)))
 
     override fun onEnable() {

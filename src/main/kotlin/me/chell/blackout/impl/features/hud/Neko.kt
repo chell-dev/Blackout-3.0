@@ -15,6 +15,8 @@ import kotlin.random.Random
 
 class Neko: Widget("Neko") {
 
+    override var description = "I <3 Neko"
+
     private val instance = this
 
     override val mainSetting = object: Setting<Boolean>("Enabled", false) {

@@ -6,6 +6,8 @@ import net.minecraft.client.util.math.MatrixStack
 
 class Cps: Widget("CPS") {
 
+    override var description = "(debug) Crystals per second"
+
     override var width = 50
     override var height = textRenderer.fontHeight
 

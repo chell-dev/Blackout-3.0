@@ -10,6 +10,8 @@ import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen
 
 class FirstPersonBody: ToggleFeature("First Person Body", Category.Render, false) {
 
+    override var description = "See your own legs"
+
     companion object {
         private lateinit var instance: FirstPersonBody
 

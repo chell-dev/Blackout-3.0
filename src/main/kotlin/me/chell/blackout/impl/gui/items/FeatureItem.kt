@@ -64,6 +64,8 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         val center = y.toFloat() + (height /2) - (mc.textRenderer.fontHeight/2)
         mc.textRenderer.drawWithShadow(matrices, feature.name, x + margin.toFloat(), center, -1)
 
+        val mouse = mouseX >= x + SettingItem.offset && mouseX <= x + width
+
         if(expanded) {
             var itemY = y + height + margin
             for(item in settings) {
@@ -71,6 +73,9 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
                 item.y = itemY
                 item.render(matrices, mouseX, mouseY, delta)
                 itemY += item.height + margin
+
+                if(mouse && mouseY >= item.y && mouseY <= item.y + item.height)
+                    parent.parent.hoveredItem = item.setting
             }
         }
     }

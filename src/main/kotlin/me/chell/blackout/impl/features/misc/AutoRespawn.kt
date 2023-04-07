@@ -5,6 +5,8 @@ import me.chell.blackout.api.feature.ToggleFeature
 
 class AutoRespawn: ToggleFeature("Auto Respawn", Category.Misc, false) {
 
+    override var description = "Don't open the death screen when you die"
+
     companion object {
         lateinit var instance: AutoRespawn
     }

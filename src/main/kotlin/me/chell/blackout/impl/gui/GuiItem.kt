@@ -43,6 +43,8 @@ abstract class GuiItem: DrawableHelper() {
 
     open fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean = false
 
+    open fun charTyped(chr: Char, modifiers: Int): Boolean = false
+
     open fun onClose() {}
 
 }

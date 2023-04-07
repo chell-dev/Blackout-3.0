@@ -11,6 +11,8 @@ import java.util.*
 
 class FakePlayer: ToggleFeature("Fake Player", Category.Misc, false) {
 
+    override var description = "Spawns a fake player for testing and whatnot"
+
     private val uuid = UUID.randomUUID()
     private var id = -1
 

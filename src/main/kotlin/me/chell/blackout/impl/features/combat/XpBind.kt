@@ -13,6 +13,8 @@ import net.minecraft.util.Hand
 
 class XpBind: Feature("XP Bind", Category.Combat) {
 
+    override var description = "Throw XP bottles"
+
     override val mainSetting = Setting("Bind", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
 
     private val armor = register(Setting("Stop on 100% durability", true))

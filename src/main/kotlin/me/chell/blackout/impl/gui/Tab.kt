@@ -2,6 +2,7 @@ package me.chell.blackout.impl.gui
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.util.mc
+import me.chell.blackout.impl.gui.items.FeatureItem
 import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.math.MatrixStack
@@ -32,8 +33,12 @@ open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifi
 
         if(parent.currentTab == this) {
             enableScissor(size + 1, parent.bannerHeight + 1, x + parent.uiWidth, parent.descY.toInt())
+            val mouse = mouseX >= size +1+ GuiItem.margin && mouseX <= parent.uiWidth - GuiItem.margin
             for(item in items) {
                 item.render(matrices, mouseX, mouseY, delta)
+
+                if(mouse && item is FeatureItem && mouseY >= item.y && mouseY <= item.y + item.height)
+                    parent.hoveredItem = item.feature
             }
             disableScissor()
         }

@@ -12,6 +12,8 @@ import net.minecraft.entity.effect.StatusEffects
 
 class Sprint: Feature("Sprint", Category.Movement) {
 
+    override var description = "Sprint automatically"
+
     override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = { onEnable() }, onDisable = { onDisable() }))
 
     private val mode = register(Setting("Mode", Mode.Rage))

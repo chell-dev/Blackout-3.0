@@ -7,6 +7,9 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.mc
 
 class Step: Feature("Step", Category.Movement) {
+
+    override var description = "Increase your step height"
+
     override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
 
     private val height = register(Setting("Height", 2.2f, 0.6f, 3f))

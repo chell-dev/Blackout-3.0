@@ -17,6 +17,8 @@ import net.minecraft.item.SwordItem
 
 class KillAura: Feature("KillAura", Category.Combat) {
 
+    override var description = "Attack entities around you"
+
     override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
 
     private val delay = register(Setting("Attack Delay", true))

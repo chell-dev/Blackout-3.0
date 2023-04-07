@@ -12,6 +12,8 @@ import me.chell.blackout.api.util.player
 
 class Bhop: Feature("Auto Jump", Category.Movement) {
 
+    override var description = "Jump when you're moving"
+
     override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = { onEnable() }, onDisable = { onDisable() }))
 
     private fun onEnable() {

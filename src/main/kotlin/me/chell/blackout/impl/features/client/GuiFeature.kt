@@ -10,6 +10,8 @@ import net.minecraft.client.util.InputUtil
 
 class GuiFeature: Feature("GUI Bind", Category.Client) {
 
+    override var description = "Keybind to open this GUI"
+
     companion object {
         lateinit var instance: GuiFeature
     }
