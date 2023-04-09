@@ -30,7 +30,6 @@ import net.minecraft.world.Difficulty
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.RaycastContext.ShapeType
 import net.minecraft.world.explosion.Explosion
-import java.awt.Color
 import java.util.function.Predicate
 import kotlin.math.max
 import kotlin.math.min
@@ -63,7 +62,7 @@ class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
     private val facePlaceBind = register(Setting("FacePlace Bind", Bind.Toggle(onEnable={}, onDisable={})) {page.value == Page.Place})
 
     private val hitAndPlace = register(Setting("Hit & Place On The Same Tick", false) {page.value == Page.Other})
-    private val espColor = register(Setting("ESP Color", Color(200, 50, 200, 100)) {page.value == Page.Other})
+    private val espColor = register(Setting("ESP Color", Color.sync(0.5f)) {page.value == Page.Other})
 
     private var speedTicks = 0
     private var hitCounter = 0

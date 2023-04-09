@@ -47,5 +47,5 @@ enum class Category(val icon: Identifier): Description {
     Movement(Identifier(modId, "textures/gui/categories/movement.png")) { override var description = "Movement"},
     Misc(Identifier(modId, "textures/gui/categories/misc.png")) { override var description = "Misc"},
     Client(Identifier(modId, "textures/gui/categories/client.png")) { override var description = "Client"},
-    Hud(Identifier(modId, "textures/gui/categories/misc.png")) { override var description = "HUD"}
+    Hud(Identifier(modId, "textures/gui/categories/hud.png")) { override var description = "HUD"}
 }

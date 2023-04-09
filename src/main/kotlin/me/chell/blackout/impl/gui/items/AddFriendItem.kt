@@ -10,10 +10,10 @@ import me.chell.blackout.impl.gui.buttons.RunnableButton
 import net.minecraft.client.util.math.MatrixStack
 import org.lwjgl.glfw.GLFW
 
-class AddFriendItem(override var x: Int, override var y: Int): GuiItem() {
+class AddFriendItem(override var x: Int, override var y: Int, tab: Tab): GuiItem(tab) {
 
     override val width = 300 - Tab.size - 1 - margin - margin
-    override val height = 28
+    override var height = 28
 
     private var input = ""
     private var listening = false

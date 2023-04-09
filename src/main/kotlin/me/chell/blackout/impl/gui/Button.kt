@@ -13,8 +13,8 @@ abstract class Button(private val parent: GuiItem, private val expandable: Boole
     abstract var width: Int
     abstract val height: Int
 
-    private val icon = Identifier(modId, "textures/gui/settings.png")
-    private val iconSize = parent.height / 2
+    val icon = Identifier(modId, "textures/gui/settings.png")
+    val iconSize = parent.height / 2
     private val iconX get() = x - iconSize - GuiItem.margin
     private val iconY get() = parent.y + (parent.height / 2) - (iconSize / 2)
 

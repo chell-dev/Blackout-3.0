@@ -16,15 +16,15 @@ import net.minecraft.sound.SoundEvents
 import java.io.File
 
 @Suppress("unchecked_cast")
-class FeatureItem(val feature: Feature, override var x: Int, override var y: Int, private val parent: CategoryTab): GuiItem() {
+class FeatureItem(val feature: Feature, override var x: Int, override var y: Int, private val parent: CategoryTab): GuiItem(parent) {
 
     override val width = 300 - Tab.size - 1 - margin - margin
-    override val height = 28
+    override var height = 28
     var fullHeight = height
 
     private val expandable = feature.settings.isNotEmpty()
     private var expanded = false
-    private val expandedHeight: Int
+    private var expandedHeight: Int
 
     private val settings = mutableListOf<SettingItem>()
 
@@ -50,7 +50,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
     init {
         var sY = y + height + margin
         for(setting in feature.settings) {
-            val i = SettingItem(setting, x + SettingItem.offset, sY)
+            val i = SettingItem(setting, x + SettingItem.offset, sY, parent)
             settings.add(i)
             sY += i.height + margin
         }
@@ -67,6 +67,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
         val mouse = mouseX >= x + SettingItem.offset && mouseX <= x + width
 
+        val oldHeight = fullHeight
         if(expanded) {
             var itemY = y + height + margin
             for(item in settings) {
@@ -75,10 +76,17 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
                 item.render(matrices, mouseX, mouseY, delta)
                 itemY += item.height + margin
 
+
+                expandedHeight = itemY - y - margin
+                fullHeight = expandedHeight
+
                 if(mouse && mouseY >= item.y && mouseY <= item.y + item.height)
                     parent.parent.hoveredItem = item.setting
             }
+        } else {
+            fullHeight = height
         }
+        if(fullHeight != oldHeight) parent.updateItems()
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
@@ -86,10 +94,10 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
             if(expanded) {
                 mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_TOAST_OUT, 1.0f, 1.0f))
                 expanded = false
-                fullHeight = height
+                //fullHeight = height
             } else {
                 mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_TOAST_IN, 1.0f, 1.0f))
-                fullHeight = expandedHeight
+                //fullHeight = expandedHeight
                 expanded = true
             }
             parent.updateItems()
@@ -98,6 +106,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
         if(expanded) {
             for(item in settings) {
+                if(!item.setting.visible.test(null)) continue
                 if(item.mouseClicked(mouseX, mouseY, button)) return true
             }
         }

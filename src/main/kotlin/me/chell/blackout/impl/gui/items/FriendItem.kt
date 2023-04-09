@@ -11,10 +11,10 @@ import me.chell.blackout.impl.gui.tabs.FriendsTab
 import net.minecraft.client.network.AbstractClientPlayerEntity
 import net.minecraft.client.util.math.MatrixStack
 
-class FriendItem(val friend: String, override var x: Int, override var y: Int, val parent: FriendsTab): GuiItem() {
+class FriendItem(val friend: String, override var x: Int, override var y: Int, val parent: FriendsTab): GuiItem(parent) {
 
     override val width = 300 - Tab.size - 1 - margin - margin
-    override val height = 28
+    override var height = 28
 
     private val id = AbstractClientPlayerEntity.getSkinId(friend)
 

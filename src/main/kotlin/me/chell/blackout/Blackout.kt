@@ -30,6 +30,7 @@ class Blackout {
 
         clientGUI = ClientGUI()
         hudEditor = HudEditor()
+        eventManager.register(Rainbow)
 
         Runtime.getRuntime().addShutdownHook(Thread{
             println("Saving config")

@@ -6,7 +6,6 @@ import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.render.WorldRenderer
 import net.minecraft.util.math.Box
-import java.awt.Color
 
 fun drawBox(box: Box, color: Color) {
     RenderSystem.enableBlend()
@@ -18,7 +17,7 @@ fun drawBox(box: Box, color: Color) {
     val box = box.offset(mc.gameRenderer.camera.pos.negate())
 
     bb.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR)
-    WorldRenderer.drawBox(bb, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, color.red / 255f, color.green / 255f, color.blue / 255f, color.alpha / 255f)
+    WorldRenderer.drawBox(bb, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, color.red, color.green, color.blue, color.alpha)
     tessellator.draw()
 
     RenderSystem.enableDepthTest()
@@ -32,9 +31,9 @@ fun drawBoxOutline(box: Box, color: Color, lineWidth: Float) {
     val tessellator = Tessellator.getInstance()
     val bb = tessellator.buffer
 
-    val r = color.red / 255f
-    val g = color.green / 255f
-    val b = color.blue / 255f
+    val r = color.red
+    val g = color.green
+    val b = color.blue
 
     val box = box.offset(mc.gameRenderer.camera.pos.negate())
 

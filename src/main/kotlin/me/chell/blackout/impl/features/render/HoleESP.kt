@@ -14,7 +14,6 @@ import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
-import java.awt.Color
 
 class HoleESP: ToggleFeature("Hole ESP", Category.Render, false) {
 
@@ -79,9 +78,10 @@ class HoleESP: ToggleFeature("Hole ESP", Category.Render, false) {
     }
 
     private fun drawGradient(box: Box, color: Color) {
-        val r = color.red / 255f
-        val g = color.green / 255f
-        val b = color.blue / 255f
+        val r = color.red
+        val g = color.green
+        val b = color.blue
+        val a = color.alpha
 
         val box = box.offset(mc.gameRenderer.camera.pos.negate())
 
@@ -100,32 +100,32 @@ class HoleESP: ToggleFeature("Hole ESP", Category.Render, false) {
 
         bb.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR)
 
-        bb.vertex(x1, y1, z1).color(r, g, b, 1f).next()
-        bb.vertex(x2, y1, z1).color(r, g, b, 1f).next()
+        bb.vertex(x1, y1, z1).color(r, g, b, a).next()
+        bb.vertex(x2, y1, z1).color(r, g, b, a).next()
         bb.vertex(x2, y2, z1).color(r, g, b, 0f).next()
         bb.vertex(x1, y2, z1).color(r, g, b, 0f).next()
-        bb.vertex(x1, y1, z1).color(r, g, b, 1f).next()
+        bb.vertex(x1, y1, z1).color(r, g, b, a).next()
 
-        bb.vertex(x2, y1, z1).color(r, g, b, 1f).next()
-        bb.vertex(x2, y1, z2).color(r, g, b, 1f).next()
+        bb.vertex(x2, y1, z1).color(r, g, b, a).next()
+        bb.vertex(x2, y1, z2).color(r, g, b, a).next()
         bb.vertex(x2, y2, z2).color(r, g, b, 0f).next()
         bb.vertex(x2, y2, z1).color(r, g, b, 0f).next()
-        bb.vertex(x2, y1, z1).color(r, g, b, 1f).next()
-        bb.vertex(x2, y1, z2).color(r, g, b, 1f).next()
-        bb.vertex(x2, y1, z2).color(r, g, b, 1f).next()
+        bb.vertex(x2, y1, z1).color(r, g, b, a).next()
+        bb.vertex(x2, y1, z2).color(r, g, b, a).next()
+        bb.vertex(x2, y1, z2).color(r, g, b, a).next()
 
-        bb.vertex(x1, y1, z2).color(r, g, b, 1f).next()
+        bb.vertex(x1, y1, z2).color(r, g, b, a).next()
         bb.vertex(x1, y2, z2).color(r, g, b, 0f).next()
         bb.vertex(x2, y2, z2).color(r, g, b, 0f).next()
-        bb.vertex(x2, y1, z2).color(r, g, b, 1f).next()
-        bb.vertex(x1, y1, z2).color(r, g, b, 1f).next()
-        bb.vertex(x1, y1, z2).color(r, g, b, 1f).next()
+        bb.vertex(x2, y1, z2).color(r, g, b, a).next()
+        bb.vertex(x1, y1, z2).color(r, g, b, a).next()
+        bb.vertex(x1, y1, z2).color(r, g, b, a).next()
 
-        bb.vertex(x1, y1, z1).color(r, g, b, 1f).next()
+        bb.vertex(x1, y1, z1).color(r, g, b, a).next()
         bb.vertex(x1, y2, z1).color(r, g, b, 0f).next()
         bb.vertex(x1, y2, z2).color(r, g, b, 0f).next()
-        bb.vertex(x1, y1, z2).color(r, g, b, 1f).next()
-        bb.vertex(x1, y1, z1).color(r, g, b, 1f).next()
+        bb.vertex(x1, y1, z2).color(r, g, b, a).next()
+        bb.vertex(x1, y1, z1).color(r, g, b, a).next()
 
         tessellator.draw()
 

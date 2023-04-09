@@ -10,7 +10,7 @@ import me.chell.blackout.impl.gui.items.FriendItem
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 
-class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifier(modId, "textures/gui/categories/player.png")) {
+class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifier(modId, "textures/gui/categories/friends.png")) {
 
     val removeQueue = mutableListOf<FriendItem>()
 
@@ -25,7 +25,7 @@ class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifie
             bY += item.height + GuiItem.margin
         }
 
-        addButton = AddFriendItem(size +1+ GuiItem.margin, bY)
+        addButton = AddFriendItem(size +1+ GuiItem.margin, bY, this)
     }
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
