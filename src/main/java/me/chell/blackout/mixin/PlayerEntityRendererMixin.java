@@ -1,5 +1,6 @@
 package me.chell.blackout.mixin;
 
+import me.chell.blackout.api.events.RenderNametagEvent;
 import me.chell.blackout.api.util.GlobalsKt;
 import me.chell.blackout.impl.features.render.FirstPersonBody;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -9,9 +10,7 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.datafixer.fix.ChunkPalettedStorageFix;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,6 +24,13 @@ abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractCl
 
     public PlayerEntityRendererMixin(EntityRendererFactory.Context ctx, PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
         super(ctx, model, shadowRadius);
+    }
+
+    @Inject(method = "renderLabelIfPresent(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
+    public void label(AbstractClientPlayerEntity abstractClientPlayerEntity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
+        RenderNametagEvent event = new RenderNametagEvent(false);
+        GlobalsKt.getEventManager().post(event);
+        if(event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "setModelPose", at = @At("TAIL"))
