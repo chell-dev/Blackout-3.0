@@ -39,20 +39,20 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
 
     private val custom = register(Setting("Customize", false))
 
-    private val distanceScale = register(Setting("Distance Scale", 10, 1, 20) {custom.value})
-    private val normalColor = register(Setting("Neutral Color", Color(-1)) {custom.value})
-    private val nameShadow = register(Setting("Shadow", true) {custom.value})
-    private val backgroundColor = register(Setting("Background Color", Color(0xaa252525.toInt())) {custom.value})
-    private val itemSize = register(Setting("Item Size", 13, 1, 20) {custom.value})
+    private val distanceScale = register(Setting("Distance Scale", 10, 1, 20, level = 2) {custom.value})
+    private val normalColor = register(Setting("Neutral Color", Color(-1), level = 2) {custom.value})
+    private val nameShadow = register(Setting("Shadow", true, level = 2) {custom.value})
+    private val backgroundColor = register(Setting("Background Color", Color(0xaa252525.toInt()), level = 2) {custom.value})
+    private val itemSize = register(Setting("Item Size", 13, 1, 20, level = 2) {custom.value})
 
-    private val duraBar = register(Setting("Durability Bar", false) {custom.value})
-    private val duraValue = register(Setting("Durability Value", true) {custom.value})
-    private val duraScale = register(Setting("Durability Scale", 0.6f, 0.1f, 2f) {custom.value && duraValue.value})
-    private val duraShadow = register(Setting("Durability Shadow", true) {custom.value && duraValue.value})
+    private val duraBar = register(Setting("Durability Bar", false, level = 2) {custom.value})
+    private val duraValue = register(Setting("Durability Value", true, level = 2) {custom.value})
+    private val duraScale = register(Setting("Durability Scale", 0.6f, 0.1f, 2f, level = 2) {custom.value && duraValue.value})
+    private val duraShadow = register(Setting("Durability Shadow", true, level = 2) {custom.value && duraValue.value})
 
-    private val overlayScale = register(Setting("Stack Size Scale", 0.7f, 0.1f, 2f) {custom.value})
-    private val stackColor = register(Setting("Stack Size Color", Color(-1)) {custom.value})
-    private val stackShadow = register(Setting("Stack Size Shadow", true) {custom.value})
+    private val overlayScale = register(Setting("Stack Size Scale", 0.7f, 0.1f, 2f, level = 2) {custom.value})
+    private val stackColor = register(Setting("Stack Size Color", Color(-1), level = 2) {custom.value})
+    private val stackShadow = register(Setting("Stack Size Shadow", true, level = 2) {custom.value})
 
     @EventHandler
     fun onRender(event: RenderWorldEvent) {

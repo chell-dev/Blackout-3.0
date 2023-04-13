@@ -14,7 +14,7 @@ class ConfigFeature: Feature("Config", Category.Client) {
 
     val save = register(Setting("Save", Runnable { writeFeatures(mainSetting.value.absolutePath) }))
     val load = register(Setting("Load", false))
-    val confirmLoad = register(Setting("Confirm Load", Runnable { readFeatures(mainSetting.value.absolutePath) }))
+    val confirmLoad = register(Setting("Confirm Load", Runnable { readFeatures(mainSetting.value.absolutePath); load.value = false }, level = 2) {load.value})
 
     init {
         mainSetting.value.parentFile.mkdirs()

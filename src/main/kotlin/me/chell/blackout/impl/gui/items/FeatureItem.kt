@@ -50,7 +50,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
     init {
         var sY = y + height + margin
         for(setting in feature.settings) {
-            val i = SettingItem(setting, x + SettingItem.offset, sY, parent)
+            val i = SettingItem(setting, x + SettingItem.getOffset(setting), sY, parent)
             settings.add(i)
             sY += i.height + margin
         }
@@ -65,8 +65,6 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
         val center = y.toFloat() + (height /2) - (mc.textRenderer.fontHeight/2)
         mc.textRenderer.drawWithShadow(matrices, feature.name, x + margin.toFloat(), center, -1)
 
-        val mouse = mouseX >= x + SettingItem.offset && mouseX <= x + width
-
         val oldHeight = fullHeight
         if(expanded) {
             var itemY = y + height + margin
@@ -80,7 +78,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
                 expandedHeight = itemY - y - margin
                 fullHeight = expandedHeight
 
-                if(mouse && mouseY >= item.y && mouseY <= item.y + item.height)
+                if(mouseX >= x + item.offset && mouseX <= x + width && mouseY >= item.y && mouseY <= item.y + item.height)
                     parent.parent.hoveredItem = item.setting
             }
         } else {

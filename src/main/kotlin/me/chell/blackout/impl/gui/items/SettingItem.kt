@@ -16,8 +16,10 @@ import java.io.File
 class SettingItem(val setting: Setting<*>, override var x: Int, override var y: Int, tab: Tab): GuiItem(tab) {
 
     companion object {
-        const val offset = 10
+        fun getOffset(setting: Setting<*>) = 10 * setting.level
     }
+
+    val offset = getOffset(setting)
 
     override val width = 300 - Tab.size - 1 - margin - margin - offset
     override var height = 26
