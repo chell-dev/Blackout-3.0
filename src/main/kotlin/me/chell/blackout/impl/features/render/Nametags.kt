@@ -13,7 +13,6 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.*
 import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.render.model.json.ModelTransformation
-import net.minecraft.client.texture.SpriteAtlasTexture
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -107,10 +106,10 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
                 immediate.draw()
             }
 
-            textRenderer.draw(string, -width, 0.0f, color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, false, 0, 0xF000F0)
+            textRenderer.draw(string, -width, 0.0f, color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
             immediate.draw()
 
-            textRenderer.draw(hp.toString(), -width+nameWidth, 0.0f, hpColor.colorValue!!, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, false, 0, 0xF000F0)
+            textRenderer.draw(hp.toString(), -width+nameWidth, 0.0f, hpColor.colorValue!!, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
             immediate.draw()
 
             var itemX = -(itemSize.value*3)
@@ -138,8 +137,8 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
         val bakedModel: BakedModel = mc.itemRenderer.getModel(stack, null, null, 0)
         mc.itemRenderer.zOffset = if (bakedModel.hasDepth()) mc.itemRenderer.zOffset + 50.0f else mc.itemRenderer.zOffset + 50.0f
 
-        mc.textureManager.getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false)
-        RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE)
+        //mc.textureManager.getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false)
+        //RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE)
         RenderSystem.enableBlend()
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA)
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f)
@@ -191,7 +190,7 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             textRenderer.draw(stack.count.toString(),
                 (1 - textRenderer.getWidth(stack.count.toString())).toFloat(),
                 2f,
-                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, false, 0, 0xF000F0)
+                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
             immediate.draw()
 
             matrixStack.pop()
@@ -243,7 +242,7 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             textRenderer.draw(string,
                 -textRenderer.getWidth(string) / 2f,
                 0f,
-                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, false, 0, 0xF000F0)
+                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
             immediate.draw()
 
             matrixStack.pop()
