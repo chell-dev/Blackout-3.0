@@ -35,6 +35,8 @@ class Color(red: Float, green: Float, blue: Float, var alpha: Float = 1f, var ra
     companion object {
         fun rainbow(alpha: Float = 1f) = Color(0f, 0f, 0f, alpha, true)
         fun sync(alpha: Float = 1f) = Color(0f, 0f, 0f, alpha, sync = true)
+
+        fun white(alpha: Float = 1f) = Color(1f, 1f, 1f, alpha)
     }
 
 }

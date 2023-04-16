@@ -5,7 +5,9 @@ import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.render.WorldRenderer
+import net.minecraft.entity.Entity
 import net.minecraft.util.math.Box
+import net.minecraft.util.math.MathHelper
 
 fun drawBox(box: Box, color: Color) {
     RenderSystem.enableBlend()
@@ -67,4 +69,18 @@ fun drawBoxOutline(box: Box, color: Color, lineWidth: Float) {
 
     RenderSystem.lineWidth(1f)
     RenderSystem.enableDepthTest()
+}
+
+val Entity.renderBoundingBox: Box get() {
+    val d = getDimensions(pose)
+    val w = d.width / 2f
+
+    val x = MathHelper.lerp(mc.tickDelta.toDouble(), lastRenderX, pos.x)
+    val y = MathHelper.lerp(mc.tickDelta.toDouble(), lastRenderY, pos.y)
+    val z = MathHelper.lerp(mc.tickDelta.toDouble(), lastRenderZ, pos.z)
+
+    return Box(
+        x - w, y, z - w,
+        x + w, y + d.height, z + w
+    )
 }
