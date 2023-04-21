@@ -61,7 +61,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         currentTab = tabs[0]
     }
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
         // animation linear interpolation
         val scissorWidth = if(animationTicks > 0) {
             val t = if (closing) animationTicks + delta else animationLength - animationTicks + delta
@@ -110,10 +110,14 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         mc.textRenderer.drawTrimmedWithShadow(matrices, hoveredItem?.description ?: "Hover over an item to see it's description.", descX + descPadding, descY + descPadding, (uiWidth - Tab.size - 1 - descPadding - descPadding).toInt(), -1)
 
         disableScissor()
+
+        Console.render(matrices, mouseX, mouseY, delta)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         if(animationTicks > 0) return false
+
+        if(Console.mouseClicked(mouseX, mouseY, button)) return true
 
         for(tab in tabs) {
             if(tab.mouseClicked(mouseX, mouseY, button)) return true
@@ -123,13 +127,18 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     }
 
     override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
+        if(Console.mouseReleased(mouseX, mouseY, button)) return true
+
         for(tab in tabs) {
             if(tab.mouseReleased(mouseX, mouseY, button)) return true
         }
+
         return false
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+        if(Console.keyPressed(keyCode, scanCode, modifiers)) return true
+
         for(tab in tabs) {
             if(tab.keyPressed(keyCode, scanCode, modifiers)) return true
         }
@@ -142,6 +151,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     }
 
     override fun charTyped(chr: Char, modifiers: Int): Boolean {
+        if(Console.charTyped(chr, modifiers)) return true
+
         for(tab in tabs) {
             if(tab.charTyped(chr, modifiers)) return true
         }
@@ -150,9 +161,12 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     }
 
     override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
+        if(Console.mouseScrolled(mouseX, mouseY, amount)) return true
+
         for(tab in tabs) {
             if(tab.mouseScrolled(mouseX, mouseY, amount)) return true
         }
+
         return false
     }
 
@@ -166,6 +180,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         if(animationTicks > 0) {
             animationTicks--
             if(closing && animationTicks == 0) mc.setScreen(null)
+        } else {
+            Console.tick()
         }
     }
 
