@@ -9,6 +9,17 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/chell-dev/Blackout-3.0?label=Lines%20of%20code&style=flat-square&color=blueviolet)
 
 <details>
+<summary>Not to be confused with the Meteor addon called BlackOut</summary>
+
+- The name is inspired by Watch Dogs
+- I made the first Blackout back in March 2020
+- I was very sad after finding out someone else used the name but I'm not changing it now
+
+</details>
+
+<br>
+
+<details>
 <summary>Screenshots</summary>
 
 GUI
