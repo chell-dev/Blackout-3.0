@@ -13,7 +13,7 @@ import net.minecraft.client.particle.FireworksSparkParticle.FireworkParticle
 import net.minecraft.client.particle.SpellParticle
 import net.minecraft.client.particle.TotemParticle
 
-class NoRender: ToggleFeature("NoRender", Category.Render, false) {
+class NoRender : ToggleFeature("NoRender", Category.Render, false) {
 
     private val explosions = register(Setting("Explosion Particles", false))
     private val potionParticles = register(Setting("Potion Particles", false))
@@ -39,17 +39,17 @@ class NoRender: ToggleFeature("NoRender", Category.Render, false) {
 
     @EventHandler
     fun onParticle(event: ParticleEvent) {
-        when(event.particle) {
-            is ExplosionLargeParticle, is ExplosionSmokeParticle -> if(explosions.value) event.canceled = true
-            is SpellParticle -> if(potionParticles.value) event.canceled = true
-            is TotemParticle -> if(totemParticles.value) event.canceled = true
-            is FireworkParticle -> if(fireworks.value) event.canceled = true
+        when (event.particle) {
+            is ExplosionLargeParticle, is ExplosionSmokeParticle -> if (explosions.value) event.canceled = true
+            is SpellParticle -> if (potionParticles.value) event.canceled = true
+            is TotemParticle -> if (totemParticles.value) event.canceled = true
+            is FireworkParticle -> if (fireworks.value) event.canceled = true
         }
     }
 
     @EventHandler
     fun onRenderHud(event: RenderHudEvent) {
-        event.canceled = when(event) {
+        event.canceled = when (event) {
             is RenderHudEvent.Overlay -> (pumpkin.value && event.id.path == "textures/misc/pumpkinblur.png") || (snowOverlay.value && event.id.path == "textures/misc/powder_snow_outline.png")
             is RenderHudEvent.Portal -> portalOverlay.value
             is RenderHudEvent.Tooltip -> tooltip.value

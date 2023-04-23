@@ -7,15 +7,13 @@ import me.chell.blackout.impl.gui.ClientGUI
 import me.chell.blackout.impl.gui.HudEditor
 
 class Blackout {
-
     companion object {
         lateinit var instance: Blackout
+        lateinit var eventManager: EventManager
+        lateinit var featureManager: FeatureManager
+        lateinit var clientGUI: ClientGUI
+        lateinit var hudEditor: HudEditor
     }
-
-    lateinit var eventManager: EventManager
-    lateinit var featureManager: FeatureManager
-    lateinit var clientGUI: ClientGUI
-    lateinit var hudEditor: HudEditor
 
     fun init() {
         instance = this
@@ -32,7 +30,7 @@ class Blackout {
         hudEditor = HudEditor()
         eventManager.register(Rainbow)
 
-        Runtime.getRuntime().addShutdownHook(Thread{
+        Runtime.getRuntime().addShutdownHook(Thread {
             println("Saving config")
             writeClientFile()
             val f = readClientFile()
@@ -40,7 +38,8 @@ class Blackout {
             writeFriends(f[1])
         })
 
-        print("""
+        print(
+            """
             
              ▄▄▄▄    ██▓    ▄▄▄       ▄████▄   ██ ▄█▀ ▒█████   █    ██ ▄▄▄█████▓
             ▓█████▄ ▓██▒   ▒████▄    ▒██▀ ▀█   ██▄█▒ ▒██▒  ██▒ ██  ▓██▒▓  ██▒ ▓▒
@@ -54,6 +53,7 @@ class Blackout {
                   ░                  ░                                          
             
             
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 }

@@ -23,7 +23,7 @@ import net.minecraft.util.math.Vec3d
 import org.joml.Matrix4f
 import kotlin.math.max
 
-class Nametags: ToggleFeature("Nametags", Category.Render, false) {
+class Nametags : ToggleFeature("Nametags", Category.Render, false) {
 
     override fun onEnable() {
         eventManager.register(this)
@@ -39,25 +39,27 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
 
     private val custom = register(Setting("Customize", false))
 
-    private val distanceScale = register(Setting("Distance Scale", 10, 1, 20, level = 2) {custom.value})
-    private val normalColor = register(Setting("Neutral Color", Color(-1), level = 2) {custom.value})
-    private val nameShadow = register(Setting("Shadow", true, level = 2) {custom.value})
-    private val backgroundColor = register(Setting("Background Color", Color(0xaa252525.toInt()), level = 2) {custom.value})
-    private val itemSize = register(Setting("Item Size", 13, 1, 20, level = 2) {custom.value})
+    private val distanceScale = register(Setting("Distance Scale", 10, 1, 20, level = 2) { custom.value })
+    private val normalColor = register(Setting("Neutral Color", Color(-1), level = 2) { custom.value })
+    private val nameShadow = register(Setting("Shadow", true, level = 2) { custom.value })
+    private val backgroundColor =
+        register(Setting("Background Color", Color(0xaa252525.toInt()), level = 2) { custom.value })
+    private val itemSize = register(Setting("Item Size", 13, 1, 20, level = 2) { custom.value })
 
-    private val duraBar = register(Setting("Durability Bar", false, level = 2) {custom.value})
-    private val duraValue = register(Setting("Durability Value", true, level = 2) {custom.value})
-    private val duraScale = register(Setting("Durability Scale", 0.6f, 0.1f, 2f, level = 2) {custom.value && duraValue.value})
-    private val duraShadow = register(Setting("Durability Shadow", true, level = 2) {custom.value && duraValue.value})
+    private val duraBar = register(Setting("Durability Bar", false, level = 2) { custom.value })
+    private val duraValue = register(Setting("Durability Value", true, level = 2) { custom.value })
+    private val duraScale =
+        register(Setting("Durability Scale", 0.6f, 0.1f, 2f, level = 2) { custom.value && duraValue.value })
+    private val duraShadow = register(Setting("Durability Shadow", true, level = 2) { custom.value && duraValue.value })
 
-    private val overlayScale = register(Setting("Stack Size Scale", 0.7f, 0.1f, 2f, level = 2) {custom.value})
-    private val stackColor = register(Setting("Stack Size Color", Color(-1), level = 2) {custom.value})
-    private val stackShadow = register(Setting("Stack Size Shadow", true, level = 2) {custom.value})
+    private val overlayScale = register(Setting("Stack Size Scale", 0.7f, 0.1f, 2f, level = 2) { custom.value })
+    private val stackColor = register(Setting("Stack Size Color", Color(-1), level = 2) { custom.value })
+    private val stackShadow = register(Setting("Stack Size Shadow", true, level = 2) { custom.value })
 
     @EventHandler
     fun onRender(event: RenderWorldEvent) {
-        for(target in world.players) {
-            if(target == player) continue
+        for (target in world.players) {
+            if (target == player) continue
 
             val camera = mc.gameRenderer.camera
             val matrixStack = RenderSystem.getModelViewStack()
@@ -68,12 +70,15 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
                 MathHelper.lerp(mc.tickDelta.toDouble(), target.lastRenderZ, target.pos.z)
             ).subtract(camera.pos)
 
-            val gamemode = if(target.isCreative) " [C] " else if(target.isSpectator) " [SP] " else " [S] "
+            val gamemode = if (target.isCreative) " [C] " else if (target.isSpectator) " [SP] " else " [S] "
             val hp = (target.health + target.absorptionAmount).toInt()
-            val color = if(target.isFriend()) friendColor.value.rgb else normalColor.value.rgb
-            val string =  target.name.string + (if(showGamemode.value) gamemode else " ")
-            val width = textRenderer.getWidth(string+hp).toFloat() / 2f
-            val scale = (scale.value / 100f) * (max(distanceScale.value.toFloat(), player.distanceTo(target)) / distanceScale.value.toFloat())
+            val color = if (target.isFriend()) friendColor.value.rgb else normalColor.value.rgb
+            val string = target.name.string + (if (showGamemode.value) gamemode else " ")
+            val width = textRenderer.getWidth(string + hp).toFloat() / 2f
+            val scale = (scale.value / 100f) * (max(
+                distanceScale.value.toFloat(),
+                player.distanceTo(target)
+            ) / distanceScale.value.toFloat())
 
             matrixStack.push()
             matrixStack.translate(pos.x, pos.y, pos.z)
@@ -85,41 +90,92 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             matrixStack.scale(-1.0f, 1.0f, 1.0f)
             RenderSystem.applyModelViewMatrix()
 
-            fill(AffineTransformation.identity().matrix, -width.toInt() - 1, -1, width.toInt(), textRenderer.fontHeight, backgroundColor.value.rgb)
+            fill(
+                AffineTransformation.identity().matrix,
+                -width.toInt() - 1,
+                -1,
+                width.toInt(),
+                textRenderer.fontHeight,
+                backgroundColor.value.rgb
+            )
 
             val immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().buffer)
 
             val nameWidth = textRenderer.getWidth(string).toFloat()
 
             val hpColor =
-                if(hp <= 4) Formatting.DARK_RED
-                else if(hp <= 8) Formatting.RED
-                else if(hp <= 16) Formatting.YELLOW
-                else if(hp <= 24) Formatting.GREEN
+                if (hp <= 4) Formatting.DARK_RED
+                else if (hp <= 8) Formatting.RED
+                else if (hp <= 16) Formatting.YELLOW
+                else if (hp <= 24) Formatting.GREEN
                 else Formatting.DARK_GREEN
 
-            if(nameShadow.value) {
-                textRenderer.draw(string, -width+0.5f, 0.5f, (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+            if (nameShadow.value) {
+                textRenderer.draw(
+                    string,
+                    -width + 0.5f,
+                    0.5f,
+                    (color and 0xaaaaaa) shr 1,
+                    false,
+                    AffineTransformation.identity().matrix,
+                    immediate as VertexConsumerProvider,
+                    true,
+                    0,
+                    0xF000F0
+                )
                 immediate.draw()
 
-                textRenderer.draw(hp.toString(), -width+nameWidth+0.5f, 0.5f, (hpColor.colorValue!! and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                textRenderer.draw(
+                    hp.toString(),
+                    -width + nameWidth + 0.5f,
+                    0.5f,
+                    (hpColor.colorValue!! and 0xaaaaaa) shr 1,
+                    false,
+                    AffineTransformation.identity().matrix,
+                    immediate as VertexConsumerProvider,
+                    true,
+                    0,
+                    0xF000F0
+                )
                 immediate.draw()
             }
 
-            textRenderer.draw(string, -width, 0.0f, color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+            textRenderer.draw(
+                string,
+                -width,
+                0.0f,
+                color,
+                false,
+                AffineTransformation.identity().matrix,
+                immediate as VertexConsumerProvider,
+                true,
+                0,
+                0xF000F0
+            )
             immediate.draw()
 
-            textRenderer.draw(hp.toString(), -width+nameWidth, 0.0f, hpColor.colorValue!!, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+            textRenderer.draw(
+                hp.toString(),
+                -width + nameWidth,
+                0.0f,
+                hpColor.colorValue!!,
+                false,
+                AffineTransformation.identity().matrix,
+                immediate as VertexConsumerProvider,
+                true,
+                0,
+                0xF000F0
+            )
             immediate.draw()
 
-            var itemX = -(itemSize.value*3)
-            renderItem(target.mainHandStack, itemX, -itemSize.value-2, target)
+            var itemX = -(itemSize.value * 3)
+            renderItem(target.mainHandStack, itemX, -itemSize.value - 2, target)
             itemX += itemSize.value
-            for(stack in target.armorItems.reversed()) {
-                renderItem(stack, itemX, -itemSize.value-2, target, true)
+            for (stack in target.armorItems.reversed()) {
+                renderItem(stack, itemX, -itemSize.value - 2, target, true)
                 itemX += itemSize.value
             }
-            renderItem(target.offHandStack, itemX, -itemSize.value-2, target)
+            renderItem(target.offHandStack, itemX, -itemSize.value - 2, target)
 
             RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f)
             RenderSystem.enableDepthTest()
@@ -135,7 +191,8 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
 
     private fun renderItem(stack: ItemStack, x: Int, y: Int, player: PlayerEntity, showDura: Boolean = false) {
         val bakedModel: BakedModel = mc.itemRenderer.getModel(stack, null, null, 0)
-        mc.itemRenderer.zOffset = if (bakedModel.hasDepth()) mc.itemRenderer.zOffset + 50.0f else mc.itemRenderer.zOffset + 50.0f
+        mc.itemRenderer.zOffset =
+            if (bakedModel.hasDepth()) mc.itemRenderer.zOffset + 50.0f else mc.itemRenderer.zOffset + 50.0f
 
         //mc.textureManager.getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false)
         //RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE)
@@ -146,7 +203,7 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
         matrixStack.push()
 
         matrixStack.translate(x.toFloat(), y.toFloat(), 0f)
-        matrixStack.translate(itemSize.value/2f, itemSize.value/2f, 0.0f)
+        matrixStack.translate(itemSize.value / 2f, itemSize.value / 2f, 0.0f)
         matrixStack.scale(1.0f, -1.0f, 1.0f)
         matrixStack.scale(itemSize.value.toFloat(), itemSize.value.toFloat(), 1.0f)
 
@@ -155,14 +212,24 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
         val entityVC = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
         val bl = !bakedModel.isSideLit
         if (bl) DiffuseLighting.disableGuiDepthLighting()
-        mc.itemRenderer.renderItem(stack, ModelTransformation.Mode.GUI, false, matrixStack2, entityVC, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV, bakedModel)
+        mc.itemRenderer.renderItem(
+            stack,
+            ModelTransformation.Mode.GUI,
+            false,
+            matrixStack2,
+            entityVC,
+            LightmapTextureManager.MAX_LIGHT_COORDINATE,
+            OverlayTexture.DEFAULT_UV,
+            bakedModel
+        )
         entityVC.draw()
         RenderSystem.enableDepthTest()
         if (bl) DiffuseLighting.enableGuiDepthLighting()
         matrixStack.pop()
         RenderSystem.applyModelViewMatrix()
 
-        mc.itemRenderer.zOffset = if (bakedModel.hasDepth()) mc.itemRenderer.zOffset - 50.0f else mc.itemRenderer.zOffset - 50.0f
+        mc.itemRenderer.zOffset =
+            if (bakedModel.hasDepth()) mc.itemRenderer.zOffset - 50.0f else mc.itemRenderer.zOffset - 50.0f
 
         if (stack.isEmpty) {
             return
@@ -171,7 +238,11 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             val matrixStack = RenderSystem.getModelViewStack()
             matrixStack.push()
 
-            matrixStack.translate(x + itemSize.value.toFloat(), (y + itemSize.value.toFloat() - textRenderer.fontHeight) * overlayScale.value, 0.0f)
+            matrixStack.translate(
+                x + itemSize.value.toFloat(),
+                (y + itemSize.value.toFloat() - textRenderer.fontHeight) * overlayScale.value,
+                0.0f
+            )
             matrixStack.scale(overlayScale.value, overlayScale.value, 1f)
 
             RenderSystem.applyModelViewMatrix()
@@ -179,18 +250,34 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             val color = stackColor.value.rgb
 
             val immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().buffer)
-            if(stackShadow.value) {
-                textRenderer.draw(stack.count.toString(),
+            if (stackShadow.value) {
+                textRenderer.draw(
+                    stack.count.toString(),
                     (1.5f - textRenderer.getWidth(stack.count.toString())),
                     2.5f,
-                    (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                    (color and 0xaaaaaa) shr 1,
+                    false,
+                    AffineTransformation.identity().matrix,
+                    immediate as VertexConsumerProvider,
+                    true,
+                    0,
+                    0xF000F0
+                )
                 immediate.draw()
             }
 
-            textRenderer.draw(stack.count.toString(),
+            textRenderer.draw(
+                stack.count.toString(),
                 (1 - textRenderer.getWidth(stack.count.toString())).toFloat(),
                 2f,
-                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                color,
+                false,
+                AffineTransformation.identity().matrix,
+                immediate as VertexConsumerProvider,
+                true,
+                0,
+                0xF000F0
+            )
             immediate.draw()
 
             matrixStack.pop()
@@ -208,7 +295,15 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             RenderSystem.disableBlend()
 
             fill(AffineTransformation.identity().matrix, 0, 0, itemSize.value - 2, 2, 0xff000000.toInt())
-            fill(AffineTransformation.identity().matrix, 0f, 0f, (stack.itemBarStep / 13f) * (itemSize.value - 2), 1f, stack.itemBarColor, 1f)
+            fill(
+                AffineTransformation.identity().matrix,
+                0f,
+                0f,
+                (stack.itemBarStep / 13f) * (itemSize.value - 2),
+                1f,
+                stack.itemBarColor,
+                1f
+            )
 
             RenderSystem.enableBlend()
             RenderSystem.enableTexture()
@@ -216,11 +311,15 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             matrixStack.pop()
             RenderSystem.applyModelViewMatrix()
         }
-        if(duraValue.value && showDura && stack.isDamageable) {
+        if (duraValue.value && showDura && stack.isDamageable) {
             val matrixStack = RenderSystem.getModelViewStack()
             matrixStack.push()
 
-            matrixStack.translate(x + (itemSize.value.toFloat() / 2f), (y - (textRenderer.fontHeight * duraScale.value)) + 1f, 0.0f)
+            matrixStack.translate(
+                x + (itemSize.value.toFloat() / 2f),
+                (y - (textRenderer.fontHeight * duraScale.value)) + 1f,
+                0.0f
+            )
             matrixStack.scale(duraScale.value, duraScale.value, 1f)
 
             RenderSystem.applyModelViewMatrix()
@@ -231,18 +330,34 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             val string = dura.toInt().toString()
 
             val immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().buffer)
-            if(duraShadow.value) {
-                textRenderer.draw(string,
+            if (duraShadow.value) {
+                textRenderer.draw(
+                    string,
                     (-textRenderer.getWidth(string) / 2f) + 0.5f,
                     0.5f,
-                    (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                    (color and 0xaaaaaa) shr 1,
+                    false,
+                    AffineTransformation.identity().matrix,
+                    immediate as VertexConsumerProvider,
+                    true,
+                    0,
+                    0xF000F0
+                )
                 immediate.draw()
             }
 
-            textRenderer.draw(string,
+            textRenderer.draw(
+                string,
                 -textRenderer.getWidth(string) / 2f,
                 0f,
-                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                color,
+                false,
+                AffineTransformation.identity().matrix,
+                immediate as VertexConsumerProvider,
+                true,
+                0,
+                0xF000F0
+            )
             immediate.draw()
 
             matrixStack.pop()
@@ -255,7 +370,14 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             RenderSystem.enableBlend()
             RenderSystem.defaultBlendFunc()
             val ff = MathHelper.floor(itemSize.value * (1.0f - f))
-            fill(AffineTransformation.identity().matrix, x, y + ff, x + itemSize.value, y + ff + MathHelper.ceil(itemSize.value * f), 0x7Fffffff)
+            fill(
+                AffineTransformation.identity().matrix,
+                x,
+                y + ff,
+                x + itemSize.value,
+                y + ff + MathHelper.ceil(itemSize.value * f),
+                0x7Fffffff
+            )
             RenderSystem.enableTexture()
             RenderSystem.enableDepthTest()
         }
@@ -280,7 +402,7 @@ class Nametags: ToggleFeature("Nametags", Category.Render, false) {
             y1 = y2
             y2 = i
         }
-        val f = if(alpha != -1f) alpha else (color shr 24 and 0xFF).toFloat() / 255.0f
+        val f = if (alpha != -1f) alpha else (color shr 24 and 0xFF).toFloat() / 255.0f
         val g = (color shr 16 and 0xFF).toFloat() / 255.0f
         val h = (color shr 8 and 0xFF).toFloat() / 255.0f
         val j = (color and 0xFF).toFloat() / 255.0f

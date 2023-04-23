@@ -18,21 +18,21 @@ public class InGameOverlayRendererMixin {
     private static void renderInWallOverlay(Sprite sprite, MatrixStack matrices, CallbackInfo ci) {
         RenderHudEvent.InWall event = new RenderHudEvent.InWall(false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "renderFireOverlay", at = @At("HEAD"), cancellable = true)
     private static void renderFireOverlay(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {
         RenderHudEvent.OnFire event = new RenderHudEvent.OnFire(false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "renderUnderwaterOverlay", at = @At("HEAD"), cancellable = true)
     private static void renderUnderwaterOverlay(MinecraftClient client, MatrixStack matrices, CallbackInfo ci) {
         RenderHudEvent.Underwater event = new RenderHudEvent.Underwater(false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
 }

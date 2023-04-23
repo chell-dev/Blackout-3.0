@@ -7,9 +7,16 @@ import net.minecraft.util.Formatting
 
 fun StringBuilder.setString(text: String): StringBuilder = this.replace(0, this.length, text)
 
-fun TextRenderer.drawTrimmedWithShadow(matrices: MatrixStack?, text: String, x: Float, y: Float, maxWidth: Int, color: Int) {
+fun TextRenderer.drawTrimmedWithShadow(
+    matrices: MatrixStack?,
+    text: String,
+    x: Float,
+    y: Float,
+    maxWidth: Int,
+    color: Int
+) {
     var y = y
-    for(line in wrapLines(Text.of(text), maxWidth)) {
+    for (line in wrapLines(Text.of(text), maxWidth)) {
         drawWithShadow(matrices, line, x, y, color)
         y += fontHeight
     }

@@ -14,7 +14,7 @@ public class KeyboardMixin {
 
     @Inject(method = "onKey", at = @At("HEAD"))
     public void onKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
-        if(window == GlobalsKt.getMc().getWindow().getHandle())
+        if (window == GlobalsKt.getMc().getWindow().getHandle())
             GlobalsKt.getEventManager().post(new InputEvent.Keyboard(InputUtil.Type.KEYSYM.createFromCode(key), action, modifiers));
     }
 

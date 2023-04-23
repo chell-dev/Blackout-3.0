@@ -11,7 +11,8 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import org.lwjgl.glfw.GLFW
 
-class ActionBindButton(private val parent: GuiItem, setting: Setting<Bind.Action>, expandable: Boolean): Button(parent, expandable) {
+class ActionBindButton(private val parent: GuiItem, setting: Setting<Bind.Action>, expandable: Boolean) :
+    Button(parent, expandable) {
 
     override var width = 0
     override val height = mc.textRenderer.fontHeight
@@ -24,8 +25,8 @@ class ActionBindButton(private val parent: GuiItem, setting: Setting<Bind.Action
     private var listening = false
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        var text = if(listening) "[ . . . ]" else "[ ${bind.key.localizedText.string} ]"
-        if(text.length == 5) text = text.uppercase()
+        var text = if (listening) "[ . . . ]" else "[ ${bind.key.localizedText.string} ]"
+        if (text.length == 5) text = text.uppercase()
         width = mc.textRenderer.getWidth(text)
         mc.textRenderer.drawWithShadow(matrices, text, x.toFloat(), y.toFloat(), -1) // 0xa100ff
 
@@ -33,14 +34,14 @@ class ActionBindButton(private val parent: GuiItem, setting: Setting<Bind.Action
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(listening) {
+        if (listening) {
             bind.setKey(button, InputUtil.Type.MOUSE)
             listening = false
             mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
             return true
         }
 
-        if(button == 0 && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+        if (button == 0 && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
             listening = true
             mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
             return true
@@ -50,16 +51,18 @@ class ActionBindButton(private val parent: GuiItem, setting: Setting<Bind.Action
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        if(listening) {
+        if (listening) {
             when (keyCode) {
                 GLFW.GLFW_KEY_ESCAPE -> {
                     listening = false
                 }
+
                 GLFW.GLFW_KEY_DELETE -> {
                     bind.setKey(GLFW.GLFW_KEY_UNKNOWN, InputUtil.Type.KEYSYM)
                     listening = false
                     mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
                 }
+
                 else -> {
                     bind.setKey(keyCode, InputUtil.Type.KEYSYM)
                     listening = false

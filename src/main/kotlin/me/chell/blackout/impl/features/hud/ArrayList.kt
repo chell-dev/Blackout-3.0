@@ -7,7 +7,7 @@ import me.chell.blackout.api.util.featureManager
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
-class ArrayList: Widget("ArrayList") {
+class ArrayList : Widget("ArrayList") {
 
     override var description = "List enabled toggleable features"
 
@@ -29,14 +29,20 @@ class ArrayList: Widget("ArrayList") {
         width = textRenderer.getWidth(list[0].name)
         height = list.size * textRenderer.fontHeight
 
-        for(feature in list) {
+        for (feature in list) {
             val textWidth = textRenderer.getWidth(feature.name)
-            val textX = when(hAlign.value) {
+            val textX = when (hAlign.value) {
                 HAlign.Left -> (x.value + width) - textWidth
                 HAlign.Right -> x.value
                 HAlign.Center -> (x.value + width / 2) - (textWidth / 2)
             }
-            textRenderer.drawWithShadow(matrices, feature.name, textX.toFloat(), if(vAlign.value == VAlign.Up) y.value + height - textRenderer.fontHeight - textY.toFloat() else y.value + textY.toFloat(), -1)
+            textRenderer.drawWithShadow(
+                matrices,
+                feature.name,
+                textX.toFloat(),
+                if (vAlign.value == VAlign.Up) y.value + height - textRenderer.fontHeight - textY.toFloat() else y.value + textY.toFloat(),
+                -1
+            )
 
             textY += textRenderer.fontHeight
         }

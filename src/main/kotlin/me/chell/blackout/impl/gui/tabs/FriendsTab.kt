@@ -10,27 +10,28 @@ import me.chell.blackout.impl.gui.items.FriendItem
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 
-class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifier(modId, "textures/gui/categories/friends.png")) {
+class FriendsTab(x: Int, y: Int, parent: ClientGUI) :
+    Tab(x, y, parent, Identifier(modId, "textures/gui/categories/friends.png")) {
 
     val removeQueue = mutableListOf<FriendItem>()
 
     private val addButton: AddFriendItem
 
     init {
-        var bY = parent.bannerHeight+1+ GuiItem.margin
+        var bY = parent.bannerHeight + 1 + GuiItem.margin
 
-        for(f in friends) {
-            val item = FriendItem(f, size +1+ GuiItem.margin, bY, this)
+        for (f in friends) {
+            val item = FriendItem(f, size + 1 + GuiItem.margin, bY, this)
             items.add(item)
             bY += item.height + GuiItem.margin
         }
 
-        addButton = AddFriendItem(size +1+ GuiItem.margin, bY, this)
+        addButton = AddFriendItem(size + 1 + GuiItem.margin, bY, this)
     }
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)
-        if(parent.currentTab == this)
+        if (parent.currentTab == this)
             addButton.render(matrices, mouseX, mouseY, delta)
     }
 
@@ -40,12 +41,12 @@ class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifie
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(parent.currentTab == this && addButton.mouseClicked(mouseX, mouseY, button)){
+        if (parent.currentTab == this && addButton.mouseClicked(mouseX, mouseY, button)) {
             updateItems()
             return true
         }
-        if(super.mouseClicked(mouseX, mouseY, button)) {
-            for(item in removeQueue) {
+        if (super.mouseClicked(mouseX, mouseY, button)) {
+            for (item in removeQueue) {
                 items.remove(item)
             }
             removeQueue.clear()
@@ -56,7 +57,7 @@ class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifie
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        if(parent.currentTab == this && addButton.keyPressed(keyCode, scanCode, modifiers)){
+        if (parent.currentTab == this && addButton.keyPressed(keyCode, scanCode, modifiers)) {
             updateItems()
             return true
         }
@@ -64,25 +65,25 @@ class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifie
     }
 
     override fun charTyped(chr: Char, modifiers: Int): Boolean {
-        return if(parent.currentTab == this)
+        return if (parent.currentTab == this)
             addButton.charTyped(chr, modifiers)
         else false
     }
 
     override fun updateItems() {
-        var itemY = parent.bannerHeight+1+ GuiItem.margin + scrollAmount
+        var itemY = parent.bannerHeight + 1 + GuiItem.margin + scrollAmount
 
         val knownFriends = mutableListOf<String>()
 
-        for(item in items) {
+        for (item in items) {
             item.y = itemY
             itemY += item.height + margin
             knownFriends.add((item as FriendItem).friend)
         }
 
-        for(f in friends) {
-            if(knownFriends.contains(f)) continue
-            val item = FriendItem(f, size +1+ GuiItem.margin, itemY, this)
+        for (f in friends) {
+            if (knownFriends.contains(f)) continue
+            val item = FriendItem(f, size + 1 + GuiItem.margin, itemY, this)
             items.add(item)
             itemY += item.height + GuiItem.margin
         }

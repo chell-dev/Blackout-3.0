@@ -11,7 +11,8 @@ import net.minecraft.sound.SoundEvents
 import org.lwjgl.util.tinyfd.TinyFileDialogs
 import java.io.File
 
-class FileButton(private val parent: GuiItem, private val setting: Setting<File>, expandable: Boolean): Button(parent, expandable) {
+class FileButton(private val parent: GuiItem, private val setting: Setting<File>, expandable: Boolean) :
+    Button(parent, expandable) {
 
     override var width = 32
     override val height = 9
@@ -28,9 +29,10 @@ class FileButton(private val parent: GuiItem, private val setting: Setting<File>
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(button == 0 && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
-            val select = TinyFileDialogs.tinyfd_openFileDialog("Select File", setting.value.absolutePath, null, null, false)
-            if(select != null) {
+        if (button == 0 && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+            val select =
+                TinyFileDialogs.tinyfd_openFileDialog("Select File", setting.value.absolutePath, null, null, false)
+            if (select != null) {
                 setting.value = File(select)
                 mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
             }

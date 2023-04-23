@@ -6,7 +6,7 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.isFriend
 import me.chell.blackout.api.util.player
 
-class Cosmetics: ToggleFeature("Cosmetics", Category.Render, false) {
+class Cosmetics : ToggleFeature("Cosmetics", Category.Render, false) {
 
     override var description = "Client-side player cosmetics"
 
@@ -27,7 +27,7 @@ class Cosmetics: ToggleFeature("Cosmetics", Category.Render, false) {
     }
 
     private fun get(name: String): Boolean {
-        return when(mode.value) {
+        return when (mode.value) {
             Mode.Self -> name == player.name.string
             Mode.Friends -> name == player.name.string || isFriend(name)
             Mode.Everyone -> true

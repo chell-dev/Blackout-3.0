@@ -9,7 +9,7 @@ import net.arikia.dev.drpc.DiscordEventHandlers
 import net.arikia.dev.drpc.DiscordRPC
 import net.arikia.dev.drpc.DiscordRichPresence
 
-class DiscordActivity: ToggleFeature("Discord RPC", Category.Client, false) {
+class DiscordActivity : ToggleFeature("Discord RPC", Category.Client, false) {
 
     private var shouldUpdate = false
 
@@ -38,7 +38,7 @@ class DiscordActivity: ToggleFeature("Discord RPC", Category.Client, false) {
 
     @EventHandler
     fun onMultiPlayer(event: ServerEvent) {
-        rpc.details = when(event) {
+        rpc.details = when (event) {
             is ServerEvent.MultiPlayer -> "Playing Multiplayer"
             is ServerEvent.SinglePlayer -> "Playing Singleplayer"
             is ServerEvent.Lan -> "Playing LAN"
@@ -46,6 +46,6 @@ class DiscordActivity: ToggleFeature("Discord RPC", Category.Client, false) {
             else -> "Main Menu"
         }
 
-        if(shouldUpdate) DiscordRPC.discordUpdatePresence(rpc)
+        if (shouldUpdate) DiscordRPC.discordUpdatePresence(rpc)
     }
 }

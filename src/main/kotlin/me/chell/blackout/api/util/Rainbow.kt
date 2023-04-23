@@ -12,7 +12,7 @@ object Rainbow {
     @EventHandler
     fun onTick(event: PlayerTickEvent) {
         hue += ColorsFeature.instance.rainbowSpeed.value / 100f
-        if(hue >= 1f) hue = 0f
+        if (hue >= 1f) hue = 0f
 
         val rgb = java.awt.Color.HSBtoRGB(hue, 1f, 1f)
         color.red = rgb.red

@@ -7,14 +7,14 @@ import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.Tab
 import me.chell.blackout.impl.gui.items.FeatureItem
 
-class CategoryTab(val category: Category, x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, category.icon) {
+class CategoryTab(val category: Category, x: Int, y: Int, parent: ClientGUI) : Tab(x, y, parent, category.icon) {
 
     init {
-        var bY = parent.bannerHeight+1+ GuiItem.margin
+        var bY = parent.bannerHeight + 1 + GuiItem.margin
 
-        for(feature in featureManager.features) {
-            if(feature.category == category) {
-                val item = FeatureItem(feature, size +1+ GuiItem.margin, bY, this)
+        for (feature in featureManager.features) {
+            if (feature.category == category) {
+                val item = FeatureItem(feature, size + 1 + GuiItem.margin, bY, this)
                 items.add(item)
                 bY += item.height + GuiItem.margin
             }
@@ -23,9 +23,9 @@ class CategoryTab(val category: Category, x: Int, y: Int, parent: ClientGUI): Ta
 
     @Suppress("unchecked_cast")
     override fun updateItems() {
-        var itemY = parent.bannerHeight+1+ GuiItem.margin + scrollAmount
+        var itemY = parent.bannerHeight + 1 + GuiItem.margin + scrollAmount
 
-        for(item in items as MutableList<FeatureItem>) {
+        for (item in items as MutableList<FeatureItem>) {
             item.y = itemY
             itemY += item.fullHeight + margin
             item.updateItems()

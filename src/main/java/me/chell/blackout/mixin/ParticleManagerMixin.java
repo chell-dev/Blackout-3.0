@@ -13,10 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ParticleManagerMixin {
 
     @Inject(method = "addParticle(Lnet/minecraft/client/particle/Particle;)V", at = @At("HEAD"), cancellable = true)
-    public void addParticle(Particle particle, CallbackInfo ci){
+    public void addParticle(Particle particle, CallbackInfo ci) {
         ParticleEvent event = new ParticleEvent(particle, false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
 }

@@ -16,17 +16,17 @@ public class GameRendererMixin {
 
     @Inject(method = "showFloatingItem", at = @At("HEAD"), cancellable = true)
     public void renderTotem(ItemStack floatingItem, CallbackInfo ci) {
-        if(floatingItem.getItem() != Items.TOTEM_OF_UNDYING) return;
+        if (floatingItem.getItem() != Items.TOTEM_OF_UNDYING) return;
         RenderHudEvent.Totem event = new RenderHudEvent.Totem(false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
     public void bobViewWhenHurt(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         RenderHudEvent.Hurt event = new RenderHudEvent.Hurt(false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
 }

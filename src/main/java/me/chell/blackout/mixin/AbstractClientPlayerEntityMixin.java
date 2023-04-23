@@ -15,15 +15,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(AbstractClientPlayerEntity.class)
 public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
 
+    Identifier id = new Identifier("blackout", "textures/cape.png");
+
     public AbstractClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
         super(world, pos, yaw, gameProfile);
     }
 
-    Identifier id = new Identifier("blackout", "textures/cape.png");
-
     @Inject(method = "getCapeTexture", at = @At("HEAD"), cancellable = true)
     public void cape(CallbackInfoReturnable<Identifier> cir) {
-        if(Cosmetics.Companion.getCape(getName().getString())) cir.setReturnValue(id);
+        if (Cosmetics.Companion.getCape(getName().getString())) cir.setReturnValue(id);
     }
 
 }

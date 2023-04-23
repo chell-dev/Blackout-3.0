@@ -13,15 +13,15 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 import kotlin.random.Random
 
-class Neko: Widget("Neko") {
+class Neko : Widget("Neko") {
 
     override var description = "I <3 Neko"
 
     private val instance = this
 
-    override val mainSetting = object: Setting<Boolean>("Enabled", false) {
+    override val mainSetting = object : Setting<Boolean>("Enabled", false) {
         override fun onValueChanged(oldValue: Boolean, newValue: Boolean) {
-            if(newValue) eventManager.register(instance)
+            if (newValue) eventManager.register(instance)
             else eventManager.unregister(instance)
 
             state = 2
@@ -54,19 +54,22 @@ class Neko: Widget("Neko") {
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)
 
-        val textureHeight = when(state) {
+        val textureHeight = when (state) {
             0 -> {
                 RenderSystem.setShaderTexture(0, idle)
                 160
             }
+
             1 -> {
                 RenderSystem.setShaderTexture(0, asleep)
                 128
             }
+
             2 -> {
                 RenderSystem.setShaderTexture(0, alert)
                 32
             }
+
             else -> 32
         }
 
@@ -79,15 +82,15 @@ class Neko: Widget("Neko") {
 
     @EventHandler
     fun onTick(event: PlayerTickEvent) {
-        if(afkTimer >= 1200) state = 1
+        if (afkTimer >= 1200) state = 1
         else afkTimer++
 
-        when(state) {
+        when (state) {
             0 -> {
-                if(idleAnimation) {
-                    if(stateTimer >= 4) {
+                if (idleAnimation) {
+                    if (stateTimer >= 4) {
                         stateTimer = 0
-                        if(texture == 4) {
+                        if (texture == 4) {
                             texture = 0
                             stateTimer = 0
                             idleAnimation = false
@@ -98,7 +101,7 @@ class Neko: Widget("Neko") {
                         stateTimer++
                     }
                 } else {
-                    if(stateTimer >= random) {
+                    if (stateTimer >= random) {
                         stateTimer = 0
                         idleAnimation = true
                         random = Random.nextInt(20, 400)
@@ -107,15 +110,15 @@ class Neko: Widget("Neko") {
             }
 
             1 -> {
-                if(stateTimer >= 10) {
+                if (stateTimer >= 10) {
                     stateTimer = 0
-                    if(texture == 3) texture = 0
+                    if (texture == 3) texture = 0
                     else texture++
                 } else stateTimer++
             }
 
             2 -> {
-                if(stateTimer >= 20) {
+                if (stateTimer >= 20) {
                     stateTimer = 0
                     state = 0
                     texture = 0
@@ -128,7 +131,7 @@ class Neko: Widget("Neko") {
     @EventHandler
     fun onInput(event: InputEvent) {
         afkTimer = 0
-        if(state == 1) {
+        if (state == 1) {
             state = 2
             texture = 0
             stateTimer = 0

@@ -10,7 +10,7 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.math.Direction
 import net.minecraft.world.dimension.DimensionTypes
 
-class Coordinates: Widget("Coordinates") {
+class Coordinates : Widget("Coordinates") {
 
     override var width = 10
     override var height = textRenderer.fontHeight * 2
@@ -28,39 +28,71 @@ class Coordinates: Widget("Coordinates") {
         val g = Formatting.GRAY
         val r = Formatting.RESET
 
-        when(player.world.dimensionKey) {
+        when (player.world.dimensionKey) {
             DimensionTypes.OVERWORLD -> {
                 val a = "${g}X: ${r}$x${g}, Y: ${r}$y${g}, Z: ${r}$z $direction"
                 val b = Formatting.GRAY + "X: ${pos.x / 8}, Y: ${pos.y}, Z: ${pos.z / 8}"
                 width = maxOf(textRenderer.getWidth(a), textRenderer.getWidth(b), width)
 
-                if(vAlign.value == VAlign.UP) {
+                if (vAlign.value == VAlign.UP) {
                     textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat(), -1)
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(
+                        matrices,
+                        a,
+                        this.x.value.toFloat(),
+                        this.y.value.toFloat() + textRenderer.fontHeight,
+                        -1
+                    )
                 } else {
                     textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), -1)
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(
+                        matrices,
+                        b,
+                        this.x.value.toFloat(),
+                        this.y.value.toFloat() + textRenderer.fontHeight,
+                        -1
+                    )
                 }
             }
+
             DimensionTypes.THE_NETHER -> {
                 val a = "${g}X: ${r}$x${g}, Y: ${r}$y${g}, Z: ${r}$z $direction"
                 val b = Formatting.GRAY + "X: ${pos.x * 8}, Y: ${pos.y}, Z: ${pos.z * 8}"
                 width = maxOf(textRenderer.getWidth(a), textRenderer.getWidth(b), width)
 
-                if(vAlign.value == VAlign.UP) {
+                if (vAlign.value == VAlign.UP) {
                     textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat(), -1)
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(
+                        matrices,
+                        a,
+                        this.x.value.toFloat(),
+                        this.y.value.toFloat() + textRenderer.fontHeight,
+                        -1
+                    )
                 } else {
                     textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), -1)
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(
+                        matrices,
+                        b,
+                        this.x.value.toFloat(),
+                        this.y.value.toFloat() + textRenderer.fontHeight,
+                        -1
+                    )
                 }
             }
+
             else -> {
                 val a = "${g}X: ${r}$x${g}, Y: ${r}$y${g}, Z: ${r}$z $direction"
                 width = maxOf(textRenderer.getWidth(a), width)
 
-                if(vAlign.value == VAlign.UP) {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                if (vAlign.value == VAlign.UP) {
+                    textRenderer.drawWithShadow(
+                        matrices,
+                        a,
+                        this.x.value.toFloat(),
+                        this.y.value.toFloat() + textRenderer.fontHeight,
+                        -1
+                    )
                 } else {
                     textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), -1)
                 }
@@ -68,15 +100,17 @@ class Coordinates: Widget("Coordinates") {
         }
     }
 
-    private val direction: String get() =
-        "${Formatting.GRAY}[${Formatting.RESET}" +
-                when(player.horizontalFacing) {
-                    Direction.NORTH -> "-Z"
-                    Direction.WEST -> "-X"
-                    Direction.SOUTH -> "+Z"
-                    Direction.EAST -> "+X"
-                    else -> "" } +
-        "${Formatting.GRAY}]${Formatting.RESET}"
+    private val direction: String
+        get() =
+            "${Formatting.GRAY}[${Formatting.RESET}" +
+                    when (player.horizontalFacing) {
+                        Direction.NORTH -> "-Z"
+                        Direction.WEST -> "-X"
+                        Direction.SOUTH -> "+Z"
+                        Direction.EAST -> "+X"
+                        else -> ""
+                    } +
+                    "${Formatting.GRAY}]${Formatting.RESET}"
 
     enum class VAlign {
         UP, DOWN

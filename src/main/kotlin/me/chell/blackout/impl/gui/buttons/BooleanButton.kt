@@ -1,9 +1,9 @@
 package me.chell.blackout.impl.gui.buttons
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modId
-import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
 import net.minecraft.client.sound.PositionedSoundInstance
@@ -11,7 +11,8 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 
-class BooleanButton(private val parent: GuiItem, private val setting: Setting<Boolean>, expandable: Boolean): Button(parent, expandable) {
+class BooleanButton(private val parent: GuiItem, private val setting: Setting<Boolean>, expandable: Boolean) :
+    Button(parent, expandable) {
 
     companion object {
         val on = Identifier(modId, "textures/gui/button_on.png")
@@ -38,7 +39,7 @@ class BooleanButton(private val parent: GuiItem, private val setting: Setting<Bo
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(button == 0 && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+        if (button == 0 && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
             setting.value = !setting.value
             mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
             return true

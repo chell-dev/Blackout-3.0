@@ -8,7 +8,7 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.mixin.accessors.MinecraftClientAccessor
 
-class FastPlace: ToggleFeature("FastPlace", Category.PLayer, false) {
+class FastPlace : ToggleFeature("FastPlace", Category.PLayer, false) {
 
     override var description = "No block place / item use delay"
 

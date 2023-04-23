@@ -3,8 +3,8 @@ package me.chell.blackout.impl.gui.items
 import com.mojang.logging.LogUtils
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.setting.Bind
-import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.setting.Setting
+import me.chell.blackout.api.util.mc
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.Tab
@@ -16,7 +16,8 @@ import net.minecraft.sound.SoundEvents
 import java.io.File
 
 @Suppress("unchecked_cast")
-class FeatureItem(val feature: Feature, override var x: Int, override var y: Int, private val parent: CategoryTab): GuiItem(parent) {
+class FeatureItem(val feature: Feature, override var x: Int, override var y: Int, private val parent: CategoryTab) :
+    GuiItem(parent) {
 
     override val width = 300 - Tab.size - 1 - margin - margin
     override var height = 28
@@ -28,7 +29,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
     private val settings = mutableListOf<SettingItem>()
 
-    override val button = when(feature.mainSetting.value) {
+    override val button = when (feature.mainSetting.value) {
         is Boolean -> BooleanButton(this, feature.mainSetting as Setting<Boolean>, expandable)
         is Bind.Action -> ActionBindButton(this, feature.mainSetting as Setting<Bind.Action>, expandable)
         is Bind.Toggle -> ToggleBindButton(this, feature.mainSetting as Setting<Bind.Toggle>, expandable)
@@ -49,7 +50,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
     init {
         var sY = y + height + margin
-        for(setting in feature.settings) {
+        for (setting in feature.settings) {
             val i = SettingItem(setting, x + SettingItem.getOffset(setting), sY, parent)
             settings.add(i)
             sY += i.height + margin
@@ -59,17 +60,17 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
     fun updateItems() {}
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
+    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)
 
-        val center = y.toFloat() + (height /2) - (mc.textRenderer.fontHeight/2)
+        val center = y.toFloat() + (height / 2) - (mc.textRenderer.fontHeight / 2)
         mc.textRenderer.drawWithShadow(matrices, feature.name, x + margin.toFloat(), center, -1)
 
         val oldHeight = fullHeight
-        if(expanded) {
+        if (expanded) {
             var itemY = y + height + margin
-            for(item in settings) {
-                if(!item.setting.visible.test(null)) continue
+            for (item in settings) {
+                if (!item.setting.visible.test(null)) continue
                 item.y = itemY
                 item.render(matrices, mouseX, mouseY, delta)
                 itemY += item.height + margin
@@ -78,18 +79,18 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
                 expandedHeight = itemY - y - margin
                 fullHeight = expandedHeight
 
-                if(mouseX >= x + item.offset && mouseX <= x + width && mouseY >= item.y && mouseY <= item.y + item.height)
+                if (mouseX >= x + item.offset && mouseX <= x + width && mouseY >= item.y && mouseY <= item.y + item.height)
                     parent.parent.hoveredItem = item.setting
             }
         } else {
             fullHeight = height
         }
-        if(fullHeight != oldHeight) parent.updateItems()
+        if (fullHeight != oldHeight) parent.updateItems()
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(button == 1 && expandable && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
-            if(expanded) {
+        if (button == 1 && expandable && mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+            if (expanded) {
                 mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_TOAST_OUT, 1.0f, 1.0f))
                 expanded = false
                 //fullHeight = height
@@ -102,10 +103,10 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
             return true
         }
 
-        if(expanded) {
-            for(item in settings) {
-                if(!item.setting.visible.test(null)) continue
-                if(item.mouseClicked(mouseX, mouseY, button)) return true
+        if (expanded) {
+            for (item in settings) {
+                if (!item.setting.visible.test(null)) continue
+                if (item.mouseClicked(mouseX, mouseY, button)) return true
             }
         }
 
@@ -113,9 +114,9 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
     }
 
     override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(expanded) {
-            for(item in settings) {
-                if(item.mouseReleased(mouseX, mouseY, button)) return true
+        if (expanded) {
+            for (item in settings) {
+                if (item.mouseReleased(mouseX, mouseY, button)) return true
             }
         }
 
@@ -124,15 +125,15 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
     override fun onClose() {
         button.onClose()
-        for(item in settings) {
+        for (item in settings) {
             item.onClose()
         }
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        if(expanded) {
-            for(item in settings) {
-                if(item.keyPressed(keyCode, scanCode, modifiers)) return true
+        if (expanded) {
+            for (item in settings) {
+                if (item.keyPressed(keyCode, scanCode, modifiers)) return true
             }
         }
 

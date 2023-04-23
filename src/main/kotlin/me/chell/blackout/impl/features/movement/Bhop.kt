@@ -10,7 +10,7 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
 
-class Bhop: Feature("Auto Jump", Category.Movement) {
+class Bhop : Feature("Auto Jump", Category.Movement) {
 
     override var description = "Jump when you're moving"
 
@@ -26,7 +26,7 @@ class Bhop: Feature("Auto Jump", Category.Movement) {
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {
-        if((player.forwardSpeed != 0f || player.sidewaysSpeed != 0f) && player.isOnGround && !mc.options.jumpKey.isPressed && !player.isRiding && !player.isTouchingWater && !player.isSubmergedInWater)
+        if ((player.forwardSpeed != 0f || player.sidewaysSpeed != 0f) && player.isOnGround && !mc.options.jumpKey.isPressed && !player.isRiding && !player.isTouchingWater && !player.isSubmergedInWater)
             player.jump()
     }
 

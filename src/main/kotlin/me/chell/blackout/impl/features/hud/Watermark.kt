@@ -6,7 +6,7 @@ import me.chell.blackout.api.util.modVersion
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
-class Watermark: Widget("Watermark") {
+class Watermark : Widget("Watermark") {
 
     override var width = 60
     override var height = textRenderer.fontHeight

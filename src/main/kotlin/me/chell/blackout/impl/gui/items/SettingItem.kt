@@ -2,9 +2,9 @@ package me.chell.blackout.impl.gui.items
 
 import com.mojang.logging.LogUtils
 import me.chell.blackout.api.setting.Bind
-import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.Color
+import me.chell.blackout.api.util.mc
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.Tab
@@ -13,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack
 import java.io.File
 
 @Suppress("unchecked_cast")
-class SettingItem(val setting: Setting<*>, override var x: Int, override var y: Int, tab: Tab): GuiItem(tab) {
+class SettingItem(val setting: Setting<*>, override var x: Int, override var y: Int, tab: Tab) : GuiItem(tab) {
 
     companion object {
         fun getOffset(setting: Setting<*>) = 10 * setting.level
@@ -24,7 +24,7 @@ class SettingItem(val setting: Setting<*>, override var x: Int, override var y: 
     override val width = 300 - Tab.size - 1 - margin - margin - offset
     override var height = 26
 
-    override val button = when(setting.value) {
+    override val button = when (setting.value) {
         is Boolean -> BooleanButton(this, setting as Setting<Boolean>, false)
         is Bind.Action -> ActionBindButton(this, setting as Setting<Bind.Action>, false)
         is Bind.Toggle -> ToggleBindButton(this, setting as Setting<Bind.Toggle>, false)
@@ -44,10 +44,10 @@ class SettingItem(val setting: Setting<*>, override var x: Int, override var y: 
         }
     }
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
+    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)
 
-        val center = y.toFloat() + (height /2) - (mc.textRenderer.fontHeight/2)
+        val center = y.toFloat() + (height / 2) - (mc.textRenderer.fontHeight / 2)
         mc.textRenderer.drawWithShadow(matrices, setting.name, x + margin.toFloat(), center, -1)
     }
 
