@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.MatrixStack
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 
-class Keybinds: Widget("Keybinds") {
+class Keybinds : Widget("Keybinds") {
 
     override var width = 50
     override var height = textRenderer.fontHeight
@@ -21,11 +21,13 @@ class Keybinds: Widget("Keybinds") {
 
         val list = mutableMapOf<String, Bind>()
 
-        for(f in featureManager.features.filter { !blacklist.value.contains(it) }) {
-            if(f.mainSetting.value is Bind && (f.mainSetting.value as Bind).key.code != GLFW.GLFW_KEY_UNKNOWN) list[f.name] = f.mainSetting.value as Bind
+        for (f in featureManager.features.filter { !blacklist.value.contains(it) }) {
+            if (f.mainSetting.value is Bind && (f.mainSetting.value as Bind).key.code != GLFW.GLFW_KEY_UNKNOWN) list[f.name] =
+                f.mainSetting.value as Bind
 
-            for(s in f.settings) {
-                if(s.value is Bind && (s.value as Bind).key.code != GLFW.GLFW_KEY_UNKNOWN) list[s.name] = s.value as Bind
+            for (s in f.settings) {
+                if (s.value is Bind && (s.value as Bind).key.code != GLFW.GLFW_KEY_UNKNOWN) list[s.name] =
+                    s.value as Bind
             }
         }
 
@@ -33,17 +35,17 @@ class Keybinds: Widget("Keybinds") {
 
         var textY = 0
 
-        for(item in list) {
+        for (item in list) {
             val text = "${item.key} [${item.value.key.localizedText.string.uppercase()}]"
 
             var color = -1
-            if(item.value is Bind.Toggle) {
-                color = if((item.value as Bind.Toggle).enabled) Color.GREEN.rgb
+            if (item.value is Bind.Toggle) {
+                color = if ((item.value as Bind.Toggle).enabled) Color.GREEN.rgb
                 else Color.RED.rgb
             }
 
             val textWidth = textRenderer.getWidth(text)
-            if(textWidth > width) width = textWidth
+            if (textWidth > width) width = textWidth
 
             textRenderer.drawWithShadow(matrices, text, x.value.toFloat(), y.value + textY.toFloat(), color)
             textY += textRenderer.fontHeight

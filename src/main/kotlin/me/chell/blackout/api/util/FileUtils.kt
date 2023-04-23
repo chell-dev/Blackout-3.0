@@ -21,8 +21,7 @@ fun writeClientFile() {
 fun readClientFile(): List<String> {
     val file = File(clientFile)
 
-    return if(file.exists()) file.readLines()
-    else listOf(defaultConfig, defaultFriends)
+    return if (file.exists()) file.readLines() else listOf(defaultConfig, defaultFriends)
 }
 
 fun writeFeatures(fileName: String) {
@@ -35,28 +34,32 @@ fun writeFeatures(fileName: String) {
 
     val sb = StringBuilder()
 
-    for(feature in featureManager.features) {
+    for (feature in featureManager.features) {
         sb.append("Feature: ${feature.name}$s")
         when (feature.mainSetting.value) {
             is Bind.Action -> {
                 sb.append("Main: ${(feature.mainSetting as Setting<Bind.Action>).value.key.translationKey}$s")
             }
+
             is Bind.Toggle -> {
                 sb.append("Main: ${(feature.mainSetting.value as Bind.Toggle).mode.name} ${(feature.mainSetting.value as Bind.Toggle).enabled} ${(feature.mainSetting.value as Bind.Toggle).key.translationKey}$s")
             }
+
             else -> {
                 sb.append("Main: ${feature.mainSetting.value}$s")
             }
         }
-        for(setting in feature.settings) {
+        for (setting in feature.settings) {
             when (setting.value) {
                 is Bind.Action -> {
                     sb.append("${setting.name}: ${(setting as Setting<Bind.Action>).value.key.translationKey}$s")
                 }
+
                 is Bind.Toggle -> {
                     setting as Setting<Bind.Toggle>
                     sb.append("${setting.name}: ${setting.value.mode.name} ${setting.value.enabled} ${setting.value.key.translationKey}$s")
                 }
+
                 else -> {
                     sb.append("${setting.name}: ${setting.value}$s")
                 }
@@ -69,14 +72,14 @@ fun writeFeatures(fileName: String) {
 
 fun readFeatures(fileName: String) {
     val file = File(fileName)
-    if(!file.exists()) return
+    if (!file.exists()) return
 
     var feature: Feature? = null
 
-    for(line in file.readLines()) {
-        if(line.startsWith("Feature: ")) {
+    for (line in file.readLines()) {
+        if (line.startsWith("Feature: ")) {
             feature = featureManager.getFeatureByName(line.substring("Feature: ".length))
-        } else if(line.startsWith("Main: ")) {
+        } else if (line.startsWith("Main: ")) {
             feature ?: continue
             parseValue(feature.mainSetting, line.substring("Main: ".length))
         } else {
@@ -136,14 +139,14 @@ fun writeFriends(fileName: String) {
 
     val sb = StringBuilder()
 
-    for(f in friends) sb.append("$f\r\n")
+    for (f in friends) sb.append("$f\r\n")
 
     file.writeText(sb.toString())
 }
 
 fun readFriends(fileName: String) {
     val file = File(fileName)
-    if(!file.exists()) return
+    if (!file.exists()) return
 
     friends.clear()
     friends.addAll(file.readLines())

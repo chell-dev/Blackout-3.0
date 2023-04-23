@@ -15,11 +15,11 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.AxeItem
 import net.minecraft.item.SwordItem
 
-class KillAura: Feature("KillAura", Category.Combat) {
+class KillAura : Feature("KillAura", Category.Combat) {
 
     override var description = "Attack entities around you"
 
-    override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
+    override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = { onEnable() }, onDisable = { onDisable() }))
 
     private val delay = register(Setting("Attack Delay", true))
     private val using = register(Setting("While Using Item", true))
@@ -47,16 +47,16 @@ class KillAura: Feature("KillAura", Category.Combat) {
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {
-        if(delay.value && player.getAttackCooldownProgress(0.0f) != 1f) return
-        if(weaponOnly.value && (player.mainHandStack.item !is SwordItem && player.mainHandStack.item !is AxeItem)) return
-        if(!using.value && player.isUsingItem) return
+        if (delay.value && player.getAttackCooldownProgress(0.0f) != 1f) return
+        if (weaponOnly.value && (player.mainHandStack.item !is SwordItem && player.mainHandStack.item !is AxeItem)) return
+        if (!using.value && player.isUsingItem) return
 
         val target = mc.world!!.entities
             .asSequence()
             .filter { player.distanceTo(it) <= if (player.canSee(it)) range.value else wallRange.value }
             .filter { (players.value && it is PlayerEntity) || (hostile.value && it is HostileEntity) || (passive.value && it is PassiveEntity) }
             .filter { it != player }
-            .filter { if(it is PlayerEntity) !it.isFriend() else true }
+            .filter { if (it is PlayerEntity) !it.isFriend() else true }
             .filter { it as LivingEntity; !it.isDead && it.health > 0 }
             .minByOrNull {
                 it as LivingEntity
@@ -64,12 +64,12 @@ class KillAura: Feature("KillAura", Category.Combat) {
                 else player.distanceTo(it)
             }
 
-        if(target != null) {
+        if (target != null) {
             val ground = player.isOnGround
             val sprint = player.isSprinting
 
-            if(crits.value && !player.isClimbing && !player.isTouchingWater && !player.hasStatusEffect(StatusEffects.BLINDNESS) && !player.hasVehicle()) {
-                if(player.fallDistance <= 0.0f) player.fallDistance = 0.01f
+            if (crits.value && !player.isClimbing && !player.isTouchingWater && !player.hasStatusEffect(StatusEffects.BLINDNESS) && !player.hasVehicle()) {
+                if (player.fallDistance <= 0.0f) player.fallDistance = 0.01f
                 player.isOnGround = false
                 player.isSprinting = false
             }

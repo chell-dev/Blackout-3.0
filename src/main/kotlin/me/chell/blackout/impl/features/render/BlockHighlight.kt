@@ -10,10 +10,10 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.Box
 
-class BlockHighlight: ToggleFeature("Block Highlight", Category.Render, false) {
+class BlockHighlight : ToggleFeature("Block Highlight", Category.Render, false) {
 
     private val lineWidth = register(Setting("Outline Width", 1f, 0f, 10f))
-    private val lineColor = register(Setting("Outline Color", Color.sync()) {lineWidth.value != 0f})
+    private val lineColor = register(Setting("Outline Color", Color.sync()) { lineWidth.value != 0f })
     private val fillColor = register(Setting("Fill Color", Color.sync(0.5f)))
 
     override fun onEnable() {
@@ -28,11 +28,11 @@ class BlockHighlight: ToggleFeature("Block Highlight", Category.Render, false) {
     @EventHandler
     fun onRender(event: RenderWorldEvent) {
         val target = mc.crosshairTarget ?: return
-        if(target.type != HitResult.Type.BLOCK) return
+        if (target.type != HitResult.Type.BLOCK) return
         mc.gameRenderer.setBlockOutlineEnabled(false)
         val box = Box((target as BlockHitResult).blockPos)
-        if(lineWidth.value != 0f) drawBoxOutline(box, lineColor.value, lineWidth.value)
-        if(fillColor.value.alpha > 0f) drawBox(box, fillColor.value)
+        if (lineWidth.value != 0f) drawBoxOutline(box, lineColor.value, lineWidth.value)
+        if (fillColor.value.alpha > 0f) drawBox(box, fillColor.value)
     }
 
 }

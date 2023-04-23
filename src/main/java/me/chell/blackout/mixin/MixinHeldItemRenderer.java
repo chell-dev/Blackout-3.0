@@ -20,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HeldItemRenderer.class)
 public abstract class MixinHeldItemRenderer {
 
-    @Shadow protected abstract void renderArmHoldingItem(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float equipProgress, float swingProgress, Arm arm);
+    @Shadow
+    protected abstract void renderArmHoldingItem(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, float equipProgress, float swingProgress, Arm arm);
 
     @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;renderArmHoldingItem(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IFFLnet/minecraft/util/Arm;)V"), cancellable = true)
     public void renderArm(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
@@ -31,7 +32,7 @@ public abstract class MixinHeldItemRenderer {
         RenderArmEvent event = new RenderArmEvent(arm == Arm.RIGHT ? RenderArmEvent.Type.RightArm : RenderArmEvent.Type.LeftArm, matrices, equipProgress, false);
         GlobalsKt.getEventManager().post(event);
 
-        if(!event.getCanceled()) {
+        if (!event.getCanceled()) {
             renderArmHoldingItem(matrices, vertexConsumers, light, event.getEquipProgress(), swingProgress, arm);
             matrices.pop();
         }
@@ -39,10 +40,10 @@ public abstract class MixinHeldItemRenderer {
 
     @Inject(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
     public void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        if(renderMode.isFirstPerson()) {
+        if (renderMode.isFirstPerson()) {
             RenderArmEvent event = new RenderArmEvent(leftHanded ? RenderArmEvent.Type.LeftItem : RenderArmEvent.Type.RightItem, matrices, -1f, false);
             GlobalsKt.getEventManager().post(event);
-            if(event.getCanceled()) ci.cancel();
+            if (event.getCanceled()) ci.cancel();
         }
     }
 

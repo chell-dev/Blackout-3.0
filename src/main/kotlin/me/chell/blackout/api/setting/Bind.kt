@@ -13,42 +13,54 @@ abstract class Bind(var key: InputUtil.Key) {
 
     abstract fun onKey(event: InputEvent)
 
-    class Action(key: InputUtil.Key = InputUtil.Type.KEYSYM.createFromCode(GLFW_KEY_UNKNOWN),
-                 private val action: () -> Unit): Bind(key) {
-
+    class Action(
+        key: InputUtil.Key = InputUtil.Type.KEYSYM.createFromCode(GLFW_KEY_UNKNOWN),
+        private val action: () -> Unit
+    ) : Bind(key) {
         constructor(keyCode: Int, type: InputUtil.Type, action: () -> Unit) : this(type.createFromCode(keyCode), action)
 
         override fun onKey(event: InputEvent) {
-            if(key.code != GLFW_KEY_UNKNOWN && event.key == key && event.action == 1 && mc.currentScreen == null) action()
+            if (key.code != GLFW_KEY_UNKNOWN && event.key == key && event.action == 1 && mc.currentScreen == null) action()
         }
     }
 
-    class Toggle(key: InputUtil.Key = InputUtil.Type.KEYSYM.createFromCode(GLFW_KEY_UNKNOWN),
-                 enabled: Boolean = false, var mode: Mode = Mode.Toggle,
-                 private val onEnable: () -> Unit, private val onDisable: () -> Unit): Bind(key) {
-
+    class Toggle(
+        key: InputUtil.Key = InputUtil.Type.KEYSYM.createFromCode(GLFW_KEY_UNKNOWN),
+        enabled: Boolean = false, var mode: Mode = Mode.Toggle,
+        private val onEnable: () -> Unit,
+        private val onDisable: () -> Unit
+    ) : Bind(key) {
         var enabled = enabled
-        set(value) {
-            if(value) {
-                onEnable()
+            set(value) {
+                if (value) {
+                    onEnable()
+                } else {
+                    onDisable()
+                }
                 field = value
-            } else {
-                field = value
-                onDisable()
             }
-        }
 
-        constructor(keyCode: Int, type: InputUtil.Type, enabled: Boolean = false, mode: Mode = Mode.Toggle, onEnable: () -> Unit, onDisable: () -> Unit) : this(type.createFromCode(keyCode), enabled, mode, onEnable, onDisable)
+        constructor(
+            keyCode: Int,
+            type: InputUtil.Type,
+            enabled: Boolean = false,
+            mode: Mode = Mode.Toggle,
+            onEnable: () -> Unit,
+            onDisable: () -> Unit
+        ) : this(type.createFromCode(keyCode), enabled, mode, onEnable, onDisable)
 
         override fun onKey(event: InputEvent) {
-            when(event.action) {
+            when (event.action) {
                 1 -> {
-                    if(key.code != GLFW_KEY_UNKNOWN && event.key == key
-                        && mc.currentScreen == null) enabled = !enabled
+                    if (key.code != GLFW_KEY_UNKNOWN && event.key == key
+                        && mc.currentScreen == null
+                    ) enabled = !enabled
                 }
+
                 0 -> {
-                    if(key.code != GLFW_KEY_UNKNOWN && event.key == key
-                        && mode == Mode.Hold) enabled = !enabled
+                    if (key.code != GLFW_KEY_UNKNOWN && event.key == key
+                        && mode == Mode.Hold
+                    ) enabled = !enabled
                 }
             }
         }

@@ -12,9 +12,10 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class SliderButton(private val parent: GuiItem, private val setting: Setting<Number>, expandable: Boolean): Button(parent, expandable) {
+class SliderButton(private val parent: GuiItem, private val setting: Setting<Number>, expandable: Boolean) :
+    Button(parent, expandable) {
 
-    override val x: Int get() =  parent.x + parent.width - GuiItem.margin - width
+    override val x: Int get() = parent.x + parent.width - GuiItem.margin - width
     override val y: Int get() = parent.y + (parent.height / 2) - (height / 2)
 
     private val min = setting.min!!.toFloat()
@@ -31,10 +32,10 @@ class SliderButton(private val parent: GuiItem, private val setting: Setting<Num
     private val fill = Identifier(modId, "textures/gui/slider_fill.png")
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        if(dragging) {
+        if (dragging) {
             val normalized = min(max((mouseX - x) / width.toFloat(), 0f), 1f)
             val value = min + ((max - min) * normalized)
-            when(setting.value) {
+            when (setting.value) {
                 is Int -> setting.value = value.roundToInt()
                 is Double -> setting.value = (value * 10.0).roundToInt() / 10.0
                 is Float -> setting.value = (value * 10.0f).roundToInt() / 10.0f
@@ -53,14 +54,20 @@ class SliderButton(private val parent: GuiItem, private val setting: Setting<Num
         drawTexture(matrices, x, y, 0f, 0f, width, height, width, height)
 
         val text = setting.value.toString()
-        textRenderer.drawWithShadow(matrices, text, x + width - textRenderer.getWidth(text).toFloat() - GuiItem.margin, parent.y + textOffset + 1, -1)
+        textRenderer.drawWithShadow(
+            matrices,
+            text,
+            x + width - textRenderer.getWidth(text).toFloat() - GuiItem.margin,
+            parent.y + textOffset + 1,
+            -1
+        )
 
         super.render(matrices, mouseX, mouseY, delta)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
-            if(button == 0) {
+        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+            if (button == 0) {
                 dragging = true
             }
         }

@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 
-class ClientGUI: Screen(Text.literal("$modName GUI")) {
+class ClientGUI : Screen(Text.literal("$modName GUI")) {
 
     private val bannerTexture = Identifier(modId, "textures/gui/banner.png")
 
@@ -39,13 +39,13 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
     var hoveredItem: Description? = null
     private val descX get() = x + Tab.size
-    val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
+    val descY get() = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
     private val descPadding = 5f
 
     init {
-        var tabY = bannerHeight+1
+        var tabY = bannerHeight + 1
 
-        for(category in Category.values()) {
+        for (category in Category.values()) {
             tabs.add(CategoryTab(category, 0, tabY, this))
             tabY += Tab.size
         }
@@ -63,7 +63,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
     override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
         // animation linear interpolation
-        val scissorWidth = if(animationTicks > 0) {
+        val scissorWidth = if (animationTicks > 0) {
             val t = if (closing) animationTicks + delta else animationLength - animationTicks + delta
             (lerp(x.toFloat(), x + uiWidth.toFloat(), t) / animationLength).toInt()
         } else {
@@ -91,14 +91,14 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
         val mouseTab = mouseX <= x + Tab.size
 
         // tabs
-        for(tab in tabs) {
+        for (tab in tabs) {
             tab.render(matrices, mouseX, mouseY, delta)
 
-            if(mouseTab && tab is CategoryTab && mouseY >= tab.y && mouseY <= tab.y + Tab.size)
+            if (mouseTab && tab is CategoryTab && mouseY >= tab.y && mouseY <= tab.y + Tab.size)
                 hoveredItem = tab.category
         }
 
-        if(!mouseTab) {
+        if (!mouseTab) {
 
         }
 
@@ -107,7 +107,14 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
         drawHorizontalLine(matrices, descX, x + uiWidth, descY.toInt(), color)
 
-        mc.textRenderer.drawTrimmedWithShadow(matrices, hoveredItem?.description ?: "Hover over an item to see it's description.", descX + descPadding, descY + descPadding, (uiWidth - Tab.size - 1 - descPadding - descPadding).toInt(), -1)
+        mc.textRenderer.drawTrimmedWithShadow(
+            matrices,
+            hoveredItem?.description ?: "Hover over an item to see it's description.",
+            descX + descPadding,
+            descY + descPadding,
+            (uiWidth - Tab.size - 1 - descPadding - descPadding).toInt(),
+            -1
+        )
 
         disableScissor()
 
@@ -115,32 +122,32 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(animationTicks > 0) return false
+        if (animationTicks > 0) return false
 
-        if(Console.mouseClicked(mouseX, mouseY, button)) return true
+        if (Console.mouseClicked(mouseX, mouseY, button)) return true
 
-        for(tab in tabs) {
-            if(tab.mouseClicked(mouseX, mouseY, button)) return true
+        for (tab in tabs) {
+            if (tab.mouseClicked(mouseX, mouseY, button)) return true
         }
 
         return false
     }
 
     override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(Console.mouseReleased(mouseX, mouseY, button)) return true
+        if (Console.mouseReleased(mouseX, mouseY, button)) return true
 
-        for(tab in tabs) {
-            if(tab.mouseReleased(mouseX, mouseY, button)) return true
+        for (tab in tabs) {
+            if (tab.mouseReleased(mouseX, mouseY, button)) return true
         }
 
         return false
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        if(Console.keyPressed(keyCode, scanCode, modifiers)) return true
+        if (Console.keyPressed(keyCode, scanCode, modifiers)) return true
 
-        for(tab in tabs) {
-            if(tab.keyPressed(keyCode, scanCode, modifiers)) return true
+        for (tab in tabs) {
+            if (tab.keyPressed(keyCode, scanCode, modifiers)) return true
         }
 
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
@@ -151,20 +158,20 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     }
 
     override fun charTyped(chr: Char, modifiers: Int): Boolean {
-        if(Console.charTyped(chr, modifiers)) return true
+        if (Console.charTyped(chr, modifiers)) return true
 
-        for(tab in tabs) {
-            if(tab.charTyped(chr, modifiers)) return true
+        for (tab in tabs) {
+            if (tab.charTyped(chr, modifiers)) return true
         }
 
         return false
     }
 
     override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
-        if(Console.mouseScrolled(mouseX, mouseY, amount)) return true
+        if (Console.mouseScrolled(mouseX, mouseY, amount)) return true
 
-        for(tab in tabs) {
-            if(tab.mouseScrolled(mouseX, mouseY, amount)) return true
+        for (tab in tabs) {
+            if (tab.mouseScrolled(mouseX, mouseY, amount)) return true
         }
 
         return false
@@ -177,20 +184,20 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     }
 
     override fun tick() {
-        if(animationTicks > 0) {
+        if (animationTicks > 0) {
             animationTicks--
-            if(closing && animationTicks == 0) mc.setScreen(null)
+            if (closing && animationTicks == 0) mc.setScreen(null)
         } else {
             Console.tick()
         }
     }
 
     override fun close() {
-        for(tab in tabs) {
+        for (tab in tabs) {
             tab.onClose()
         }
 
-        if(GuiFeature.instance.mainSetting.value.key.code == GLFW.GLFW_KEY_UNKNOWN)
+        if (GuiFeature.instance.mainSetting.value.key.code == GLFW.GLFW_KEY_UNKNOWN)
             GuiFeature.instance.mainSetting.value.setKey(InputUtil.GLFW_KEY_BACKSLASH, InputUtil.Type.KEYSYM)
 
         closing = true
@@ -207,31 +214,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    override fun isMouseOver(mouseX: Double, mouseY: Double): Boolean {
-        return super.isMouseOver(mouseX, mouseY)
-    }
-
-    override fun shouldCloseOnEsc(): Boolean {
-        return super.shouldCloseOnEsc()
-    }
-
-    override fun clearAndInit() {
-        super.clearAndInit()
-    }
-
-    override fun removed() {
-        super.removed()
-    }
-
     override fun renderBackground(matrices: MatrixStack?) {
         super.renderBackground(matrices)
     }
 
-    override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {
-        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY)
-    }
-
-    override fun keyReleased(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        return super.keyReleased(keyCode, scanCode, modifiers)
-    }
 }

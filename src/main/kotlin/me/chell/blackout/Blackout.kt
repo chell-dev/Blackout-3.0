@@ -30,7 +30,7 @@ class Blackout {
         hudEditor = HudEditor()
         eventManager.register(Rainbow)
 
-        Runtime.getRuntime().addShutdownHook(Thread{
+        Runtime.getRuntime().addShutdownHook(Thread {
             println("Saving config")
             writeClientFile()
             val f = readClientFile()
@@ -38,7 +38,8 @@ class Blackout {
             writeFriends(f[1])
         })
 
-        print("""
+        print(
+            """
             
              ▄▄▄▄    ██▓    ▄▄▄       ▄████▄   ██ ▄█▀ ▒█████   █    ██ ▄▄▄█████▓
             ▓█████▄ ▓██▒   ▒████▄    ▒██▀ ▀█   ██▄█▒ ▒██▒  ██▒ ██  ▓██▒▓  ██▒ ▓▒
@@ -52,6 +53,7 @@ class Blackout {
                   ░                  ░                                          
             
             
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 }

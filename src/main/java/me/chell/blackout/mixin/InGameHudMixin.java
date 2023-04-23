@@ -22,21 +22,21 @@ public class InGameHudMixin {
     public void renderOverlay(Identifier texture, float opacity, CallbackInfo ci) {
         RenderHudEvent.Overlay event = new RenderHudEvent.Overlay(texture, false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "renderHeldItemTooltip", at = @At("HEAD"), cancellable = true)
     public void renderOverlay(MatrixStack matrices, CallbackInfo ci) {
         RenderHudEvent.Tooltip event = new RenderHudEvent.Tooltip(false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "renderPortalOverlay", at = @At("HEAD"), cancellable = true)
     public void renderOverlay(float nauseaStrength, CallbackInfo ci) {
         RenderHudEvent.Portal event = new RenderHudEvent.Portal(false);
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
 }

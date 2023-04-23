@@ -7,7 +7,7 @@ import me.chell.blackout.api.util.modName
 import me.chell.blackout.api.util.modVersion
 
 /** @see me.chell.blackout.mixin.MinecraftClientMixin */
-class WindowTitle: ToggleFeature("Change Window Title", Category.Client, true) {
+class WindowTitle : ToggleFeature("Change Window Title", Category.Client, true) {
 
     val title = "$modName $modVersion"
 

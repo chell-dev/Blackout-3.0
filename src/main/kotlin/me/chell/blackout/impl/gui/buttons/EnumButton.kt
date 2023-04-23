@@ -9,7 +9,8 @@ import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 
-class EnumButton(private val parent: GuiItem, private val setting: Setting<Enum<*>>, expandable: Boolean): Button(parent, expandable) {
+class EnumButton(private val parent: GuiItem, private val setting: Setting<Enum<*>>, expandable: Boolean) :
+    Button(parent, expandable) {
 
     override var width = 0
     override val height = textRenderer.fontHeight
@@ -27,9 +28,9 @@ class EnumButton(private val parent: GuiItem, private val setting: Setting<Enum<
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(button == 0 && mouseX >= parent.x && mouseX <= parent.x + parent.width && mouseY >= parent.y && mouseY <= parent.y + parent.height) {
-            if(setting.value.ordinal == constants.size-1) setting.value = constants[0]
-            else setting.value = constants[setting.value.ordinal+1]
+        if (button == 0 && mouseX >= parent.x && mouseX <= parent.x + parent.width && mouseY >= parent.y && mouseY <= parent.y + parent.height) {
+            if (setting.value.ordinal == constants.size - 1) setting.value = constants[0]
+            else setting.value = constants[setting.value.ordinal + 1]
 
             mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
             return true

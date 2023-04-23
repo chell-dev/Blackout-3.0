@@ -25,32 +25,32 @@ public class MinecraftClientMixin {
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 2, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void getWindowTitle(CallbackInfoReturnable<String> cir, StringBuilder stringBuilder) {
-        if(WindowTitle.instance != null && WindowTitle.instance.getMainSetting().getValue()) {
+        if (WindowTitle.instance != null && WindowTitle.instance.getMainSetting().getValue()) {
             FunctionsKt.setString(stringBuilder, WindowTitle.instance.getTitle());
         }
     }
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 4, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void singlePlayer(CallbackInfoReturnable<String> cir, StringBuilder stringBuilder) {
-        if(Blackout.instance != null)
+        if (Blackout.instance != null)
             GlobalsKt.getEventManager().post(new ServerEvent.SinglePlayer());
     }
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 5, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void realms(CallbackInfoReturnable<String> cir, StringBuilder stringBuilder) {
-        if(Blackout.instance != null)
+        if (Blackout.instance != null)
             GlobalsKt.getEventManager().post(new ServerEvent.Realms());
     }
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 6, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void lan(CallbackInfoReturnable<String> cir, StringBuilder stringBuilder) {
-        if(Blackout.instance != null)
+        if (Blackout.instance != null)
             GlobalsKt.getEventManager().post(new ServerEvent.Lan());
     }
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 7, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void multiPlayer(CallbackInfoReturnable<String> cir, StringBuilder stringBuilder) {
-        if(Blackout.instance != null)
+        if (Blackout.instance != null)
             GlobalsKt.getEventManager().post(new ServerEvent.MultiPlayer());
     }
 

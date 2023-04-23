@@ -11,11 +11,11 @@ import me.chell.blackout.mixin.accessors.MinecraftClientAccessor
 import net.minecraft.item.Items
 import net.minecraft.util.Hand
 
-class XpBind: Feature("XP Bind", Category.Combat) {
+class XpBind : Feature("XP Bind", Category.Combat) {
 
     override var description = "Throw XP bottles"
 
-    override val mainSetting = Setting("Bind", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
+    override val mainSetting = Setting("Bind", Bind.Toggle(onEnable = { onEnable() }, onDisable = { onDisable() }))
 
     private val armor = register(Setting("Stop on 100% durability", true))
     private val feet = register(Setting("Throw at feet", true))
@@ -33,22 +33,22 @@ class XpBind: Feature("XP Bind", Category.Combat) {
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {
-        if(armor.value && player.inventory.armor.none { it.isDamaged }) {
+        if (armor.value && player.inventory.armor.none { it.isDamaged }) {
             mainSetting.value.enabled = false
             return
         }
 
-        if(!fast.value && accessor.itemUseCooldown > 0) return
+        if (!fast.value && accessor.itemUseCooldown > 0) return
 
-        if(player.inventory.mainHandStack.item == Items.EXPERIENCE_BOTTLE) {
+        if (player.inventory.mainHandStack.item == Items.EXPERIENCE_BOTTLE) {
             throwXp(Hand.MAIN_HAND)
-        } else if(player.inventory.offHand[0].item == Items.EXPERIENCE_BOTTLE) {
+        } else if (player.inventory.offHand[0].item == Items.EXPERIENCE_BOTTLE) {
             throwXp(Hand.OFF_HAND)
         } else {
             val currentSlot = player.inventory.selectedSlot
 
             val xp = player.inventory.findItemInHotbar(Items.EXPERIENCE_BOTTLE)
-            if(xp != -1) {
+            if (xp != -1) {
                 player.inventory.selectedSlot = xp
                 throwXp(Hand.MAIN_HAND)
                 player.inventory.selectedSlot = currentSlot
@@ -59,9 +59,9 @@ class XpBind: Feature("XP Bind", Category.Combat) {
 
     private fun throwXp(hand: Hand) {
         val currentPitch = player.pitch
-        if(feet.value) player.pitch = 90f
+        if (feet.value) player.pitch = 90f
         player.useItem(hand)
-        if(!fast.value) accessor.itemUseCooldown = 4
+        if (!fast.value) accessor.itemUseCooldown = 4
         player.pitch = currentPitch
     }
 

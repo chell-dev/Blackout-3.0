@@ -25,28 +25,32 @@ import java.time.Instant;
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class ClientPlayNetworkHandlerMixin {
 
-    @Shadow private LastSeenMessagesCollector lastSeenMessagesCollector;
+    @Shadow
+    private LastSeenMessagesCollector lastSeenMessagesCollector;
 
-    @Shadow private MessageChain.Packer messagePacker;
+    @Shadow
+    private MessageChain.Packer messagePacker;
 
-    @Shadow public abstract void sendPacket(Packet<?> packet);
+    @Shadow
+    public abstract void sendPacket(Packet<?> packet);
 
-    @Shadow protected abstract ParseResults<CommandSource> parse(String command);
+    @Shadow
+    protected abstract ParseResults<CommandSource> parse(String command);
 
     @Inject(method = "onExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V"), cancellable = true)
     public void onExplosion(ExplosionS2CPacket packet, CallbackInfo ci) {
         PlayerKnockbackEvent event = new PlayerKnockbackEvent();
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "onEntityVelocityUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setVelocityClient(DDD)V"), cancellable = true)
     public void onVelocityUpdate(EntityVelocityUpdateS2CPacket packet, CallbackInfo ci) {
-        if(packet.getId() != GlobalsKt.getPlayer().getId()) return;
+        if (packet.getId() != GlobalsKt.getPlayer().getId()) return;
 
         PlayerKnockbackEvent event = new PlayerKnockbackEvent();
         GlobalsKt.getEventManager().post(event);
-        if(event.getCanceled()) ci.cancel();
+        if (event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
@@ -55,7 +59,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
         GlobalsKt.getEventManager().post(event);
 
         ci.cancel();
-        if(event.getCanceled()) return;
+        if (event.getCanceled()) return;
         content = event.getText();
 
         Instant instant = Instant.now();
@@ -71,7 +75,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
         GlobalsKt.getEventManager().post(event);
 
         ci.cancel();
-        if(event.getCanceled()) return;
+        if (event.getCanceled()) return;
         command = event.getText();
 
         Instant instant = Instant.now();

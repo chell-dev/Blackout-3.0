@@ -12,15 +12,15 @@ class EventManager {
     private val registered = ConcurrentHashMap<KClass<out Event>, MutableList<Pair<Any, KFunction<*>>>>()
 
     fun register(obj: Any) {
-        for(f in obj::class.declaredFunctions) {
-            if(f.annotations.none { it is EventHandler }) continue
+        for (f in obj::class.declaredFunctions) {
+            if (f.annotations.none { it is EventHandler }) continue
 
             registered.getOrPut(f.eventType, ::CopyOnWriteArrayList).add(Pair(obj, f))
         }
     }
 
     fun unregister(obj: Any) {
-        for(f in obj::class.declaredFunctions) {
+        for (f in obj::class.declaredFunctions) {
             if (f.annotations.none { it is EventHandler }) continue
 
             registered[f.eventType]?.removeIf { it.second == f }

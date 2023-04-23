@@ -7,7 +7,7 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 import java.awt.Color
 
-abstract class GuiItem(val tab: Tab): DrawableHelper() {
+abstract class GuiItem(val tab: Tab) : DrawableHelper() {
 
     companion object {
         const val margin = 5
@@ -23,7 +23,7 @@ abstract class GuiItem(val tab: Tab): DrawableHelper() {
     private val background = Identifier(modId, "textures/gui/item.png")
     private val border = Identifier(modId, "textures/gui/item_border.png")
 
-    open fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
+    open fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         /*
         RenderSystem.setShaderTexture(0, background)
         RenderSystem.setShaderColor(1f, 1f, 1f, 0.59f)
@@ -52,7 +52,7 @@ abstract class GuiItem(val tab: Tab): DrawableHelper() {
 
     open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean = false
 
-    open  fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean = false
+    open fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean = false
 
     open fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean = false
 

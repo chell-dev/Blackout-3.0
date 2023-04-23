@@ -4,7 +4,7 @@ import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
-class Cps: Widget("CPS") {
+class Cps : Widget("CPS") {
 
     override var description = "(debug) Crystals per second"
 

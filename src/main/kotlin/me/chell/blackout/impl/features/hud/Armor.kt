@@ -6,7 +6,7 @@ import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
-class Armor: Widget("Armor") {
+class Armor : Widget("Armor") {
 
     override var width = 64
     override var height = 16
@@ -15,7 +15,7 @@ class Armor: Widget("Armor") {
         super.render(matrices, mouseX, mouseY, delta)
 
         var itemX = x.value
-        for(stack in player.armorItems.reversed()) {
+        for (stack in player.armorItems.reversed()) {
             mc.itemRenderer.renderInGui(stack, itemX, y.value)
             mc.itemRenderer.renderGuiItemOverlay(textRenderer, stack, itemX, y.value)
             itemX += 16

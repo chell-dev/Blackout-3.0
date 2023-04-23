@@ -8,13 +8,18 @@ import me.chell.blackout.api.util.readFeatures
 import me.chell.blackout.api.util.writeFeatures
 import java.io.File
 
-class ConfigFeature: Feature("Config", Category.Client) {
+class ConfigFeature : Feature("Config", Category.Client) {
 
     override val mainSetting = Setting("File", File(defaultConfig))
 
     val save = register(Setting("Save", Runnable { writeFeatures(mainSetting.value.absolutePath) }))
     val load = register(Setting("Load", false))
-    val confirmLoad = register(Setting("Confirm Load", Runnable { readFeatures(mainSetting.value.absolutePath); load.value = false }, level = 2) {load.value})
+    val confirmLoad = register(
+        Setting(
+            "Confirm Load",
+            Runnable { readFeatures(mainSetting.value.absolutePath); load.value = false },
+            level = 2
+        ) { load.value })
 
     init {
         mainSetting.value.parentFile.mkdirs()

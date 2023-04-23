@@ -11,7 +11,8 @@ import me.chell.blackout.impl.gui.tabs.FriendsTab
 import net.minecraft.client.network.AbstractClientPlayerEntity
 import net.minecraft.client.util.math.MatrixStack
 
-class FriendItem(val friend: String, override var x: Int, override var y: Int, val parent: FriendsTab): GuiItem(parent) {
+class FriendItem(val friend: String, override var x: Int, override var y: Int, val parent: FriendsTab) :
+    GuiItem(parent) {
 
     override val width = 300 - Tab.size - 1 - margin - margin
     override var height = 28
@@ -40,7 +41,7 @@ class FriendItem(val friend: String, override var x: Int, override var y: Int, v
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(mouseX >= x + width - this.button.width - margin - margin && mouseX <= x + width && mouseY >= y && mouseY <= y + height)
+        if (mouseX >= x + width - this.button.width - margin - margin && mouseX <= x + width && mouseY >= y && mouseY <= y + height)
             friends.remove(friend); parent.removeQueue.add(this)
         return this.button.mouseClicked(mouseX, mouseY, button)
     }

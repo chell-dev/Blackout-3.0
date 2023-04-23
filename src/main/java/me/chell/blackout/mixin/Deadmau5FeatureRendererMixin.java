@@ -28,7 +28,8 @@ public abstract class Deadmau5FeatureRendererMixin extends FeatureRenderer<Abstr
     @Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/client/network/AbstractClientPlayerEntity;FFFFFF)V", at = @At("HEAD"), cancellable = true)
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
         ci.cancel();
-        if(!Cosmetics.Companion.getEars(abstractClientPlayerEntity.getName().getString()) || abstractClientPlayerEntity.isInvisible()) return;
+        if (!Cosmetics.Companion.getEars(abstractClientPlayerEntity.getName().getString()) || abstractClientPlayerEntity.isInvisible())
+            return;
 
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntitySolid(abstractClientPlayerEntity.getSkinTexture()));
         int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0f);
@@ -38,7 +39,7 @@ public abstract class Deadmau5FeatureRendererMixin extends FeatureRenderer<Abstr
             matrixStack.push();
             matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(o));
             matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(p));
-            matrixStack.translate(0.375f * (float)(n * 2 - 1), 0.0f, 0.0f);
+            matrixStack.translate(0.375f * (float) (n * 2 - 1), 0.0f, 0.0f);
             matrixStack.translate(0.0f, -0.375f, 0.0f);
             matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-p));
             matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-o));

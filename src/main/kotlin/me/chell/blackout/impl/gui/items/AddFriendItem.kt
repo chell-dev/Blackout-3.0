@@ -10,7 +10,7 @@ import me.chell.blackout.impl.gui.buttons.RunnableButton
 import net.minecraft.client.util.math.MatrixStack
 import org.lwjgl.glfw.GLFW
 
-class AddFriendItem(override var x: Int, override var y: Int, tab: Tab): GuiItem(tab) {
+class AddFriendItem(override var x: Int, override var y: Int, tab: Tab) : GuiItem(tab) {
 
     override val width = 300 - Tab.size - 1 - margin - margin
     override var height = 28
@@ -18,22 +18,30 @@ class AddFriendItem(override var x: Int, override var y: Int, tab: Tab): GuiItem
     private var input = ""
     private var listening = false
 
-    override val button = RunnableButton(this, Setting("Add", Runnable{}), false, "+")
+    override val button = RunnableButton(this, Setting("Add", Runnable {}), false, "+")
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)
 
         val center = y.toFloat() + (height / 2) - (mc.textRenderer.fontHeight / 2)
-        mc.textRenderer.drawWithShadow(matrices, if(listening) input + "_" else "Add Friend:", x + margin.toFloat(), center, if(listening) -1 else 0xcacaca)
+        mc.textRenderer.drawWithShadow(
+            matrices,
+            if (listening) input + "_" else "Add Friend:",
+            x + margin.toFloat(),
+            center,
+            if (listening) -1 else 0xcacaca
+        )
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(listening) {
-            if(!isFriend(input) && mouseX >= x + width - this.button.width - margin - margin && mouseX <= x + width && mouseY >= y && mouseY <= y + height) friends.add(input)
+        if (listening) {
+            if (!isFriend(input) && mouseX >= x + width - this.button.width - margin - margin && mouseX <= x + width && mouseY >= y && mouseY <= y + height) friends.add(
+                input
+            )
             input = ""
             listening = false
             return true
-        } else if(mouseX >= x && mouseX <= x + width - this.button.width && mouseY >= y && mouseY <= y + height) {
+        } else if (mouseX >= x && mouseX <= x + width - this.button.width && mouseY >= y && mouseY <= y + height) {
             listening = true
             return true
         }
@@ -41,21 +49,23 @@ class AddFriendItem(override var x: Int, override var y: Int, tab: Tab): GuiItem
     }
 
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        when(keyCode) {
+        when (keyCode) {
             GLFW.GLFW_KEY_ESCAPE -> {
-                if(!listening) return false
+                if (!listening) return false
                 listening = false
                 input = ""
                 return true
             }
+
             GLFW.GLFW_KEY_KP_ENTER, GLFW.GLFW_KEY_ENTER -> {
                 listening = false
-                if(!isFriend(input)) friends.add(input)
+                if (!isFriend(input)) friends.add(input)
                 input = ""
                 return true
             }
+
             GLFW.GLFW_KEY_BACKSPACE -> {
-                if(input.isNotEmpty()) input = input.dropLast(1)
+                if (input.isNotEmpty()) input = input.dropLast(1)
                 return true
             }
         }
@@ -64,7 +74,7 @@ class AddFriendItem(override var x: Int, override var y: Int, tab: Tab): GuiItem
     }
 
     override fun charTyped(chr: Char, modifiers: Int): Boolean {
-        if(listening) {
+        if (listening) {
             input += chr
             return true
         }

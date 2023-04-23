@@ -14,7 +14,7 @@ public class MouseMixin {
 
     @Inject(method = "onMouseButton", at = @At("HEAD"))
     public void onKey(long window, int key, int action, int modifiers, CallbackInfo ci) {
-        if(window == GlobalsKt.getMc().getWindow().getHandle())
+        if (window == GlobalsKt.getMc().getWindow().getHandle())
             GlobalsKt.getEventManager().post(new InputEvent.Mouse(InputUtil.Type.MOUSE.createFromCode(key), action, modifiers));
     }
 
