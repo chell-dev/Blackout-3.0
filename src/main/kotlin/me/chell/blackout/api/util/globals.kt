@@ -12,9 +12,9 @@ const val modName = "Blackout"
 const val modId = "blackout"
 const val modVersion = "3.0"
 
-val eventManager get() = Blackout.instance.eventManager
+val eventManager get() = Blackout.eventManager
 
-val featureManager get() = Blackout.instance.featureManager
+val featureManager get() = Blackout.featureManager
 
 val mc get() = MinecraftClient.getInstance()!!
 

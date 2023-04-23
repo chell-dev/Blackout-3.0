@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(LightmapTextureManager.class)
 public class LightmapTextureManagerMixin {
-
     @Redirect(method = "update", at = @At(value = "INVOKE", target = "Lorg/joml/Vector3f;lerp(Lorg/joml/Vector3fc;F)Lorg/joml/Vector3f;", ordinal = 5))
     public Vector3f lerp(Vector3f instance, Vector3fc other, float t) {
         if(Fullbright.instance.getMainSetting().getValue()) t = 1000f;

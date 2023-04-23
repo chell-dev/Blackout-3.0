@@ -39,7 +39,7 @@ class FeatureManager {
     @EventHandler
     fun onRenderHud(event: RenderHudEvent.Post) {
         if(mc.currentScreen is HudEditor) return
-        for(widget in Blackout.instance.hudEditor.widgets) {
+        for(widget in Blackout.hudEditor.widgets) {
             if(widget.mainSetting.value)
                 widget.render(event.matrices, -1, -1, event.tickDelta)
         }

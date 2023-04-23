@@ -20,6 +20,6 @@ class GuiFeature: Feature("GUI Bind", Category.Client) {
         instance = this
     }
 
-    override val mainSetting = Setting("Open", Bind.Action(InputUtil.GLFW_KEY_BACKSLASH, InputUtil.Type.KEYSYM, action = { mc.setScreen(Blackout.instance.clientGUI) }))
+    override val mainSetting = Setting("Open", Bind.Action(InputUtil.GLFW_KEY_BACKSLASH, InputUtil.Type.KEYSYM, action = { mc.setScreen(Blackout.clientGUI) }))
 
 }

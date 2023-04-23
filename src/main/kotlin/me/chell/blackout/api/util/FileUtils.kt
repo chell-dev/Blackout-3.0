@@ -25,7 +25,6 @@ fun readClientFile(): List<String> {
     else listOf(defaultConfig, defaultFriends)
 }
 
-@Suppress("unchecked_cast")
 fun writeFeatures(fileName: String) {
     val file = File(fileName)
     file.parentFile.mkdirs()

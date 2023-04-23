@@ -7,15 +7,13 @@ import me.chell.blackout.impl.gui.ClientGUI
 import me.chell.blackout.impl.gui.HudEditor
 
 class Blackout {
-
     companion object {
         lateinit var instance: Blackout
+        lateinit var eventManager: EventManager
+        lateinit var featureManager: FeatureManager
+        lateinit var clientGUI: ClientGUI
+        lateinit var hudEditor: HudEditor
     }
-
-    lateinit var eventManager: EventManager
-    lateinit var featureManager: FeatureManager
-    lateinit var clientGUI: ClientGUI
-    lateinit var hudEditor: HudEditor
 
     fun init() {
         instance = this

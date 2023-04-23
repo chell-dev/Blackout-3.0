@@ -118,7 +118,7 @@ class HudEditor: Screen(Text.of("$modName HUD Editor")) {
         for(w in widgets) {
             w.mouseReleased()
         }
-        mc.setScreen(Blackout.instance.clientGUI)
+        mc.setScreen(Blackout.clientGUI)
     }
 
     override fun shouldPause() = false
