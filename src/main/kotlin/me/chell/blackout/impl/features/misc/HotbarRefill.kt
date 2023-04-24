@@ -11,7 +11,7 @@ import me.chell.blackout.api.util.player
 import net.minecraft.item.Items
 import net.minecraft.screen.slot.SlotActionType
 
-class HotbarRefill: ToggleFeature("Hotbar Refill", Category.Misc, false) {
+object HotbarRefill: ToggleFeature("Hotbar Refill", Category.Misc, false) {
 
     override var description = "Refills stacks in your hotbar"
 

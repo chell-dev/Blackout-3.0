@@ -6,7 +6,7 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.isFriend
 import me.chell.blackout.api.util.player
 
-class Cosmetics: ToggleFeature("Cosmetics", Category.Render, false) {
+object Cosmetics: ToggleFeature("Cosmetics", Category.Render, false) {
 
     override var description = "Client-side player cosmetics"
 
@@ -14,17 +14,8 @@ class Cosmetics: ToggleFeature("Cosmetics", Category.Render, false) {
     private val ears = register(Setting("Ears", false))
     private val mode = register(Setting("Mode", Mode.Self))
 
-    companion object {
-        private lateinit var instance: Cosmetics
-
-        fun getCape(name: String) = instance.get(name) && instance.mainSetting.value && instance.cape.value
-        fun getEars(name: String) = instance.get(name) && instance.mainSetting.value && instance.ears.value
-
-    }
-
-    init {
-        instance = this
-    }
+    fun getCape(name: String) = get(name) && mainSetting.value && cape.value
+    fun getEars(name: String) = get(name) && mainSetting.value && ears.value
 
     private fun get(name: String): Boolean {
         return when(mode.value) {

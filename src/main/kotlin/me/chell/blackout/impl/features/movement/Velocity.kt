@@ -6,7 +6,7 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.util.eventManager
 
-class Velocity: ToggleFeature("Velocity", Category.Movement, false) {
+object Velocity: ToggleFeature("Velocity", Category.Movement, false) {
 
     override var description = "Anti knockback"
 

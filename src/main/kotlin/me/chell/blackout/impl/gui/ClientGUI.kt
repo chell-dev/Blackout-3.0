@@ -190,8 +190,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
             tab.onClose()
         }
 
-        if(GuiFeature.instance.mainSetting.value.key.code == GLFW.GLFW_KEY_UNKNOWN)
-            GuiFeature.instance.mainSetting.value.setKey(InputUtil.GLFW_KEY_BACKSLASH, InputUtil.Type.KEYSYM)
+        if(GuiFeature.mainSetting.value.key.code == GLFW.GLFW_KEY_UNKNOWN)
+            GuiFeature.mainSetting.value.setKey(InputUtil.GLFW_KEY_BACKSLASH, InputUtil.Type.KEYSYM)
 
         closing = true
         animationTicks = animationLength

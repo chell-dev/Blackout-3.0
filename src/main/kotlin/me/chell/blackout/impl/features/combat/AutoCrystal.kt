@@ -35,7 +35,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
-class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
+object AutoCrystal: Feature("AutoCrystal", Category.Combat) {
 
     override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
 

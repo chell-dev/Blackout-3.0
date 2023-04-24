@@ -15,7 +15,7 @@ import net.minecraft.client.render.VertexFormats
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 
-class HoleESP: ToggleFeature("Hole ESP", Category.Render, false) {
+object HoleESP: ToggleFeature("Hole ESP", Category.Render, false) {
 
     private val range = register(Setting("Range", 10, 1, 20))
     private val height = register(Setting("Render Height", 1.0, -1.0, 1.0))

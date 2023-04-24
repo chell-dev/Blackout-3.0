@@ -23,7 +23,7 @@ import net.minecraft.util.math.Vec3d
 import org.joml.Matrix4f
 import kotlin.math.max
 
-class Nametags: ToggleFeature("Nametags", Category.Render, false) {
+object Nametags: ToggleFeature("Nametags", Category.Render, false) {
 
     override fun onEnable() {
         eventManager.register(this)

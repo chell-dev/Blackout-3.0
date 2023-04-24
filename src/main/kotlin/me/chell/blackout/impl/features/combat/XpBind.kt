@@ -11,7 +11,7 @@ import me.chell.blackout.mixin.accessors.MinecraftClientAccessor
 import net.minecraft.item.Items
 import net.minecraft.util.Hand
 
-class XpBind: Feature("XP Bind", Category.Combat) {
+object XpBind: Feature("XP Bind", Category.Combat) {
 
     override var description = "Throw XP bottles"
 

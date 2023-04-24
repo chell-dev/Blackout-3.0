@@ -13,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 import kotlin.random.Random
 
-class Neko: Widget("Neko") {
+object Neko: Widget("Neko") {
 
     override var description = "I <3 Neko"
 

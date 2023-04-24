@@ -9,7 +9,7 @@ import net.minecraft.client.util.math.MatrixStack
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 
-class Keybinds: Widget("Keybinds") {
+object Keybinds: Widget("Keybinds") {
 
     override var width = 50
     override var height = textRenderer.fontHeight

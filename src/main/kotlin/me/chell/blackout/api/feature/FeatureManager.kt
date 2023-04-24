@@ -25,7 +25,7 @@ class FeatureManager {
 
         for(c in list) {
             if(!c.isAnnotationPresent(NoRegister::class.java))
-                features.add(c.getDeclaredConstructor().newInstance() as Feature)
+                features.add(c.kotlin.objectInstance as Feature? ?: c.getDeclaredConstructor().newInstance() as Feature)
         }
     }
 

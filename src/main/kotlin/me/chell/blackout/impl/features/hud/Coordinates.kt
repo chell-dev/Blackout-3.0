@@ -10,7 +10,7 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.math.Direction
 import net.minecraft.world.dimension.DimensionTypes
 
-class Coordinates: Widget("Coordinates") {
+object Coordinates: Widget("Coordinates") {
 
     override var width = 10
     override var height = textRenderer.fontHeight * 2

@@ -10,7 +10,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.Box
 
-class BlockHighlight: ToggleFeature("Block Highlight", Category.Render, false) {
+object BlockHighlight: ToggleFeature("Block Highlight", Category.Render, false) {
 
     private val lineWidth = register(Setting("Outline Width", 1f, 0f, 10f))
     private val lineColor = register(Setting("Outline Color", Color.sync()) {lineWidth.value != 0f})

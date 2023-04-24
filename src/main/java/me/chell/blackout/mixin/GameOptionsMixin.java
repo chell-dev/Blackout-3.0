@@ -13,7 +13,7 @@ public class GameOptionsMixin {
 
     @Inject(method = "getFov", at = @At("HEAD"), cancellable = true)
     public void getPositionOffset(CallbackInfoReturnable<SimpleOption<Integer>> cir) {
-        if(FovSlider.enabled.getValue()) cir.setReturnValue(FovSlider.fov);
+        if(FovSlider.INSTANCE.getMainSetting().getValue()) cir.setReturnValue(FovSlider.INSTANCE.getSetting());
     }
 
 }

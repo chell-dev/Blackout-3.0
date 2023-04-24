@@ -11,9 +11,7 @@ class Cps: Widget("CPS") {
     override var width = 50
     override var height = textRenderer.fontHeight
 
-    companion object {
-        var value = 0
-    }
+    var value = 0
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)

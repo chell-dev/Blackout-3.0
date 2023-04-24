@@ -7,7 +7,7 @@ import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
-class OffHandItem: Widget("Item Count - Offhand") {
+object OffHandItem: Widget("Item Count - Offhand") {
 
     override var width = 16
     override var height = 16

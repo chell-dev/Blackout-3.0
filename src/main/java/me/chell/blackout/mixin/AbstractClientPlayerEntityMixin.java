@@ -23,7 +23,7 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
 
     @Inject(method = "getCapeTexture", at = @At("HEAD"), cancellable = true)
     public void cape(CallbackInfoReturnable<Identifier> cir) {
-        if(Cosmetics.Companion.getCape(getName().getString())) cir.setReturnValue(id);
+        if(Cosmetics.INSTANCE.getCape(getName().getString())) cir.setReturnValue(id);
     }
 
 }

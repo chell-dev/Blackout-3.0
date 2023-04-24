@@ -10,17 +10,17 @@ class Color(red: Float, green: Float, blue: Float, var alpha: Float = 1f, var ra
     constructor(rgb: Int, alpha: Int): this(rgb.red, rgb.green, rgb.blue, alpha / 255f)
 
     var red = red
-        get() = if(sync) ColorsFeature.instance.sync.value.red else if(rainbow) Rainbow.color.red else field
+        get() = if(sync) ColorsFeature.sync.value.red else if(rainbow) Rainbow.color.red else field
 
     var green = green
-        get() = if(sync) ColorsFeature.instance.sync.value.green else if(rainbow) Rainbow.color.green else field
+        get() = if(sync) ColorsFeature.sync.value.green else if(rainbow) Rainbow.color.green else field
 
     var blue = blue
-        get() = if(sync) ColorsFeature.instance.sync.value.blue else if(rainbow) Rainbow.color.blue else field
+        get() = if(sync) ColorsFeature.sync.value.blue else if(rainbow) Rainbow.color.blue else field
 
     var sync = sync
         set(value) {
-            if(this != ColorsFeature.instance.sync.value) field = value
+            if(this != ColorsFeature.sync.value) field = value
         }
 
     val rgb: Int get() {

@@ -10,7 +10,7 @@ import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Vec3d
 
-class Speed: Widget("Movement Speed") {
+object Speed: Widget("Movement Speed") {
 
     override var width = 10
     override var height = textRenderer.fontHeight

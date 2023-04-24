@@ -8,19 +8,11 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen
 
-class FirstPersonBody: ToggleFeature("First Person Body", Category.Render, false) {
+object FirstPersonBody: ToggleFeature("First Person Body", Category.Render, false) {
 
     override var description = "See your own legs"
 
-    companion object {
-        private lateinit var instance: FirstPersonBody
-
-        fun isActive() = instance.mainSetting.value && mc.options.perspective.isFirstPerson && mc.currentScreen !is AbstractInventoryScreen<*>
-    }
-
-    init {
-        instance = this
-    }
+    fun isActive() = mainSetting.value && mc.options.perspective.isFirstPerson && mc.currentScreen !is AbstractInventoryScreen<*>
 
     override fun onEnable() {
         eventManager.register(this)

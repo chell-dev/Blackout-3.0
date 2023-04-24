@@ -6,7 +6,7 @@ import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
-class Armor: Widget("Armor") {
+object Armor: Widget("Armor") {
 
     override var width = 64
     override var height = 16

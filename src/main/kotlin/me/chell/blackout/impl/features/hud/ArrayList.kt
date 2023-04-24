@@ -7,7 +7,7 @@ import me.chell.blackout.api.util.featureManager
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
-class ArrayList: Widget("ArrayList") {
+object ArrayList: Widget("ArrayList") {
 
     override var description = "List enabled toggleable features"
 

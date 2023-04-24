@@ -8,7 +8,7 @@ import me.chell.blackout.api.util.readFeatures
 import me.chell.blackout.api.util.writeFeatures
 import java.io.File
 
-class ConfigFeature: Feature("Config", Category.Client) {
+object ConfigFeature: Feature("Config", Category.Client) {
 
     override val mainSetting = Setting("File", File(defaultConfig))
 

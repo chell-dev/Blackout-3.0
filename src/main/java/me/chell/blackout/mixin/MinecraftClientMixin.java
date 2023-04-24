@@ -25,8 +25,8 @@ public class MinecraftClientMixin {
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 2, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void getWindowTitle(CallbackInfoReturnable<String> cir, StringBuilder stringBuilder) {
-        if(WindowTitle.instance != null && WindowTitle.instance.getMainSetting().getValue()) {
-            FunctionsKt.setString(stringBuilder, WindowTitle.instance.getTitle());
+        if(WindowTitle.INSTANCE != null && WindowTitle.INSTANCE.getMainSetting().getValue()) {
+            FunctionsKt.setString(stringBuilder, WindowTitle.INSTANCE.getTitle());
         }
     }
 

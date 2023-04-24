@@ -15,7 +15,7 @@ import net.minecraft.item.Items
 import net.minecraft.util.Hand
 import net.minecraft.util.math.Vec3d
 
-class AutoFish: ToggleFeature("Auto Fish", Category.PLayer, false) {
+object AutoFish: ToggleFeature("Auto Fish", Category.PLayer, false) {
 
     override var description = "Automatically recasts when you catch a fish"
 

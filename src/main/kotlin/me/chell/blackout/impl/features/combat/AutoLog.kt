@@ -9,7 +9,7 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.player
 import net.minecraft.text.Text
 
-class AutoLog: ToggleFeature("AutoLog", Category.Combat, false) {
+object AutoLog: ToggleFeature("AutoLog", Category.Combat, false) {
 
     override var description = "Disconnect when your health goes below the threshold"
 

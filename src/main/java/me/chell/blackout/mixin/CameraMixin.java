@@ -12,7 +12,7 @@ public class CameraMixin {
 
     @Inject(method = "isThirdPerson", at = @At("HEAD"), cancellable = true)
     public void isThirdPerson(CallbackInfoReturnable<Boolean> cir) {
-        if(FirstPersonBody.Companion.isActive())
+        if(FirstPersonBody.INSTANCE.isActive())
             cir.setReturnValue(true);
     }
 

@@ -10,7 +10,7 @@ import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
 
-class Bhop: Feature("Auto Jump", Category.Movement) {
+object Bhop: Feature("Auto Jump", Category.Movement) {
 
     override var description = "Jump when you're moving"
 

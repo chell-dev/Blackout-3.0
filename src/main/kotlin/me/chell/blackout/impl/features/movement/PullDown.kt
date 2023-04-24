@@ -10,7 +10,7 @@ import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.world
 import net.minecraft.world.RaycastContext
 
-class PullDown: ToggleFeature("PullDown", Category.Movement, false) {
+object PullDown: ToggleFeature("PullDown", Category.Movement, false) {
 
     override var description = "Step down blocks almost instantly"
 

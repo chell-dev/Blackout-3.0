@@ -9,7 +9,7 @@ import net.arikia.dev.drpc.DiscordEventHandlers
 import net.arikia.dev.drpc.DiscordRPC
 import net.arikia.dev.drpc.DiscordRichPresence
 
-class DiscordActivity: ToggleFeature("Discord RPC", Category.Client, false) {
+object DiscordActivity: ToggleFeature("Discord RPC", Category.Client, false) {
 
     private var shouldUpdate = false
 

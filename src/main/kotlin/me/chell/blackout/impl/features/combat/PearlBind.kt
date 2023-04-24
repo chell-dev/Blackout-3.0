@@ -10,7 +10,7 @@ import me.chell.blackout.api.util.useItem
 import net.minecraft.item.Items
 import net.minecraft.util.Hand
 
-class PearlBind: Feature("Pearl Bind", Category.Combat) {
+object PearlBind: Feature("Pearl Bind", Category.Combat) {
 
     override var description = "Keybind to throw an Ender Pearl from your hotbar"
 

@@ -10,7 +10,7 @@ import me.chell.blackout.api.util.player
 import me.chell.blackout.api.setting.Setting
 import net.minecraft.entity.effect.StatusEffects
 
-class Sprint: Feature("Sprint", Category.Movement) {
+object Sprint: Feature("Sprint", Category.Movement) {
 
     override var description = "Sprint automatically"
 

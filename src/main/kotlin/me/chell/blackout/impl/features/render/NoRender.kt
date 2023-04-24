@@ -13,7 +13,7 @@ import net.minecraft.client.particle.FireworksSparkParticle.FireworkParticle
 import net.minecraft.client.particle.SpellParticle
 import net.minecraft.client.particle.TotemParticle
 
-class NoRender: ToggleFeature("NoRender", Category.Render, false) {
+object NoRender: ToggleFeature("NoRender", Category.Render, false) {
 
     private val explosions = register(Setting("Explosion Particles", false))
     private val potionParticles = register(Setting("Potion Particles", false))

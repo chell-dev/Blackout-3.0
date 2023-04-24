@@ -6,7 +6,7 @@ import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.mc
 
-class Step: Feature("Step", Category.Movement) {
+object Step: Feature("Step", Category.Movement) {
 
     override var description = "Increase your step height"
 

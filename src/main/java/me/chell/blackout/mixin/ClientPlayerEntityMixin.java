@@ -21,20 +21,20 @@ public class ClientPlayerEntityMixin {
 
     @Inject(method = "tickMovement", at = @At(value = "FIELD", target = "Lnet/minecraft/client/input/Input;movementForward:F", shift = At.Shift.AFTER))
     public void noSlowForward(CallbackInfo ci) {
-        if(NoSlow.instance.getMainSetting().getValue()) {
+        if(NoSlow.INSTANCE.getMainSetting().getValue()) {
             GlobalsKt.getPlayer().input.movementForward /= 0.2f;
         }
     }
     @Inject(method = "tickMovement", at = @At(value = "FIELD", target = "Lnet/minecraft/client/input/Input;movementSideways:F", shift = At.Shift.AFTER))
     public void noSlowSideways(CallbackInfo ci) {
-        if(NoSlow.instance.getMainSetting().getValue()) {
+        if(NoSlow.INSTANCE.getMainSetting().getValue()) {
             GlobalsKt.getPlayer().input.movementSideways /= 0.2f;
         }
     }
 
     @Inject(method = "showsDeathScreen", at = @At("HEAD"), cancellable = true)
     public void deathScreen(CallbackInfoReturnable<Boolean> cir) {
-        if(AutoRespawn.instance.getMainSetting().getValue()) cir.setReturnValue(false);
+        if(AutoRespawn.INSTANCE.getMainSetting().getValue()) cir.setReturnValue(false);
     }
 
 }

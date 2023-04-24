@@ -9,7 +9,7 @@ import me.chell.blackout.api.util.eventManager
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.RotationAxis
 
-class ViewModel: ToggleFeature("ViewModel", Category.Render, false) {
+object ViewModel: ToggleFeature("ViewModel", Category.Render, false) {
 
     private val page = register(Setting("Settings", Page.RightItem))
 

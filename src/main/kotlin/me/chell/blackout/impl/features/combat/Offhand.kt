@@ -13,7 +13,7 @@ import net.minecraft.item.PickaxeItem
 import net.minecraft.item.SwordItem
 import net.minecraft.screen.slot.SlotActionType
 
-class Offhand: ToggleFeature("Offhand", Category.Combat, false) {
+object Offhand: ToggleFeature("Offhand", Category.Combat, false) {
 
     private val gapple = register(Setting("Gapple", Bind.Toggle(onEnable={}, onDisable={})))
 

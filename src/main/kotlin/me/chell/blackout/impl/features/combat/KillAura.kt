@@ -15,7 +15,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.AxeItem
 import net.minecraft.item.SwordItem
 
-class KillAura: Feature("KillAura", Category.Combat) {
+object KillAura: Feature("KillAura", Category.Combat) {
 
     override var description = "Attack entities around you"
 
