@@ -3,7 +3,6 @@ package me.chell.blackout.impl.features.render
 import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.event.EventHandler
-import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.RenderNametagEvent
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.feature.Category
@@ -24,15 +23,7 @@ import net.minecraft.util.math.Vec3d
 import org.joml.Matrix4f
 import kotlin.math.max
 
-object Nametags: ToggleFeature("Nametags", Category.Render, false) {
-
-    override fun onEnable() {
-        EventManager.register(this)
-    }
-
-    override fun onDisable() {
-        EventManager.unregister(this)
-    }
+object Nametags: ToggleFeature("Nametags", Category.Render) {
 
     private val showGamemode = register(Setting("Show Gamemode", false))
     private val scale = register(Setting("Scale", 2.7f, 1f, 5f))

@@ -1,16 +1,16 @@
 package me.chell.blackout.impl.features.combat
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.events.PlayerBreakBlockEvent
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.feature.Category
-import me.chell.blackout.api.feature.Feature
+import me.chell.blackout.api.feature.ToggleBindFeature
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.features.hud.Cps
 import net.minecraft.block.Blocks
-import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.command.argument.EntityAnchorArgumentType
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.DamageUtil
@@ -22,22 +22,24 @@ import net.minecraft.entity.decoration.EndCrystalEntity
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Items
+import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
-import net.minecraft.util.math.*
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Box
+import net.minecraft.util.math.Direction
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.Difficulty
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.RaycastContext.ShapeType
 import net.minecraft.world.explosion.Explosion
-import java.util.function.Predicate
+import java.time.Instant
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
-object AutoCrystal: Feature("AutoCrystal", Category.Combat) {
-
-    override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
+object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
 
     private val page = register(Setting("Settings", Page.Place))
 

@@ -10,7 +10,7 @@ import net.minecraft.client.option.SimpleOption
 import net.minecraft.client.option.SimpleOption.ValidatingIntSliderCallbacks
 import net.minecraft.text.Text
 
-object FovSlider: ToggleFeature("Custom FOV", Category.Client, false) {
+object FovSlider: ToggleFeature("Custom FOV", Category.Client) {
 
     private val slider = register(object : Setting<Int>("Value", 90, 2, 179) {
         override fun onValueChanged(oldValue: Int, newValue: Int) {

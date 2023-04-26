@@ -6,10 +6,10 @@ import me.chell.blackout.api.events.ChatSendEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
-import java.util.Locale
+import java.util.*
 import kotlin.random.Random
 
-object ChatTransform: ToggleFeature("Chat Transform", Category.Misc, false) {
+object ChatTransform: ToggleFeature("Chat Transform", Category.Misc) {
 
     private val uwuify = register(Setting("UwUify", false))
     private val prefix = register(Setting("Prefix", ""))

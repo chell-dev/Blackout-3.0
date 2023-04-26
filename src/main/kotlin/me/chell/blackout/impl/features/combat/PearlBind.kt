@@ -1,22 +1,18 @@
 package me.chell.blackout.impl.features.combat
 
+import me.chell.blackout.api.feature.ActionBindFeature
 import me.chell.blackout.api.feature.Category
-import me.chell.blackout.api.feature.Feature
-import me.chell.blackout.api.setting.Bind
-import me.chell.blackout.api.util.player
-import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.findItemInHotbar
+import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.useItem
 import net.minecraft.item.Items
 import net.minecraft.util.Hand
 
-object PearlBind: Feature("Pearl Bind", Category.Combat) {
+object PearlBind: ActionBindFeature("Pearl Bind", Category.Combat) {
 
     override var description = "Keybind to throw an Ender Pearl from your hotbar"
 
-    override val mainSetting = Setting("Activate", Bind.Action(action = { activate() }))
-
-    private fun activate() {
+    override fun activate() {
         if(player.mainHandStack.item == Items.ENDER_PEARL) {
             player.useItem(Hand.MAIN_HAND)
             return

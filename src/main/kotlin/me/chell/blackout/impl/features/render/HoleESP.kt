@@ -2,7 +2,6 @@ package me.chell.blackout.impl.features.render
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.event.EventHandler
-import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.feature.Category
@@ -16,7 +15,7 @@ import net.minecraft.client.render.VertexFormats
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 
-object HoleESP: ToggleFeature("Hole ESP", Category.Render, false) {
+object HoleESP: ToggleFeature("Hole ESP", Category.Render) {
 
     private val range = register(Setting("Range", 10, 1, 20))
     private val height = register(Setting("Render Height", 1.0, -1.0, 1.0))
@@ -29,14 +28,6 @@ object HoleESP: ToggleFeature("Hole ESP", Category.Render, false) {
 
     enum class Mode {
         Box, Outline, OutlineBox, Gradient
-    }
-
-    override fun onEnable() {
-        EventManager.register(this)
-    }
-
-    override fun onDisable() {
-        EventManager.unregister(this)
     }
 
     @EventHandler

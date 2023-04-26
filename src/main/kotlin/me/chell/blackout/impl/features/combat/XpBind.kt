@@ -1,36 +1,27 @@
 package me.chell.blackout.impl.features.combat
 
 import me.chell.blackout.api.event.EventHandler
-import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Category
-import me.chell.blackout.api.feature.Feature
-import me.chell.blackout.api.setting.Bind
+import me.chell.blackout.api.feature.ToggleBindFeature
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.*
+import me.chell.blackout.api.util.findItemInHotbar
+import me.chell.blackout.api.util.mc
+import me.chell.blackout.api.util.player
+import me.chell.blackout.api.util.useItem
 import me.chell.blackout.mixin.accessors.MinecraftClientAccessor
 import net.minecraft.item.Items
 import net.minecraft.util.Hand
 
-object XpBind: Feature("XP Bind", Category.Combat) {
+object XpBind: ToggleBindFeature("XP Bind", Category.Combat) {
 
     override var description = "Throw XP bottles"
-
-    override val mainSetting = Setting("Bind", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
 
     private val armor = register(Setting("Stop on 100% durability", true))
     private val feet = register(Setting("Throw at feet", true))
     private val fast = register(Setting("Fast", true))
 
     private val accessor = mc as MinecraftClientAccessor
-
-    private fun onEnable() {
-        EventManager.register(this)
-    }
-
-    private fun onDisable() {
-        EventManager.unregister(this)
-    }
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {

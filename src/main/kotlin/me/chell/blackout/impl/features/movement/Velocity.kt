@@ -1,22 +1,13 @@
 package me.chell.blackout.impl.features.movement
 
 import me.chell.blackout.api.event.EventHandler
-import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerKnockbackEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 
-object Velocity: ToggleFeature("Velocity", Category.Movement, false) {
+object Velocity: ToggleFeature("Velocity", Category.Movement) {
 
     override var description = "Anti knockback"
-
-    override fun onEnable() {
-        EventManager.register(this)
-    }
-
-    override fun onDisable() {
-        EventManager.unregister(this)
-    }
 
     @EventHandler
     fun onKnockback(event: PlayerKnockbackEvent) {

@@ -6,7 +6,7 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.isFriend
 import me.chell.blackout.api.util.player
 
-object Cosmetics: ToggleFeature("Cosmetics", Category.Render, false) {
+object Cosmetics: ToggleFeature("Cosmetics", Category.Render) {
 
     override var description = "Client-side player cosmetics"
 

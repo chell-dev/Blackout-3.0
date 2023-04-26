@@ -1,7 +1,6 @@
 package me.chell.blackout.impl.features.player
 
 import me.chell.blackout.api.event.EventHandler
-import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.events.SoundEvent
 import me.chell.blackout.api.feature.Category
@@ -15,21 +14,13 @@ import net.minecraft.item.Items
 import net.minecraft.util.Hand
 import net.minecraft.util.math.Vec3d
 
-object AutoFish: ToggleFeature("Auto Fish", Category.PLayer, false) {
+object AutoFish: ToggleFeature("Auto Fish", Category.PLayer) {
 
     override var description = "Automatically recasts when you catch a fish"
 
     private val rotate = register(Setting("Rotate", false))
 
-    private var interact = 0
-
-    override fun onEnable() {
-        EventManager.register(this)
-    }
-
-    override fun onDisable() {
-        EventManager.unregister(this)
-    }
+    private var interact = 0;
 
     @EventHandler
     fun onSound(event: SoundEvent) {
