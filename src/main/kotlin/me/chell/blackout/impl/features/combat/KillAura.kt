@@ -1,6 +1,7 @@
 package me.chell.blackout.impl.features.combat
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.Feature
@@ -38,11 +39,11 @@ object KillAura: Feature("KillAura", Category.Combat) {
     private val weaponOnly = register(Setting("Sword/Axe Only", false))
 
     private fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     private fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 
     @EventHandler

@@ -1,11 +1,11 @@
 package me.chell.blackout.impl.features.movement
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.setting.Bind
-import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.player
 import me.chell.blackout.api.setting.Setting
 import net.minecraft.entity.effect.StatusEffects
@@ -19,11 +19,11 @@ object Sprint: Feature("Sprint", Category.Movement) {
     private val mode = register(Setting("Mode", Mode.Rage))
 
     private fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     private fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 
     @EventHandler

@@ -1,6 +1,7 @@
 package me.chell.blackout.impl.features.combat
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
@@ -23,11 +24,11 @@ object Offhand: ToggleFeature("Offhand", Category.Combat, false) {
     private val health = register(Setting("Totem HP", 16.0, 0.0, 40.0))
 
     override fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     override fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 
     @EventHandler

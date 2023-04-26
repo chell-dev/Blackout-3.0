@@ -1,5 +1,6 @@
 package me.chell.blackout.mixin;
 
+import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.RenderNametagEvent;
 import me.chell.blackout.api.util.GlobalsKt;
 import me.chell.blackout.impl.features.render.FirstPersonBody;
@@ -29,7 +30,7 @@ abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractCl
     @Inject(method = "renderLabelIfPresent(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
     public void label(AbstractClientPlayerEntity abstractClientPlayerEntity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
         RenderNametagEvent event = new RenderNametagEvent(false);
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
         if(event.getCanceled()) ci.cancel();
     }
 

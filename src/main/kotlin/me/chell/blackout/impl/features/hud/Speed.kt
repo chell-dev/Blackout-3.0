@@ -1,10 +1,10 @@
 package me.chell.blackout.impl.features.hud
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.eventManager
 import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
@@ -21,7 +21,7 @@ object Speed: Widget("Movement Speed") {
     private val units = register(Setting("Units", Units.KMH, description = "Meters (Blocks) per second / Kilometers per hour / Miles per hour"))
 
     init {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {

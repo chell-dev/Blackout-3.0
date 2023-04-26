@@ -1,6 +1,7 @@
 package me.chell.blackout.impl.features.render
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
@@ -17,11 +18,11 @@ object BlockHighlight: ToggleFeature("Block Highlight", Category.Render, false) 
     private val fillColor = register(Setting("Fill Color", Color.sync(0.5f)))
 
     override fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     override fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
         mc.gameRenderer.setBlockOutlineEnabled(true)
     }
 

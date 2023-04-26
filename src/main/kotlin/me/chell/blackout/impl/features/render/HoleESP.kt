@@ -2,6 +2,7 @@ package me.chell.blackout.impl.features.render
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.feature.Category
@@ -31,11 +32,11 @@ object HoleESP: ToggleFeature("Hole ESP", Category.Render, false) {
     }
 
     override fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     override fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 
     @EventHandler

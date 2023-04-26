@@ -6,7 +6,7 @@ import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.superclasses
 import kotlin.reflect.jvm.jvmErasure
 
-class EventManager {
+object EventManager {
 
     private val registered = mutableMapOf<KClass<out Event>, MutableList<Pair<Any, KFunction<*>>>>()
 

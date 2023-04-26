@@ -2,6 +2,7 @@ package me.chell.blackout.mixin;
 
 import com.mojang.blaze3d.platform.GlConst;
 import com.mojang.blaze3d.systems.RenderSystem;
+import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.RenderWorldEvent;
 import me.chell.blackout.api.util.GlobalsKt;
 import net.minecraft.client.MinecraftClient;
@@ -29,7 +30,7 @@ public class WorldRendererMixin {
         RenderSystem.applyModelViewMatrix();
         //RenderSystem.setShader(GameRenderer::getPositionColorProgram)
 
-        GlobalsKt.getEventManager().post(new RenderWorldEvent(matrices));
+        EventManager.INSTANCE.post(new RenderWorldEvent(matrices));
 
         matrixStack.pop();
         RenderSystem.applyModelViewMatrix();

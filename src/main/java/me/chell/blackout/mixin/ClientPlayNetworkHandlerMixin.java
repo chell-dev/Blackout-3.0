@@ -1,6 +1,7 @@
 package me.chell.blackout.mixin;
 
 import com.mojang.brigadier.ParseResults;
+import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.ChatSendEvent;
 import me.chell.blackout.api.events.PlayerKnockbackEvent;
 import me.chell.blackout.api.util.GlobalsKt;
@@ -36,7 +37,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
     @Inject(method = "onExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V"), cancellable = true)
     public void onExplosion(ExplosionS2CPacket packet, CallbackInfo ci) {
         PlayerKnockbackEvent event = new PlayerKnockbackEvent();
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
         if(event.getCanceled()) ci.cancel();
     }
 
@@ -45,14 +46,14 @@ public abstract class ClientPlayNetworkHandlerMixin {
         if(packet.getId() != GlobalsKt.getPlayer().getId()) return;
 
         PlayerKnockbackEvent event = new PlayerKnockbackEvent();
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
         if(event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String content, CallbackInfo ci) {
         ChatSendEvent event = new ChatSendEvent(content, false, false);
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
 
         ci.cancel();
         if(event.getCanceled()) return;
@@ -68,7 +69,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
     @Inject(method = "sendChatCommand", at = @At("HEAD"), cancellable = true)
     public void sendChatCommand(String command, CallbackInfo ci) {
         ChatSendEvent event = new ChatSendEvent(command, true, false);
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
 
         ci.cancel();
         if(event.getCanceled()) return;

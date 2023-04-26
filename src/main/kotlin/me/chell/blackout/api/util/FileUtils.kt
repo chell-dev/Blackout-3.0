@@ -1,6 +1,7 @@
 package me.chell.blackout.api.util
 
 import me.chell.blackout.api.feature.Feature
+import me.chell.blackout.api.feature.FeatureManager
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
 import net.minecraft.client.util.InputUtil
@@ -36,7 +37,7 @@ fun writeFeatures(fileName: String) {
 
     val sb = StringBuilder()
 
-    for(feature in featureManager.features) {
+    for(feature in FeatureManager.features) {
         sb.append("Feature: ${feature.name}$s")
         when (feature.mainSetting.value) {
             is Bind.Action -> {
@@ -76,7 +77,7 @@ fun readFeatures(fileName: String) {
 
     for(line in file.readLines()) {
         if(line.startsWith("Feature: ")) {
-            feature = featureManager.getFeatureByName(line.substring("Feature: ".length))
+            feature = FeatureManager.getFeatureByName(line.substring("Feature: ".length))
         } else if(line.startsWith("Main: ")) {
             feature ?: continue
             parseValue(feature.mainSetting, line.substring("Main: ".length))

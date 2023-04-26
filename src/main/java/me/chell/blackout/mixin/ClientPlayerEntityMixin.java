@@ -1,5 +1,6 @@
 package me.chell.blackout.mixin;
 
+import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.PlayerTickEvent;
 import me.chell.blackout.api.util.GlobalsKt;
 import me.chell.blackout.impl.features.misc.AutoRespawn;
@@ -16,7 +17,7 @@ public class ClientPlayerEntityMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void postTick(CallbackInfo ci) {
-        GlobalsKt.getEventManager().post(new PlayerTickEvent());
+        EventManager.INSTANCE.post(new PlayerTickEvent());
     }
 
     @Inject(method = "tickMovement", at = @At(value = "FIELD", target = "Lnet/minecraft/client/input/Input;movementForward:F", shift = At.Shift.AFTER))

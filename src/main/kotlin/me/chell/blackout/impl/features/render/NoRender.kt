@@ -1,12 +1,12 @@
 package me.chell.blackout.impl.features.render
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.ParticleEvent
 import me.chell.blackout.api.events.RenderHudEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.eventManager
 import net.minecraft.client.particle.ExplosionLargeParticle
 import net.minecraft.client.particle.ExplosionSmokeParticle
 import net.minecraft.client.particle.FireworksSparkParticle.FireworkParticle
@@ -30,11 +30,11 @@ object NoRender: ToggleFeature("NoRender", Category.Render, false) {
     private val tooltip = register(Setting("Item Tooltip", false))
 
     override fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     override fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 
     @EventHandler

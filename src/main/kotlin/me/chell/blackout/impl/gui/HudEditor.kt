@@ -1,9 +1,8 @@
 package me.chell.blackout.impl.gui
 
-import me.chell.blackout.Blackout
 import me.chell.blackout.api.feature.Category
+import me.chell.blackout.api.feature.FeatureManager
 import me.chell.blackout.api.feature.Widget
-import me.chell.blackout.api.util.featureManager
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modName
 import me.chell.blackout.impl.features.client.HudEditorFeature
@@ -13,15 +12,15 @@ import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 
-class HudEditor: Screen(Text.of("$modName HUD Editor")) {
+object HudEditor: Screen(Text.of("$modName HUD Editor")) {
 
     val widgets = mutableListOf<Widget>()
 
     private var lastSelected: Widget? = null
     private var selected: Widget? = null
 
-    init {
-        for(feature in featureManager.features) {
+    fun clientInit() {
+        for(feature in FeatureManager.features) {
             if(feature::class == HudEditorFeature::class) continue
             if(feature.category == Category.Hud) widgets.add(feature as Widget)
         }
@@ -118,7 +117,7 @@ class HudEditor: Screen(Text.of("$modName HUD Editor")) {
         for(w in widgets) {
             w.mouseReleased()
         }
-        mc.setScreen(Blackout.instance.clientGUI)
+        mc.setScreen(ClientGUI)
     }
 
     override fun shouldPause() = false

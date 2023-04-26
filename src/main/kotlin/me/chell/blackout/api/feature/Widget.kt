@@ -43,7 +43,7 @@ abstract class Widget(name: String): Feature(name, Category.Hud) {
 
     open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         if(button == 0 && mouseX >= x.value && mouseX <= x.value + width && mouseY >= y.value && mouseY <= y.value + height) {
-            Blackout.instance.hudEditor.select(this)
+            HudEditor.select(this)
             grabbed = true
             deltaX = mouseX.toInt() - x.value
             deltaY = mouseY.toInt() - y.value

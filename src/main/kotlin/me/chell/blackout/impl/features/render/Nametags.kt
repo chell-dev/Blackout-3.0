@@ -3,6 +3,7 @@ package me.chell.blackout.impl.features.render
 import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.RenderNametagEvent
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.feature.Category
@@ -26,11 +27,11 @@ import kotlin.math.max
 object Nametags: ToggleFeature("Nametags", Category.Render, false) {
 
     override fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     override fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 
     private val showGamemode = register(Setting("Show Gamemode", false))

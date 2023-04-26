@@ -9,7 +9,9 @@ import net.minecraft.client.gui.screen.TitleScreen
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen
 import net.minecraft.client.network.ServerAddress
 import net.minecraft.client.network.ServerInfo
+import net.minecraft.text.Style
 import net.minecraft.text.Text
+import net.minecraft.text.TextColor
 import net.minecraft.util.Formatting
 import net.minecraft.util.Util
 import org.lwjgl.glfw.GLFW

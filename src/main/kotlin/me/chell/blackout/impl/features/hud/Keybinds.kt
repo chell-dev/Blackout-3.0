@@ -1,9 +1,9 @@
 package me.chell.blackout.impl.features.hud
 
+import me.chell.blackout.api.feature.FeatureManager
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.featureManager
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 import org.lwjgl.glfw.GLFW
@@ -14,14 +14,14 @@ object Keybinds: Widget("Keybinds") {
     override var width = 50
     override var height = textRenderer.fontHeight
 
-    private val blacklist = register(Setting("Blacklist", mutableListOf(featureManager.getFeatureByName("GUI Bind"))))
+    private val blacklist = register(Setting("Blacklist", mutableListOf(FeatureManager.getFeatureByName("GUI Bind"))))
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)
 
         val list = mutableMapOf<String, Bind>()
 
-        for(f in featureManager.features.filter { !blacklist.value.contains(it) }) {
+        for(f in FeatureManager.features.filter { !blacklist.value.contains(it) }) {
             if(f.mainSetting.value is Bind && (f.mainSetting.value as Bind).key.code != GLFW.GLFW_KEY_UNKNOWN) list[f.name] = f.mainSetting.value as Bind
 
             for(s in f.settings) {

@@ -1,9 +1,9 @@
 package me.chell.blackout.api.feature
 
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.util.modId
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.Description
-import me.chell.blackout.api.util.eventManager
 import net.minecraft.util.Identifier
 
 abstract class Feature(val name: String, val category: Category): Description {
@@ -36,10 +36,10 @@ abstract class ToggleFeature(name: String, category: Category, enabled: Boolean)
     }
 
     open fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
     open fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 }
 

@@ -1,11 +1,11 @@
 package me.chell.blackout.impl.features.render
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.RenderArmEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.eventManager
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.RotationAxis
 
@@ -43,11 +43,11 @@ object ViewModel: ToggleFeature("ViewModel", Category.Render, false) {
     }
 
     override fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     override fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 
     @EventHandler

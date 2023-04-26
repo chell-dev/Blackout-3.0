@@ -1,9 +1,9 @@
 package me.chell.blackout.impl.features.hud
 
+import me.chell.blackout.api.feature.FeatureManager
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.featureManager
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
@@ -14,7 +14,7 @@ object ArrayList: Widget("ArrayList") {
     override var width = 50
     override var height = 9
 
-    private val whitelist = register(Setting("Whitelist", featureManager.features))
+    private val whitelist = register(Setting("Whitelist", FeatureManager.features))
     private val vAlign = register(Setting("Vertical Align", VAlign.Down))
     private val hAlign = register(Setting("Horizontal Align", HAlign.Right))
 

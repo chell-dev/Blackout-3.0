@@ -1,6 +1,7 @@
 package me.chell.blackout.impl.features.combat
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.Feature
@@ -24,11 +25,11 @@ object XpBind: Feature("XP Bind", Category.Combat) {
     private val accessor = mc as MinecraftClientAccessor
 
     private fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
 
     private fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
 
     @EventHandler

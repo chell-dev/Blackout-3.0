@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 
-class ClientGUI: Screen(Text.literal("$modName GUI")) {
+object ClientGUI: Screen(Text.literal("$modName GUI")) {
 
     private val bannerTexture = Identifier(modId, "textures/gui/banner.png")
 
@@ -25,7 +25,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     private val color = Color(161, 0, 255).rgb
 
     private val tabs = mutableListOf<Tab>()
-    var currentTab: Tab
+    lateinit var currentTab: Tab
 
     private var animationTicks = 0
     private val animationLength = 5
@@ -42,7 +42,7 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
     private val descPadding = 5f
 
-    init {
+    fun clientInit() {
         var tabY = bannerHeight+1
 
         for(category in Category.values()) {
