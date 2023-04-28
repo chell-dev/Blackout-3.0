@@ -2,6 +2,7 @@ package me.chell.blackout.impl.features.hud
 
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Setting
+import me.chell.blackout.api.util.Color
 import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.plus
 import me.chell.blackout.api.util.textRenderer
@@ -14,8 +15,8 @@ object Coordinates: Widget("Coordinates") {
 
     override var width = 10
     override var height = textRenderer.fontHeight * 2
-
     private val vAlign = register(Setting("Vertical Align", VAlign.UP))
+    private val color = register(Setting("Color", Color.white()))
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)
@@ -28,6 +29,8 @@ object Coordinates: Widget("Coordinates") {
         val g = Formatting.GRAY
         val r = Formatting.RESET
 
+        val color = color.value.rgb
+
         when(player.world.dimensionKey) {
             DimensionTypes.OVERWORLD -> {
                 val a = "${g}X: ${r}$x${g}, Y: ${r}$y${g}, Z: ${r}$z $direction"
@@ -35,11 +38,11 @@ object Coordinates: Widget("Coordinates") {
                 width = maxOf(textRenderer.getWidth(a), textRenderer.getWidth(b), width)
 
                 if(vAlign.value == VAlign.UP) {
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat(), -1)
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat(), color)
+                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
                 } else {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), -1)
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), color)
+                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
                 }
             }
             DimensionTypes.THE_NETHER -> {
@@ -48,11 +51,11 @@ object Coordinates: Widget("Coordinates") {
                 width = maxOf(textRenderer.getWidth(a), textRenderer.getWidth(b), width)
 
                 if(vAlign.value == VAlign.UP) {
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat(), -1)
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat(), color)
+                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
                 } else {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), -1)
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), color)
+                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
                 }
             }
             else -> {
@@ -60,9 +63,9 @@ object Coordinates: Widget("Coordinates") {
                 width = maxOf(textRenderer.getWidth(a), width)
 
                 if(vAlign.value == VAlign.UP) {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, -1)
+                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
                 } else {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), -1)
+                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), color)
                 }
             }
         }

@@ -1,12 +1,16 @@
 package me.chell.blackout.impl.features.hud
 
 import me.chell.blackout.api.feature.Widget
+import me.chell.blackout.api.setting.Setting
+import me.chell.blackout.api.util.Color
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
-class Cps: Widget("CPS") {
+object Cps: Widget("Crystal Per Second") {
 
-    override var description = "(debug) Crystals per second"
+    override var description = "How many crystals AutoCrystal placed in the last 20 ticks."
+
+    private val color = register(Setting("Color", Color.white()))
 
     override var width = 50
     override var height = textRenderer.fontHeight
@@ -18,7 +22,7 @@ class Cps: Widget("CPS") {
 
         val text = "$value CPS"
         width = textRenderer.getWidth(text)
-        textRenderer.drawWithShadow(matrices, text, x.value.toFloat(), y.value.toFloat(), -1)
+        textRenderer.drawWithShadow(matrices, text, x.value.toFloat(), y.value.toFloat(), color.value.rgb)
     }
 
 }

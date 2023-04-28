@@ -5,6 +5,7 @@ import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Setting
+import me.chell.blackout.api.util.Color
 import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
@@ -19,6 +20,7 @@ object Speed: Widget("Movement Speed") {
     private var lastPos = Vec3d.ZERO
 
     private val units = register(Setting("Units", Units.KMH, description = "Meters (Blocks) per second / Kilometers per hour / Miles per hour"))
+    private val color = register(Setting("Color", Color.white()))
 
     init {
         EventManager.register(this)
@@ -33,7 +35,7 @@ object Speed: Widget("Movement Speed") {
             Units.MPH -> "${(speed * 22.36936).toInt() / 10.0} MPH"
         }
 
-        textRenderer.drawWithShadow(matrices, text, x.value.toFloat(), y.value.toFloat(), -1)
+        textRenderer.drawWithShadow(matrices, text, x.value.toFloat(), y.value.toFloat(), color.value.rgb)
         width = textRenderer.getWidth(text)
     }
 
