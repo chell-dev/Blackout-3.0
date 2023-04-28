@@ -46,6 +46,10 @@ fun writeFeatures(fileName: String) {
             is Bind.Toggle -> {
                 sb.append("Main: ${(feature.mainSetting.value as Bind.Toggle).mode.name} ${(feature.mainSetting.value as Bind.Toggle).enabled} ${(feature.mainSetting.value as Bind.Toggle).key.translationKey}$s")
             }
+            is Color -> {
+                val setting = feature.mainSetting as Setting<Color>
+                sb.append("Main: ${setting.value.rgb} ${setting.value.rainbow} ${setting.value.sync}$s")
+            }
             else -> {
                 sb.append("Main: ${feature.mainSetting.value}$s")
             }
@@ -58,6 +62,10 @@ fun writeFeatures(fileName: String) {
                 is Bind.Toggle -> {
                     setting as Setting<Bind.Toggle>
                     sb.append("${setting.name}: ${setting.value.mode.name} ${setting.value.enabled} ${setting.value.key.translationKey}$s")
+                }
+                is Color -> {
+                    setting as Setting<Color>
+                    sb.append("${setting.name}: ${setting.value.rgb} ${setting.value.rainbow} ${setting.value.sync}$s")
                 }
                 else -> {
                     sb.append("${setting.name}: ${setting.value}$s")
@@ -113,7 +121,13 @@ fun parseValue(setting: Setting<*>, text: String) {
                 setting.value.enabled = split[1].toBoolean()
                 setting.value.key = InputUtil.fromTranslationKey(split[2])
             }
-
+            is Color -> {
+                val split = text.split(" ")
+                val color = (setting as Setting<Color>).value
+                color.rgb = split[0].toInt()
+                color.rainbow = split[1].toBoolean()
+                color.sync = split[2].toBoolean()
+            }
             is Enum<*> -> {
                 setting as Setting<Enum<*>>
                 var set = false

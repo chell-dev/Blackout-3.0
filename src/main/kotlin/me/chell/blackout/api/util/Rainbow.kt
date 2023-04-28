@@ -14,10 +14,7 @@ object Rainbow {
         hue += ColorsFeature.rainbowSpeed.value / 100f
         if(hue >= 1f) hue = 0f
 
-        val rgb = java.awt.Color.HSBtoRGB(hue, 1f, 1f)
-        color.red = rgb.red
-        color.green = rgb.green
-        color.blue = rgb.blue
+;        color.rgb = java.awt.Color.HSBtoRGB(hue, 1f, 1f)
     }
 
 }
