@@ -12,16 +12,22 @@ const val modName = "Blackout"
 const val modId = "blackout"
 const val modVersion = "3.0"
 
-val eventManager get() = Blackout.instance.eventManager
+val eventManager
+    get() = Blackout.eventManager
 
-val featureManager get() = Blackout.instance.featureManager
+val featureManager
+    get() = Blackout.featureManager
 
-val mc get() = MinecraftClient.getInstance()!!
+val mc
+    get() = MinecraftClient.getInstance()!!
 
-val player: ClientPlayerEntity get() = mc.player!!
+val player: ClientPlayerEntity
+    get() = mc.player!!
 
-val world: ClientWorld get() = mc.world!!
+val world: ClientWorld
+    get() = mc.world!!
 
-val interactionManager: ClientPlayerInteractionManager get() = mc.interactionManager!!
+val interactionManager: ClientPlayerInteractionManager
+    get() = mc.interactionManager!!
 
 val textRenderer: TextRenderer = mc.textRenderer
