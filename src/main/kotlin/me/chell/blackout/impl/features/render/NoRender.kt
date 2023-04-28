@@ -6,14 +6,13 @@ import me.chell.blackout.api.events.RenderHudEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.eventManager
 import net.minecraft.client.particle.ExplosionLargeParticle
 import net.minecraft.client.particle.ExplosionSmokeParticle
 import net.minecraft.client.particle.FireworksSparkParticle.FireworkParticle
 import net.minecraft.client.particle.SpellParticle
 import net.minecraft.client.particle.TotemParticle
 
-class NoRender: ToggleFeature("NoRender", Category.Render, false) {
+object NoRender: ToggleFeature("NoRender", Category.Render) {
 
     private val explosions = register(Setting("Explosion Particles", false))
     private val potionParticles = register(Setting("Potion Particles", false))
@@ -28,14 +27,6 @@ class NoRender: ToggleFeature("NoRender", Category.Render, false) {
     private val waterOverlay = register(Setting("Underwater Overlay", false))
     private val totemOverlay = register(Setting("Totem Overlay", false))
     private val tooltip = register(Setting("Item Tooltip", false))
-
-    override fun onEnable() {
-        eventManager.register(this)
-    }
-
-    override fun onDisable() {
-        eventManager.unregister(this)
-    }
 
     @EventHandler
     fun onParticle(event: ParticleEvent) {

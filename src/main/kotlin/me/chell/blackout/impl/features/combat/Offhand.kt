@@ -6,14 +6,17 @@ import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.*
+import me.chell.blackout.api.util.clickSlot
+import me.chell.blackout.api.util.findItem
+import me.chell.blackout.api.util.mc
+import me.chell.blackout.api.util.player
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen
 import net.minecraft.item.Items
 import net.minecraft.item.PickaxeItem
 import net.minecraft.item.SwordItem
 import net.minecraft.screen.slot.SlotActionType
 
-class Offhand: ToggleFeature("Offhand", Category.Combat, false) {
+object Offhand: ToggleFeature("Offhand", Category.Combat) {
 
     private val gapple = register(Setting("Gapple", Bind.Toggle(onEnable={}, onDisable={})))
 
@@ -21,14 +24,6 @@ class Offhand: ToggleFeature("Offhand", Category.Combat, false) {
     private val pickaxeGapple = register(Setting("Right click gapple with Pickaxe", false))
 
     private val health = register(Setting("Totem HP", 16.0, 0.0, 40.0))
-
-    override fun onEnable() {
-        eventManager.register(this)
-    }
-
-    override fun onDisable() {
-        eventManager.unregister(this)
-    }
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {
@@ -47,5 +42,4 @@ class Offhand: ToggleFeature("Offhand", Category.Combat, false) {
             clickSlot(slot, SlotActionType.PICKUP)
         }
     }
-
 }

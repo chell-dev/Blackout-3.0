@@ -5,11 +5,10 @@ import me.chell.blackout.api.events.RenderArmEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.eventManager
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.RotationAxis
 
-class ViewModel: ToggleFeature("ViewModel", Category.Render, false) {
+object ViewModel: ToggleFeature("ViewModel", Category.Render) {
 
     private val page = register(Setting("Settings", Page.RightItem))
 
@@ -40,14 +39,6 @@ class ViewModel: ToggleFeature("ViewModel", Category.Render, false) {
 
     enum class Page {
         LeftItem, RightItem, Hand
-    }
-
-    override fun onEnable() {
-        eventManager.register(this)
-    }
-
-    override fun onDisable() {
-        eventManager.unregister(this)
     }
 
     @EventHandler

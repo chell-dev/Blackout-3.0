@@ -1,6 +1,7 @@
 package me.chell.blackout.api.util
 
-import me.chell.blackout.Blackout
+import me.chell.blackout.api.event.EventManager
+import me.chell.blackout.api.feature.FeatureManager
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.network.ClientPlayerEntity
@@ -13,10 +14,10 @@ const val modId = "blackout"
 const val modVersion = "3.0"
 
 val eventManager
-    get() = Blackout.eventManager
+    get() = EventManager
 
 val featureManager
-    get() = Blackout.featureManager
+    get() = FeatureManager
 
 val mc
     get() = MinecraftClient.getInstance()!!

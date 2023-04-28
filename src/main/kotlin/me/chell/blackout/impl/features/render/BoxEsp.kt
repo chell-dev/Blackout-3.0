@@ -11,7 +11,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity
 import net.minecraft.entity.projectile.thrown.ExperienceBottleEntity
 
-class BoxEsp: ToggleFeature("ESP", Category.Render, false) {
+object BoxEsp: ToggleFeature("ESP", Category.Render) {
 
     private val players = register(Setting("Players", false))
     private val playersOutline = register(Setting("Normal Outline", Color.white(), level = 2) {players.value})

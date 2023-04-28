@@ -9,7 +9,7 @@ import net.minecraft.client.network.OtherClientPlayerEntity
 import net.minecraft.entity.Entity
 import java.util.*
 
-class FakePlayer: ToggleFeature("Fake Player", Category.Misc, false) {
+object FakePlayer: ToggleFeature("Fake Player", Category.Misc) {
 
     override var description = "Spawns a fake player for testing and whatnot"
 

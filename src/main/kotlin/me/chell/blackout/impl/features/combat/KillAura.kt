@@ -3,10 +3,12 @@ package me.chell.blackout.impl.features.combat
 import me.chell.blackout.api.event.EventHandler
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Category
-import me.chell.blackout.api.feature.Feature
-import me.chell.blackout.api.setting.Bind
+import me.chell.blackout.api.feature.ToggleBindFeature
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.*
+import me.chell.blackout.api.util.attackEntity
+import me.chell.blackout.api.util.isFriend
+import me.chell.blackout.api.util.mc
+import me.chell.blackout.api.util.player
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.mob.HostileEntity
@@ -15,11 +17,9 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.AxeItem
 import net.minecraft.item.SwordItem
 
-class KillAura: Feature("KillAura", Category.Combat) {
+object KillAura: ToggleBindFeature("KillAura", Category.Combat) {
 
     override var description = "Attack entities around you"
-
-    override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
 
     private val delay = register(Setting("Attack Delay", true))
     private val using = register(Setting("While Using Item", true))
@@ -36,14 +36,6 @@ class KillAura: Feature("KillAura", Category.Combat) {
     private val wallRange = register(Setting("Wall Range", 6.0, 3.0, 8.0, level = 2))
 
     private val weaponOnly = register(Setting("Sword/Axe Only", false))
-
-    private fun onEnable() {
-        eventManager.register(this)
-    }
-
-    private fun onDisable() {
-        eventManager.unregister(this)
-    }
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {

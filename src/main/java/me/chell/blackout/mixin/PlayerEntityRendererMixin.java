@@ -1,5 +1,6 @@
 package me.chell.blackout.mixin;
 
+import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.RenderNametagEvent;
 import me.chell.blackout.api.util.GlobalsKt;
 import me.chell.blackout.impl.features.render.FirstPersonBody;
@@ -29,13 +30,13 @@ abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractCl
     @Inject(method = "renderLabelIfPresent(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
     public void label(AbstractClientPlayerEntity abstractClientPlayerEntity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
         RenderNametagEvent event = new RenderNametagEvent(false);
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
         if(event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "setModelPose", at = @At("TAIL"))
     public void setModelPose(AbstractClientPlayerEntity player, CallbackInfo ci) {
-        if(FirstPersonBody.Companion.isActive() && player == GlobalsKt.getPlayer()) {
+        if(FirstPersonBody.INSTANCE.isActive() && player == GlobalsKt.getPlayer()) {
             getModel().head.visible = false;
             getModel().hat.visible = false;
         }
@@ -43,7 +44,7 @@ abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractCl
 
     @Inject(method = "getPositionOffset(Lnet/minecraft/client/network/AbstractClientPlayerEntity;F)Lnet/minecraft/util/math/Vec3d;", at = @At("HEAD"), cancellable = true)
     public void getPositionOffset(AbstractClientPlayerEntity abstractClientPlayerEntity, float f, CallbackInfoReturnable<Vec3d> cir) {
-        if(!FirstPersonBody.Companion.isActive()) return;
+        if(!FirstPersonBody.INSTANCE.isActive()) return;
 
         float z = MathHelper.cos(-GlobalsKt.getPlayer().getYaw() * ((float)Math.PI / 180) - (float)Math.PI);
         float x = MathHelper.sin(-GlobalsKt.getPlayer().getYaw() * ((float)Math.PI / 180) - (float)Math.PI);

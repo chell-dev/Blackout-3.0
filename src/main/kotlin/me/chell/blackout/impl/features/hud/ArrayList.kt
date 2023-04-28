@@ -1,21 +1,22 @@
 package me.chell.blackout.impl.features.hud
 
+import me.chell.blackout.api.feature.FeatureManager
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.featureManager
+import me.chell.blackout.api.util.Color
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
-
-class ArrayList: Widget("ArrayList") {
+object ArrayList: Widget("ArrayList") {
     override var description = "List enabled toggleable features"
 
     override var width = 50
     override var height = 9
 
-    private val whitelist = register(Setting("Whitelist", featureManager.features))
+    private val whitelist = register(Setting("Whitelist", FeatureManager.features))
     private val vAlign = register(Setting("Vertical Align", VAlign.Down))
     private val hAlign = register(Setting("Horizontal Align", HAlign.Right))
+    private val color = register(Setting("Color", Color.white()))
 
     override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(matrices, mouseX, mouseY, delta)
@@ -35,7 +36,7 @@ class ArrayList: Widget("ArrayList") {
                 HAlign.Right -> x.value
                 HAlign.Center -> (x.value + width / 2) - (textWidth / 2)
             }
-            textRenderer.drawWithShadow(matrices, feature.name, textX.toFloat(), if(vAlign.value == VAlign.Up) y.value + height - textRenderer.fontHeight - textY.toFloat() else y.value + textY.toFloat(), -1)
+            textRenderer.drawWithShadow(matrices, feature.name, textX.toFloat(), if(vAlign.value == VAlign.Up) y.value + height - textRenderer.fontHeight - textY.toFloat() else y.value + textY.toFloat(), color.value.rgb)
 
             textY += textRenderer.fontHeight
         }

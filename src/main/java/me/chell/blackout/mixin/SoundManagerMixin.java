@@ -1,7 +1,7 @@
 package me.chell.blackout.mixin;
 
+import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.SoundEvent;
-import me.chell.blackout.api.util.GlobalsKt;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,7 +14,7 @@ public class SoundManagerMixin {
 
     @Inject(method = "play(Lnet/minecraft/client/sound/SoundInstance;)V", at = @At("HEAD"))
     public void play(SoundInstance sound, CallbackInfo ci) {
-        GlobalsKt.getEventManager().post(new SoundEvent(sound));
+        EventManager.INSTANCE.post(new SoundEvent(sound));
     }
 
 }

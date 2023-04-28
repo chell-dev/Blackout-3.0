@@ -28,7 +28,7 @@ public abstract class Deadmau5FeatureRendererMixin extends FeatureRenderer<Abstr
     @Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/client/network/AbstractClientPlayerEntity;FFFFFF)V", at = @At("HEAD"), cancellable = true)
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, AbstractClientPlayerEntity abstractClientPlayerEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
         ci.cancel();
-        if(!Cosmetics.Companion.getEars(abstractClientPlayerEntity.getName().getString()) || abstractClientPlayerEntity.isInvisible()) return;
+        if(!Cosmetics.INSTANCE.getEars(abstractClientPlayerEntity.getName().getString()) || abstractClientPlayerEntity.isInvisible()) return;
 
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntitySolid(abstractClientPlayerEntity.getSkinTexture()));
         int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0f);

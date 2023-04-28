@@ -1,7 +1,7 @@
 package me.chell.blackout.mixin;
 
+import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.RenderHudEvent;
-import me.chell.blackout.api.util.GlobalsKt;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -18,14 +18,14 @@ public class GameRendererMixin {
     public void renderTotem(ItemStack floatingItem, CallbackInfo ci) {
         if(floatingItem.getItem() != Items.TOTEM_OF_UNDYING) return;
         RenderHudEvent.Totem event = new RenderHudEvent.Totem(false);
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
         if(event.getCanceled()) ci.cancel();
     }
 
     @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
     public void bobViewWhenHurt(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         RenderHudEvent.Hurt event = new RenderHudEvent.Hurt(false);
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
         if(event.getCanceled()) ci.cancel();
     }
 

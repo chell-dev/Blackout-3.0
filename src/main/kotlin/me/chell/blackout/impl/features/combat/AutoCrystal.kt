@@ -4,7 +4,7 @@ import me.chell.blackout.api.event.EventHandler
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.feature.Category
-import me.chell.blackout.api.feature.Feature
+import me.chell.blackout.api.feature.ToggleBindFeature
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.*
@@ -25,7 +25,10 @@ import net.minecraft.item.Items
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
-import net.minecraft.util.math.*
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Box
+import net.minecraft.util.math.Direction
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.Difficulty
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.RaycastContext.ShapeType
@@ -35,9 +38,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
-class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
-
-    override val mainSetting = Setting("Enabled", Bind.Toggle(onEnable = {onEnable()}, onDisable = {onDisable()}))
+object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
 
     private val page = register(Setting("Settings", Page.Place))
 
@@ -105,7 +106,7 @@ class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
         if(renderPos != null) drawBox(Box(renderPos), espColor.value)
     }
 
-    private fun onEnable() {
+    override fun onEnable() {
         eventManager.register(this)
         renderPos = null
         speedTicks = 0
@@ -116,7 +117,7 @@ class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
         crystalCounter = 0
     }
 
-    private fun onDisable() {
+    override fun onDisable() {
         eventManager.unregister(this)
         renderPos = null
 
@@ -166,7 +167,7 @@ class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
             }
         }
 
-        val target = player.getClosestEntity(PlayerEntity::class.java, playerRange.value){ it != player && !player.isFriend() } as PlayerEntity?
+        val target = player.getClosestEntity(PlayerEntity::class.java, playerRange.value) { it != player && !player.isFriend() } as PlayerEntity?
         if(target == null || player.distanceTo(target) > playerRange.value) return
 
         val range = max(placeRange.value, placeWallRange.value).toInt()
@@ -260,9 +261,8 @@ class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
         if(!world.isAir(up)) return false
         if(!newPlacement.value && !world.isAir(up(2))) return false
 
-        if(world.getOtherEntities(null, Box(up.x.toDouble(), up.y.toDouble(), up.z.toDouble(), up.x + 1.0, up.y + 2.0, up.z + 1.0)).isNotEmpty()) return false // todo up.y + 1.0 ?\
-
-        return true
+        return world.getOtherEntities(null, Box(up.x.toDouble(), up.y.toDouble(), up.z.toDouble(), up.x + 1.0, up.y + 2.0, up.z + 1.0))
+            .isEmpty() // todo up.y + 1.0 ?/
     }
 
     private fun BlockPos.getExplosionDamage(target: LivingEntity): Float {
@@ -278,6 +278,7 @@ class AutoCrystal: Feature("AutoCrystal", Category.Combat) {
             Difficulty.EASY -> damage = min(damage / 2.0f + 1.0f, damage)
             Difficulty.NORMAL -> {}
             Difficulty.HARD -> damage = damage * 3.0f / 2.0f
+            null -> {}
         }
 
         damage = DamageUtil.getDamageLeft(damage, target.armor.toFloat(), target.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS).toFloat())

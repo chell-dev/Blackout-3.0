@@ -5,11 +5,12 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AbstractClientPlayerEntityMixin",
-    "Deadmau5FeatureRendererMixin",
     "CameraMixin",
     "ClientPlayerEntityMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "Deadmau5FeatureRendererMixin",
+    "GameOptionsMixin",
     "GameRendererMixin",
     "InGameHudMixin",
     "InGameOverlayRendererMixin",

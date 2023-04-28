@@ -6,26 +6,17 @@ import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.gui.ClientGUI
 import me.chell.blackout.impl.gui.HudEditor
 
-class Blackout {
-    companion object {
-        lateinit var eventManager: EventManager
-        lateinit var featureManager: FeatureManager
-        lateinit var clientGUI: ClientGUI
-        lateinit var hudEditor: HudEditor
-    }
-
+object Blackout {
     fun init() {
-        eventManager = EventManager()
-        featureManager = FeatureManager()
-        featureManager.init()
+        FeatureManager.init()
 
         val files = readClientFile()
         readFeatures(files[0])
         readFriends(files[1])
 
-        clientGUI = ClientGUI()
-        hudEditor = HudEditor()
-        eventManager.register(Rainbow)
+        ClientGUI.clientInit()
+        HudEditor.clientInit()
+        EventManager.register(Rainbow)
 
         Runtime.getRuntime().addShutdownHook(Thread {
             println("Saving config")

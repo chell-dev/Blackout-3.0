@@ -23,15 +23,7 @@ import net.minecraft.util.math.Vec3d
 import org.joml.Matrix4f
 import kotlin.math.max
 
-class Nametags: ToggleFeature("Nametags", Category.Render, false) {
-
-    override fun onEnable() {
-        eventManager.register(this)
-    }
-
-    override fun onDisable() {
-        eventManager.unregister(this)
-    }
+object Nametags: ToggleFeature("Nametags", Category.Render) {
 
     private val showGamemode = register(Setting("Show Gamemode", false))
     private val scale = register(Setting("Scale", 2.7f, 1f, 5f))

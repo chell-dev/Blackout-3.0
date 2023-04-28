@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
 
-class ClientGUI: Screen(Text.literal("$modName GUI")) {
+object ClientGUI: Screen(Text.literal("$modName GUI")) {
 
     private val bannerTexture = Identifier(modId, "textures/gui/banner.png")
 
@@ -25,24 +25,24 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
     private val color = Color(161, 0, 255).rgb
 
     private val tabs = mutableListOf<Tab>()
-    var currentTab: Tab
+    lateinit var currentTab: Tab
 
     private var animationTicks = 0
-    private val animationLength = 5
+    private const val animationLength = 5
     private var closing = false
 
     private val x = 0
     private val y = 0
-    val uiWidth = 300
+    const val uiWidth = 300
     private val uiHeight get() = mc.window.scaledHeight
-    val bannerHeight = 75
+    const val bannerHeight = 75
 
     var hoveredItem: Description? = null
     private val descX get() = x + Tab.size
     val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
-    private val descPadding = 5f
+    private const val descPadding = 5f
 
-    init {
+    fun clientInit() {
         var tabY = bannerHeight+1
 
         for(category in Category.values()) {
@@ -190,8 +190,8 @@ class ClientGUI: Screen(Text.literal("$modName GUI")) {
             tab.onClose()
         }
 
-        if(GuiFeature.instance.mainSetting.value.key.code == GLFW.GLFW_KEY_UNKNOWN)
-            GuiFeature.instance.mainSetting.value.setKey(InputUtil.GLFW_KEY_BACKSLASH, InputUtil.Type.KEYSYM)
+        if(GuiFeature.mainSetting.value.key.code == GLFW.GLFW_KEY_UNKNOWN)
+            GuiFeature.mainSetting.value.setKey(InputUtil.GLFW_KEY_BACKSLASH, InputUtil.Type.KEYSYM)
 
         closing = true
         animationTicks = animationLength

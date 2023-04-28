@@ -1,7 +1,7 @@
 package me.chell.blackout.mixin;
 
+import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.RenderArmEvent;
-import me.chell.blackout.api.util.GlobalsKt;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.HeldItemRenderer;
@@ -29,7 +29,7 @@ public abstract class MixinHeldItemRenderer {
         Arm arm = (hand == Hand.MAIN_HAND) ? player.getMainArm() : player.getMainArm().getOpposite();
 
         RenderArmEvent event = new RenderArmEvent(arm == Arm.RIGHT ? RenderArmEvent.Type.RightArm : RenderArmEvent.Type.LeftArm, matrices, equipProgress, false);
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
 
         if(!event.getCanceled()) {
             renderArmHoldingItem(matrices, vertexConsumers, light, event.getEquipProgress(), swingProgress, arm);
@@ -41,7 +41,7 @@ public abstract class MixinHeldItemRenderer {
     public void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if(renderMode.isFirstPerson()) {
             RenderArmEvent event = new RenderArmEvent(leftHanded ? RenderArmEvent.Type.LeftItem : RenderArmEvent.Type.RightItem, matrices, -1f, false);
-            GlobalsKt.getEventManager().post(event);
+            EventManager.INSTANCE.post(event);
             if(event.getCanceled()) ci.cancel();
         }
     }
@@ -53,7 +53,7 @@ public abstract class MixinHeldItemRenderer {
         boolean right = arm == Arm.RIGHT;
 
         RenderArmEvent event = new RenderArmEvent(right ? RenderArmEvent.Type.RightItemEquip : RenderArmEvent.Type.LeftItemEquip, matrices, equipProgress, false);
-        GlobalsKt.getEventManager().post(event);
+        EventManager.INSTANCE.post(event);
 
         matrices.translate((right ? 1f : -1f) * 0.56f, -0.52f + event.getEquipProgress() * -0.6f, -0.72f);
     }

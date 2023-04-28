@@ -8,7 +8,7 @@ import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.superclasses
 import kotlin.reflect.jvm.jvmErasure
 
-class EventManager {
+object EventManager {
     private val registered = ConcurrentHashMap<KClass<out Event>, MutableList<Pair<Any, KFunction<*>>>>()
 
     fun register(obj: Any) {

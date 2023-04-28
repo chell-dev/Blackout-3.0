@@ -1,10 +1,13 @@
 package me.chell.blackout.api.feature
 
-import me.chell.blackout.api.util.modId
+import me.chell.blackout.api.event.EventManager
+import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.Description
-import me.chell.blackout.api.util.eventManager
+import me.chell.blackout.api.util.modId
+import net.minecraft.client.util.InputUtil
 import net.minecraft.util.Identifier
+import org.lwjgl.glfw.GLFW
 
 abstract class Feature(val name: String, val category: Category): Description {
     abstract val mainSetting: Setting<*>
@@ -26,7 +29,7 @@ abstract class Feature(val name: String, val category: Category): Description {
 }
 
 @NoRegister
-abstract class ToggleFeature(name: String, category: Category, enabled: Boolean): Feature(name, category) {
+abstract class ToggleFeature(name: String, category: Category, enabled: Boolean = false): Feature(name, category) {
 
     override val mainSetting: Setting<Boolean> = object: Setting<Boolean>("Enabled", enabled) {
         override fun onValueChanged(oldValue: Boolean, newValue: Boolean) {
@@ -36,11 +39,32 @@ abstract class ToggleFeature(name: String, category: Category, enabled: Boolean)
     }
 
     open fun onEnable() {
-        eventManager.register(this)
+        EventManager.register(this)
     }
     open fun onDisable() {
-        eventManager.unregister(this)
+        EventManager.unregister(this)
     }
+}
+
+@NoRegister
+abstract class ToggleBindFeature(name: String, category: Category, keyCode: Int = GLFW.GLFW_KEY_UNKNOWN, enabled: Boolean = false, mode: Bind.Toggle.Mode = Bind.Toggle.Mode.Toggle): Feature(name, category) {
+
+    override val mainSetting = Setting("Bind", Bind.Toggle(InputUtil.fromKeyCode(keyCode, -1), enabled, mode, {onEnable()}, {onDisable()}))
+
+    open fun onEnable() {
+        EventManager.register(this)
+    }
+    open fun onDisable() {
+        EventManager.unregister(this)
+    }
+}
+
+@NoRegister
+abstract class ActionBindFeature(name: String, category: Category, keyCode: Int = GLFW.GLFW_KEY_UNKNOWN): Feature(name, category) {
+
+    override val mainSetting = Setting("Bind", Bind.Action(InputUtil.fromKeyCode(keyCode, -1)) { activate() })
+
+    abstract fun activate()
 }
 
 annotation class NoRegister

@@ -2,18 +2,18 @@ package me.chell.blackout.impl.features.hud
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.InputEvent
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Widget
-import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.eventManager
+import me.chell.blackout.api.setting.Setting;
 import me.chell.blackout.api.util.modId
 import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 import kotlin.random.Random
 
-class Neko: Widget("Neko") {
+object Neko: Widget("Neko") {
 
     override var description = "I <3 Neko"
 
@@ -21,8 +21,8 @@ class Neko: Widget("Neko") {
 
     override val mainSetting = object: Setting<Boolean>("Enabled", false) {
         override fun onValueChanged(oldValue: Boolean, newValue: Boolean) {
-            if(newValue) eventManager.register(instance)
-            else eventManager.unregister(instance)
+            if(newValue) EventManager.register(instance)
+            else EventManager.unregister(instance)
 
             state = 2
             stateTimer = 0
