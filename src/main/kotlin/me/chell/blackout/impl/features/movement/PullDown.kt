@@ -20,7 +20,7 @@ object PullDown: ToggleFeature("PullDown", Category.Movement) {
     fun onPlayerTick(event: PlayerTickEvent) {
         if(!player.isOnGround || player.isTouchingWater) return
 
-        val ray = world.raycast(RaycastContext(player.pos, player.pos.add(0.0, -maxHeight.value - 1, 0.0), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.ANY, player))
+        val ray = world.raycast(RaycastContext(player.pos, player.pos.add(0.0, -maxHeight.value - 1, 0.0), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.ANY, player))
 
         val distance = player.pos.y - ray.pos.y
         if(distance >= minHeight.value && distance <= maxHeight.value) {
