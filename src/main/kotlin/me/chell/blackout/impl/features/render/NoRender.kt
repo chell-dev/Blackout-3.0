@@ -49,7 +49,7 @@ object NoRender: ToggleFeature("NoRender", Category.Render) {
             is RenderHudEvent.Underwater -> waterOverlay.value
             is RenderHudEvent.Totem -> totemOverlay.value
             is RenderHudEvent.Hurt -> hurtCam.value
-            else -> false
+            else -> event.canceled
         }
 
     }
