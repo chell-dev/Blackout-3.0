@@ -28,7 +28,7 @@ public class WorldRendererMixin {
         matrixStack.push();
         matrixStack.multiplyPositionMatrix(matrices.peek().getPositionMatrix());
         RenderSystem.applyModelViewMatrix();
-        //RenderSystem.setShader(GameRenderer::getPositionColorProgram)
+        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 
         EventManager.INSTANCE.post(new RenderWorldEvent(matrices));
 

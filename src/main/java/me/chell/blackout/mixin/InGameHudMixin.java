@@ -19,7 +19,7 @@ public class InGameHudMixin {
     }
 
     @Inject(method = "renderOverlay", at = @At("HEAD"), cancellable = true)
-    public void renderOverlay(Identifier texture, float opacity, CallbackInfo ci) {
+    public void renderOverlay(MatrixStack matrices, Identifier texture, float opacity, CallbackInfo ci) {
         RenderHudEvent.Overlay event = new RenderHudEvent.Overlay(texture, false);
         EventManager.INSTANCE.post(event);
         if(event.getCanceled()) ci.cancel();
@@ -33,7 +33,7 @@ public class InGameHudMixin {
     }
 
     @Inject(method = "renderPortalOverlay", at = @At("HEAD"), cancellable = true)
-    public void renderOverlay(float nauseaStrength, CallbackInfo ci) {
+    public void renderOverlay(MatrixStack matrices, float nauseaStrength, CallbackInfo ci) {
         RenderHudEvent.Portal event = new RenderHudEvent.Portal(false);
         EventManager.INSTANCE.post(event);
         if(event.getCanceled()) ci.cancel();

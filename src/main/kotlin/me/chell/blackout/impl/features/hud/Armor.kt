@@ -16,8 +16,8 @@ object Armor: Widget("Armor") {
 
         var itemX = x.value
         for(stack in player.armorItems.reversed()) {
-            mc.itemRenderer.renderInGui(stack, itemX, y.value)
-            mc.itemRenderer.renderGuiItemOverlay(textRenderer, stack, itemX, y.value)
+            mc.itemRenderer.renderInGui(matrices, stack, itemX, y.value)
+            mc.itemRenderer.renderGuiItemOverlay(matrices, textRenderer, stack, itemX, y.value)
             itemX += 16
         }
     }

@@ -22,7 +22,7 @@ public class GameRendererMixin {
         if(event.getCanceled()) ci.cancel();
     }
 
-    @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "tiltViewWhenHurt", at = @At("HEAD"), cancellable = true)
     public void bobViewWhenHurt(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         RenderHudEvent.Hurt event = new RenderHudEvent.Hurt(false);
         EventManager.INSTANCE.post(event);

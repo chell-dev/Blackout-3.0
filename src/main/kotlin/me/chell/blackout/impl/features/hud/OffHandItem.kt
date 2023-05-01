@@ -19,8 +19,8 @@ object OffHandItem: Widget("Item Count - Offhand") {
 
         val stack = player.offHandStack
         if(!stack.isEmpty && (!stackableOnly.value || stack.isStackable)) {
-            mc.itemRenderer.renderInGui(stack, x.value, y.value)
-            mc.itemRenderer.renderGuiItemOverlay(textRenderer, stack, x.value, y.value, player.inventory.count(stack.item).toString())
+            mc.itemRenderer.renderInGui(matrices, stack, x.value, y.value)
+            mc.itemRenderer.renderGuiItemOverlay(matrices, textRenderer, stack, x.value, y.value, player.inventory.count(stack.item).toString())
         }
     }
 }
