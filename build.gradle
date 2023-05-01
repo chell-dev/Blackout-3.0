@@ -25,11 +25,11 @@ dependencies {
     //include(implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8'))
     //include(implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7'))
     include(implementation('org.jetbrains.kotlin:kotlin-reflect'))
-    //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core'))
+    //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'))
     //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm'))
     //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8'))
 
-    include(implementation('com.github.Vatuu:discord-rpc:1.6.2'))
+    include(implementation('com.github.caoimhebyrne:KDiscordIPC:0.2.1'))
     include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
     include(implementation('org.reflections:reflections:0.10.2')); include 'org.javassist:javassist:3.28.0-GA'
 

@@ -1,39 +1,43 @@
 package me.chell.blackout.impl.features.client
 
+import dev.cbyrne.kdiscordipc.KDiscordIPC
+import dev.cbyrne.kdiscordipc.data.activity.Activity
 import me.chell.blackout.api.event.EventHandler
 import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.ServerEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
-import net.arikia.dev.drpc.DiscordEventHandlers
-import net.arikia.dev.drpc.DiscordRPC
-import net.arikia.dev.drpc.DiscordRichPresence
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.coroutines.startCoroutine
 
 object DiscordActivity: ToggleFeature("Discord RPC", Category.Client) {
 
     private var shouldUpdate = false
 
-    private val rpc = DiscordRichPresence.Builder("")
-        .setDetails("Main Menu")
-        .setBigImage("logo", "github.com/chell-dev/Blackout-3.0")
-        .setSmallImage("logo", "")
-        .setStartTimestamps(System.currentTimeMillis() / 1000)
-        .build()
+    private val client = KDiscordIPC("1077286468537569361")
+
+    private var rpc = Activity(
+        details = "Main Menu",
+        assets = Activity.Assets(largeImage = "logo", smallImage = "logo"),
+        buttons = mutableListOf(Activity.Button("Github", "https://github.com/chell-dev/Blackout-3.0")),
+        timestamps = Activity.Timestamps(System.currentTimeMillis(), null)
+    )
 
     init {
-        DiscordRPC.discordInitialize("1077286468537569361", DiscordEventHandlers(), false)
-
+        run { client.connect() }
         EventManager.register(this)
     }
 
     override fun onEnable() {
-        DiscordRPC.discordUpdatePresence(rpc)
+        run { client.activityManager.setActivity(rpc) }
         shouldUpdate = true
     }
 
     override fun onDisable() {
         shouldUpdate = false
-        DiscordRPC.discordClearPresence()
+        run {  client.activityManager.clearActivity() }
     }
 
     @EventHandler
@@ -46,6 +50,14 @@ object DiscordActivity: ToggleFeature("Discord RPC", Category.Client) {
             else -> "Main Menu"
         }
 
-        if(shouldUpdate) DiscordRPC.discordUpdatePresence(rpc)
+        if(shouldUpdate) run { client.activityManager.setActivity(rpc) }
     }
+
+    private fun run(function: suspend () -> Unit) = suspend { function.invoke() }.startCoroutine(object: Continuation<Unit> {
+        override val context: CoroutineContext = EmptyCoroutineContext
+
+        override fun resumeWith(result: Result<Unit>) {
+            result.onFailure { ex : Throwable -> throw ex }
+        }
+    })
 }
