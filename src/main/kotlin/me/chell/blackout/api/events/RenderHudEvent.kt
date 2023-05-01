@@ -13,5 +13,6 @@ abstract class RenderHudEvent(var canceled: Boolean): Event() {
     class Underwater(canceled: Boolean): RenderHudEvent(canceled)
     class Totem(canceled: Boolean): RenderHudEvent(canceled)
     class Hurt(canceled: Boolean): RenderHudEvent(canceled)
+    class Crosshair(val matrices: MatrixStack, canceled: Boolean): RenderHudEvent(canceled)
     class Post(val matrices: MatrixStack, val tickDelta: Float): RenderHudEvent(false)
 }

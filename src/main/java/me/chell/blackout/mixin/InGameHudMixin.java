@@ -39,4 +39,11 @@ public class InGameHudMixin {
         if(event.getCanceled()) ci.cancel();
     }
 
+    @Inject(method = "renderCrosshair", at = @At("HEAD"), cancellable = true)
+    public void renderCrosshair(MatrixStack matrices, CallbackInfo ci) {
+        RenderHudEvent.Crosshair event = new RenderHudEvent.Crosshair(matrices, false);
+        EventManager.INSTANCE.post(event);
+        if(event.getCanceled()) ci.cancel();
+    }
+
 }
