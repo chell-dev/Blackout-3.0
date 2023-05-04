@@ -28,15 +28,15 @@ abstract class Bind(var key: InputUtil.Key) {
                  private val onEnable: () -> Unit, private val onDisable: () -> Unit): Bind(key) {
 
         var enabled = enabled
-        set(value) {
-            if(value) {
-                onEnable()
-                field = value
-            } else {
-                field = value
-                onDisable()
+            set(value) {
+                if(value) {
+                    onEnable()
+                    field = value
+                } else {
+                    field = value
+                    onDisable()
+                }
             }
-        }
 
         constructor(keyCode: Int, type: InputUtil.Type, enabled: Boolean = false, mode: Mode = Mode.Toggle, onEnable: () -> Unit, onDisable: () -> Unit) : this(type.createFromCode(keyCode), enabled, mode, onEnable, onDisable)
 

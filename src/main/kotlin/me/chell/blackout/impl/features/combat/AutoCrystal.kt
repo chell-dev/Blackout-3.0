@@ -1,6 +1,7 @@
 package me.chell.blackout.impl.features.combat
 
 import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.events.PlayerBreakBlockEvent
 import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.feature.Category
@@ -21,6 +22,7 @@ import net.minecraft.entity.decoration.EndCrystalEntity
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Items
+import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
@@ -32,6 +34,7 @@ import net.minecraft.world.Difficulty
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.RaycastContext.ShapeType
 import net.minecraft.world.explosion.Explosion
+import java.time.Instant
 import java.util.function.Predicate
 import kotlin.math.max
 import kotlin.math.min

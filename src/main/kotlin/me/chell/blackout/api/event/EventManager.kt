@@ -12,16 +12,15 @@ object EventManager {
     private val registered = ConcurrentHashMap<KClass<out Event>, MutableList<Pair<Any, KFunction<*>>>>()
 
     fun register(obj: Any) {
-        for(f in obj::class.declaredFunctions) {
-            if(f.annotations.none { it is EventHandler }) continue
+        for (f in obj::class.declaredFunctions) {
+            if (f.annotations.none { it is EventHandler }) continue
 
             this.registered.getOrPut(f.eventType, ::CopyOnWriteArrayList).add(Pair(obj, f))
         }
     }
 
     fun unregister(obj: Any) {
-        for(f in obj::class.declaredFunctions) {
-
+        for (f in obj::class.declaredFunctions) {
             if (f.annotations.none { it is EventHandler }) continue
 
             this.registered[f.eventType]?.removeIf { it.second == f }
@@ -29,9 +28,11 @@ object EventManager {
     }
 
     fun post(event: Event) {
-        for (pair in (event::class.superclasses + event::class).flatMap { this.registered[it] ?: listOf() })
-            pair.second.call(pair.first, event)
+        for (pair in (event::class.superclasses + event::class).flatMap {
+            this.registered[it] ?: listOf()
+        }) pair.second.call(pair.first, event)
     }
 }
+
 private val <T> KFunction<T>.eventType
     get() = this.parameters[1].type.jvmErasure as KClass<out Event>
