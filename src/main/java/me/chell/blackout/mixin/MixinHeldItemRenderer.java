@@ -28,7 +28,7 @@ public abstract class MixinHeldItemRenderer {
 
         Arm arm = (hand == Hand.MAIN_HAND) ? player.getMainArm() : player.getMainArm().getOpposite();
 
-        RenderArmEvent event = new RenderArmEvent(arm == Arm.RIGHT ? RenderArmEvent.Type.RightArm : RenderArmEvent.Type.LeftArm, matrices, equipProgress, false);
+        RenderArmEvent event = new RenderArmEvent(arm == Arm.RIGHT ? RenderArmEvent.Type.RightArm : RenderArmEvent.Type.LeftArm, matrices, equipProgress, false, 0.0);
         EventManager.INSTANCE.post(event);
 
         if(!event.getCanceled()) {
@@ -40,7 +40,7 @@ public abstract class MixinHeldItemRenderer {
     @Inject(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At("HEAD"), cancellable = true)
     public void renderItem(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if(renderMode.isFirstPerson()) {
-            RenderArmEvent event = new RenderArmEvent(leftHanded ? RenderArmEvent.Type.LeftItem : RenderArmEvent.Type.RightItem, matrices, -1f, false);
+            RenderArmEvent event = new RenderArmEvent(leftHanded ? RenderArmEvent.Type.LeftItem : RenderArmEvent.Type.RightItem, matrices, -1f, false, 0.0);
             EventManager.INSTANCE.post(event);
             if(event.getCanceled()) ci.cancel();
         }
@@ -52,7 +52,7 @@ public abstract class MixinHeldItemRenderer {
 
         boolean right = arm == Arm.RIGHT;
 
-        RenderArmEvent event = new RenderArmEvent(right ? RenderArmEvent.Type.RightItemEquip : RenderArmEvent.Type.LeftItemEquip, matrices, equipProgress, false);
+        RenderArmEvent event = new RenderArmEvent(right ? RenderArmEvent.Type.RightItemEquip : RenderArmEvent.Type.LeftItemEquip, matrices, equipProgress, false, 0.0);
         EventManager.INSTANCE.post(event);
 
         matrices.translate((right ? 1f : -1f) * 0.56f, -0.52f + event.getEquipProgress() * -0.6f, -0.72f);
