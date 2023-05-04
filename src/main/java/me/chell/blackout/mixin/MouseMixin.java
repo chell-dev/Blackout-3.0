@@ -19,10 +19,13 @@ public class MouseMixin {
             EventManager.INSTANCE.post(new InputEvent.Mouse(InputUtil.Type.MOUSE.createFromCode(key), action, modifiers));
     }
 
-    //@Inject(method = "onMouseScroll", at = @At("HEAD"))
-    //public void onKey(long window, double horizontal, double vertical, CallbackInfo ci) {
-    //    if(window == GlobalsKt.getMc().getWindow().getHandle())
-    //        GlobalsKt.getEventManager().post(new KeyPressedEvent(InputUtil.Type.MOUSE.createFromCode(key), action, modifiers));
-    //}
+    @Inject(method = "onMouseScroll", at = @At("HEAD"), cancellable = true)
+    public void onKey(long window, double horizontal, double vertical, CallbackInfo ci) {
+        if(window == GlobalsKt.getMc().getWindow().getHandle()) {
+            InputEvent.Scroll event = new InputEvent.Scroll(vertical, false);
+            EventManager.INSTANCE.post(event);
+            if(event.getCanceled()) ci.cancel();
+        }
+    }
 
 }

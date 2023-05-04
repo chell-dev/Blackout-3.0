@@ -8,5 +8,6 @@ abstract class InputEvent(val key: InputUtil.Key, val action: Int, val modifiers
 
     class Keyboard(key: InputUtil.Key, action: Int, modifiers: Int) : InputEvent(key, action, modifiers)
     class Mouse(key: InputUtil.Key, action: Int, modifiers: Int) : InputEvent(key, action, modifiers)
+    class Scroll(val amount: Double, var canceled: Boolean) : InputEvent(InputUtil.UNKNOWN_KEY, -1, -1)
 
 }
