@@ -19,14 +19,6 @@ class Players: Widget("Players") {
     private val hAlign = register(Setting("Horizontal Align", HAlign.Left))
     private val vAlign = register(Setting("Vertical Align", VAlign.Top))
 
-    enum class HAlign {
-        Left, Right, Center
-    }
-
-    enum class VAlign {
-        Top, Bottom, Middle
-    }
-
     private val lines = mutableMapOf<String, Int>()
 
     private var oldWidth = 0

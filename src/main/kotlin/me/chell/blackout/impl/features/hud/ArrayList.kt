@@ -5,6 +5,7 @@ import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.Color
+import me.chell.blackout.api.util.HAlign
 import me.chell.blackout.api.util.textRenderer
 import net.minecraft.client.util.math.MatrixStack
 
@@ -46,9 +47,5 @@ object ArrayList: Widget("ArrayList") {
 
     enum class VAlign {
         Up, Down
-    }
-
-    enum class HAlign {
-        Left, Right, Center
     }
 }

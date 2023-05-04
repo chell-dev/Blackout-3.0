@@ -3,40 +3,25 @@ package me.chell.blackout.impl.features.hud
 import me.chell.blackout.api.event.EventHandler
 import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.PlayerTickEvent
-import me.chell.blackout.api.feature.Widget
+import me.chell.blackout.api.feature.TextWidget
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.Color
 import me.chell.blackout.api.util.player
-import me.chell.blackout.api.util.textRenderer
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Vec3d
 
-object Speed: Widget("Movement Speed") {
-
-    override var width = 10
-    override var height = textRenderer.fontHeight
+object Speed: TextWidget("Movement Speed", {
+        when(Speed.units.value) {
+            Units.MPS -> "${(Speed.speed * 10.0).toInt() / 10.0} m/s"
+            Units.KMH -> "${(Speed.speed * 36.0).toInt() / 10.0} km/h"
+            Units.MPH -> "${(Speed.speed * 22.36936).toInt() / 10.0} MPH"
+        } }) {
 
     private var speed = 0.0
     private var lastPos = Vec3d.ZERO
 
     private val units = register(Setting("Units", Units.KMH, description = "Meters (Blocks) per second / Kilometers per hour / Miles per hour"))
-    private val color = register(Setting("Color", Color.white()))
 
     init {
         EventManager.register(this)
-    }
-
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
-
-        val text = when(units.value) {
-            Units.MPS -> "${(speed * 10.0).toInt() / 10.0} m/s"
-            Units.KMH -> "${(speed * 36.0).toInt() / 10.0} km/h"
-            Units.MPH -> "${(speed * 22.36936).toInt() / 10.0} MPH"
-        }
-
-        textRenderer.drawWithShadow(matrices, text, x.value.toFloat(), y.value.toFloat(), color.value.rgb)
-        width = textRenderer.getWidth(text)
     }
 
     @EventHandler

@@ -1,12 +1,10 @@
 package me.chell.blackout.api.feature
 
-import me.chell.blackout.Blackout
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.mc
+import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.gui.HudEditor
 import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.util.math.MatrixStack
-import java.awt.Color
 
 @NoRegister
 abstract class Widget(name: String): Feature(name, Category.Hud) {
@@ -57,4 +55,32 @@ abstract class Widget(name: String): Feature(name, Category.Hud) {
         grabbed = false
     }
 
+}
+
+@NoRegister
+abstract class TextWidget(name: String, val text: () -> String): Widget(name) {
+
+    val color = register(Setting("Color", Color.white()))
+    private val hAlign = register(Setting("Horizontal Align", HAlign.Left))
+    //val vAlign = register(Setting("Vertical Align", VAlign.Top))
+
+    private var oldWidth = 0
+
+    override var width = 10
+        get() = textRenderer.getWidth(text.invoke())
+
+    override var height = textRenderer.fontHeight
+
+    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
+        when(hAlign.value) {
+            HAlign.Left -> {}
+            HAlign.Right -> if (width != oldWidth) x.value -= width - oldWidth
+            HAlign.Center -> if (width != oldWidth) x.value -= (width - oldWidth) / 2
+        }
+        oldWidth = width
+
+        super.render(matrices, mouseX, mouseY, delta)
+
+        textRenderer.drawWithShadow(matrices, text.invoke(), x.value.toFloat(), y.value.toFloat(), width.toFloat(), height.toFloat(), hAlign.value, VAlign.Top, color.value.rgb)
+    }
 }
