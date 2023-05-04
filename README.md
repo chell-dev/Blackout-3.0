@@ -3,7 +3,7 @@
 
 ![Logo](src/main/resources/assets/blackout/textures/gui/banner.png)
 
-## Minecraft client for Fabric 1.19.3
+## Minecraft client for Fabric 1.19.4
 
 ![Downloads](https://img.shields.io/github/downloads/chell-dev/Blackout-3.0/total?style=flat-square)
 ![Lines of code](https://img.shields.io/tokei/lines/github/chell-dev/Blackout-3.0?label=Lines%20of%20code&style=flat-square&color=blueviolet)
@@ -39,7 +39,7 @@ Discord RPC
 <details>
 <summary>Manual installation</summary>
 
-1. Install [Fabric](https://fabricmc.net/use/installer/) for Minecraft 1.19.3 (Fabric API is **not** required)
+1. Install [Fabric](https://fabricmc.net/use/installer/) for Minecraft 1.19.4 (Fabric API is **not** required)
 2. Download the latest release [here](https://github.com/chell-dev/Blackout-3.0/releases)
 3. Put the downloaded .jar file in your `.minecraft/mods` folder
 
@@ -85,10 +85,12 @@ After building, the output `.jar` will be in `build/libs/`
 2. Run `./gradlew build`
 </details>
 
-### Credits
+### Thank you
 
-- [Fabric](https://fabricmc.net/) mod loader
+- [Fabric](https://fabricmc.net/)
+- [Reflections](https://github.com/ronmamo/reflections)
+- [KDiscordIPC](https://github.com/caoimhebyrne/KDiscordIPC)
+- [hack.chat](https://hack.chat/)
 
-- [Reflections](https://github.com/ronmamo/reflections) API
 
-- [popbob](https://github.com/2qb) for the [installer](https://github.com/2qb/Blackout-3.0-Installer)
+- [Installer](https://github.com/2qb/Blackout-3.0-Installer)
