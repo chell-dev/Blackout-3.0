@@ -10,9 +10,10 @@ import me.chell.blackout.api.feature.ToggleFeature
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.*
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.font.TextRenderer.TextLayerType
 import net.minecraft.client.render.*
 import net.minecraft.client.render.model.BakedModel
-import net.minecraft.client.render.model.json.ModelTransformation
+import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -71,7 +72,7 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
             matrixStack.translate(pos.x, pos.y, pos.z)
             matrixStack.multiplyPositionMatrix(Matrix4f().rotation(camera.rotation))
             matrixStack.scale(scale, -scale, scale)
-            RenderSystem.enableTexture()
+            //RenderSystem.enableTexture()
             RenderSystem.disableDepthTest()
             RenderSystem.depthMask(true)
             matrixStack.scale(-1.0f, 1.0f, 1.0f)
@@ -91,17 +92,17 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
                 else Formatting.DARK_GREEN
 
             if(nameShadow.value) {
-                textRenderer.draw(string, -width+0.5f, 0.5f, (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                textRenderer.draw(string, -width+0.5f, 0.5f, (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, TextLayerType.SEE_THROUGH, 0, 0xF000F0)
                 immediate.draw()
 
-                textRenderer.draw(hp.toString(), -width+nameWidth+0.5f, 0.5f, (hpColor.colorValue!! and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                textRenderer.draw(hp.toString(), -width+nameWidth+0.5f, 0.5f, (hpColor.colorValue!! and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, TextLayerType.SEE_THROUGH, 0, 0xF000F0)
                 immediate.draw()
             }
 
-            textRenderer.draw(string, -width, 0.0f, color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+            textRenderer.draw(string, -width, 0.0f, color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, TextLayerType.SEE_THROUGH, 0, 0xF000F0)
             immediate.draw()
 
-            textRenderer.draw(hp.toString(), -width+nameWidth, 0.0f, hpColor.colorValue!!, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+            textRenderer.draw(hp.toString(), -width+nameWidth, 0.0f, hpColor.colorValue!!, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, TextLayerType.SEE_THROUGH, 0, 0xF000F0)
             immediate.draw()
 
             var itemX = -(itemSize.value*3)
@@ -127,7 +128,7 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
 
     private fun renderItem(stack: ItemStack, x: Int, y: Int, player: PlayerEntity, showDura: Boolean = false) {
         val bakedModel: BakedModel = mc.itemRenderer.getModel(stack, null, null, 0)
-        mc.itemRenderer.zOffset = if (bakedModel.hasDepth()) mc.itemRenderer.zOffset + 50.0f else mc.itemRenderer.zOffset + 50.0f
+        //mc.itemRenderer.zOffset = if (bakedModel.hasDepth()) mc.itemRenderer.zOffset + 50.0f else mc.itemRenderer.zOffset + 50.0f
 
         //mc.textureManager.getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false)
         //RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE)
@@ -147,14 +148,14 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
         val entityVC = MinecraftClient.getInstance().bufferBuilders.entityVertexConsumers
         val bl = !bakedModel.isSideLit
         if (bl) DiffuseLighting.disableGuiDepthLighting()
-        mc.itemRenderer.renderItem(stack, ModelTransformation.Mode.GUI, false, matrixStack2, entityVC, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV, bakedModel)
+        mc.itemRenderer.renderItem(stack, ModelTransformationMode.GUI, false, matrixStack2, entityVC, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV, bakedModel)
         entityVC.draw()
         RenderSystem.enableDepthTest()
         if (bl) DiffuseLighting.enableGuiDepthLighting()
         matrixStack.pop()
         RenderSystem.applyModelViewMatrix()
 
-        mc.itemRenderer.zOffset = if (bakedModel.hasDepth()) mc.itemRenderer.zOffset - 50.0f else mc.itemRenderer.zOffset - 50.0f
+        //mc.itemRenderer.zOffset = if (bakedModel.hasDepth()) mc.itemRenderer.zOffset - 50.0f else mc.itemRenderer.zOffset - 50.0f
 
         if (stack.isEmpty) {
             return
@@ -175,14 +176,14 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
                 textRenderer.draw(stack.count.toString(),
                     (1.5f - textRenderer.getWidth(stack.count.toString())),
                     2.5f,
-                    (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                    (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, TextLayerType.SEE_THROUGH, 0, 0xF000F0)
                 immediate.draw()
             }
 
             textRenderer.draw(stack.count.toString(),
                 (1 - textRenderer.getWidth(stack.count.toString())).toFloat(),
                 2f,
-                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, TextLayerType.SEE_THROUGH, 0, 0xF000F0)
             immediate.draw()
 
             matrixStack.pop()
@@ -196,14 +197,12 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
 
             RenderSystem.applyModelViewMatrix()
             RenderSystem.disableDepthTest()
-            RenderSystem.disableTexture()
             RenderSystem.disableBlend()
 
             fill(AffineTransformation.identity().matrix, 0, 0, itemSize.value - 2, 2, 0xff000000.toInt())
             fill(AffineTransformation.identity().matrix, 0f, 0f, (stack.itemBarStep / 13f) * (itemSize.value - 2), 1f, stack.itemBarColor, 1f)
 
             RenderSystem.enableBlend()
-            RenderSystem.enableTexture()
             RenderSystem.enableDepthTest()
             matrixStack.pop()
             RenderSystem.applyModelViewMatrix()
@@ -227,14 +226,14 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
                 textRenderer.draw(string,
                     (-textRenderer.getWidth(string) / 2f) + 0.5f,
                     0.5f,
-                    (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                    (color and 0xaaaaaa) shr 1, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, TextLayerType.SEE_THROUGH, 0, 0xF000F0)
                 immediate.draw()
             }
 
             textRenderer.draw(string,
                 -textRenderer.getWidth(string) / 2f,
                 0f,
-                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, true, 0, 0xF000F0)
+                color, false, AffineTransformation.identity().matrix, immediate as VertexConsumerProvider, TextLayerType.SEE_THROUGH, 0, 0xF000F0)
             immediate.draw()
 
             matrixStack.pop()
@@ -243,12 +242,10 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
         val f = player.itemCooldownManager.getCooldownProgress(stack.item, mc.tickDelta)
         if (f > 0.0f) {
             RenderSystem.disableDepthTest()
-            RenderSystem.disableTexture()
             RenderSystem.enableBlend()
             RenderSystem.defaultBlendFunc()
             val ff = MathHelper.floor(itemSize.value * (1.0f - f))
             fill(AffineTransformation.identity().matrix, x, y + ff, x + itemSize.value, y + ff + MathHelper.ceil(itemSize.value * f), 0x7Fffffff)
-            RenderSystem.enableTexture()
             RenderSystem.enableDepthTest()
         }
     }
@@ -278,16 +275,14 @@ object Nametags: ToggleFeature("Nametags", Category.Render) {
         val j = (color and 0xFF).toFloat() / 255.0f
         val bufferBuilder = Tessellator.getInstance().buffer
         RenderSystem.enableBlend()
-        RenderSystem.disableTexture()
         RenderSystem.defaultBlendFunc()
         RenderSystem.setShader { GameRenderer.getPositionColorProgram() }
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
-        bufferBuilder.vertex(matrix, x1.toFloat(), y2.toFloat(), 0.0f).color(g, h, j, f).next()
-        bufferBuilder.vertex(matrix, x2.toFloat(), y2.toFloat(), 0.0f).color(g, h, j, f).next()
-        bufferBuilder.vertex(matrix, x2.toFloat(), y1.toFloat(), 0.0f).color(g, h, j, f).next()
-        bufferBuilder.vertex(matrix, x1.toFloat(), y1.toFloat(), 0.0f).color(g, h, j, f).next()
+        bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(g, h, j, f).next()
+        bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(g, h, j, f).next()
+        bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(g, h, j, f).next()
+        bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(g, h, j, f).next()
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end())
-        RenderSystem.enableTexture()
         RenderSystem.disableBlend()
     }
 

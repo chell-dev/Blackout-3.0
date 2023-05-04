@@ -5,6 +5,7 @@ import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.render.WorldRenderer
+import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.Entity
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.MathHelper
@@ -19,7 +20,7 @@ fun drawBox(box: Box, color: Color) {
     val box = box.offset(mc.gameRenderer.camera.pos.negate())
 
     bb.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR)
-    WorldRenderer.drawBox(bb, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, color.red, color.green, color.blue, color.alpha)
+    WorldRenderer.method_3258(MatrixStack(), bb, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, color.red, color.green, color.blue, color.alpha)
     tessellator.draw()
 
     RenderSystem.enableDepthTest()

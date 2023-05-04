@@ -30,8 +30,8 @@ dependencies {
     include implementation('org.jetbrains.kotlin:kotlin-stdlib')
     //include(implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8'))
     //include(implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7'))
-    include implementation('org.jetbrains.kotlin:kotlin-reflect')
-    //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core'))
+    include implementation('org.jetbrains.kotlin:kotlin-reflect'))
+    include implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'))
     //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm'))
     //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8'))
 

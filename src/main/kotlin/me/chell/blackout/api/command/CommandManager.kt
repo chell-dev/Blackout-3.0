@@ -1,5 +1,6 @@
 package me.chell.blackout.api.command
 
+import me.chell.blackout.api.util.HackChat
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.plus
@@ -9,9 +10,7 @@ import net.minecraft.client.gui.screen.TitleScreen
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen
 import net.minecraft.client.network.ServerAddress
 import net.minecraft.client.network.ServerInfo
-import net.minecraft.text.Style
 import net.minecraft.text.Text
-import net.minecraft.text.TextColor
 import net.minecraft.util.Formatting
 import net.minecraft.util.Util
 import org.lwjgl.glfw.GLFW
@@ -97,6 +96,12 @@ object CommandManager {
         commands.add(object: Command("shrug", description = "¯\\_(ツ)_/¯") {
             override fun run(args: String) {
                 mc.networkHandler?.sendChatMessage("¯\\_(ツ)_/¯")
+            }})
+
+        commands.add(object: Command("chat", description = "hackchat") {
+            override fun run(args: String) {
+                if(args.length !in 1 until 150) Console.print("chat <message>")
+                else HackChat.chat(args)
             }})
     }
 

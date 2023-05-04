@@ -5,7 +5,6 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
-import me.chell.blackout.impl.gui.items.FeatureItem
 import me.chell.blackout.impl.gui.items.SettingItem
 import net.minecraft.client.render.GameRenderer
 import net.minecraft.client.render.Tessellator
@@ -195,7 +194,6 @@ class ColorButton(private val parent: GuiItem, private val setting: Setting<Colo
 
     private fun drawAlphaSlider(matrices: MatrixStack?, x1: Float, y1: Float, x2: Float, y2: Float) {
         val matrix = matrices!!.peek().positionMatrix
-        RenderSystem.disableTexture()
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.setShader { GameRenderer.getPositionColorProgram() }
@@ -205,14 +203,13 @@ class ColorButton(private val parent: GuiItem, private val setting: Setting<Colo
         val c = setting.value
 
         bb.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
-        bb.vertex(matrix, x2, y1, zOffset.toFloat()).color(c.red, c.green, c.blue, 1f).next()
-        bb.vertex(matrix, x1, y1, zOffset.toFloat()).color(c.red, c.green, c.blue, 0f).next()
-        bb.vertex(matrix, x1, y2, zOffset.toFloat()).color(c.red, c.green, c.blue, 0f).next()
-        bb.vertex(matrix, x2, y2, zOffset.toFloat()).color(c.red, c.green, c.blue, 1f).next()
+        bb.vertex(matrix, x2, y1, 0f).color(c.red, c.green, c.blue, 1f).next()
+        bb.vertex(matrix, x1, y1, 0f).color(c.red, c.green, c.blue, 0f).next()
+        bb.vertex(matrix, x1, y2, 0f).color(c.red, c.green, c.blue, 0f).next()
+        bb.vertex(matrix, x2, y2, 0f).color(c.red, c.green, c.blue, 1f).next()
         tessellator.draw()
 
         RenderSystem.disableBlend()
-        RenderSystem.enableTexture()
     }
 
     private fun drawHueSlider(matrices: MatrixStack?, x: Int, y: Int, width: Int, height: Int) {
@@ -226,7 +223,6 @@ class ColorButton(private val parent: GuiItem, private val setting: Setting<Colo
 
     private fun drawSB(matrices: MatrixStack?, x1: Float, y1: Float, x2: Float, y2: Float) {
         val matrix = matrices!!.peek().positionMatrix
-        RenderSystem.disableTexture()
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.setShader { GameRenderer.getPositionColorProgram() }
@@ -236,21 +232,20 @@ class ColorButton(private val parent: GuiItem, private val setting: Setting<Colo
         val color = java.awt.Color.getHSBColor(getHue(setting.value), 1f, 1f)
 
         bb.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
-        bb.vertex(matrix, x2, y1, zOffset.toFloat()).color(color.red / 255f, color.green / 255f, color.blue / 255f, 1f).next()
-        bb.vertex(matrix, x1, y1, zOffset.toFloat()).color(1f, 1f, 1f, 1f).next()
-        bb.vertex(matrix, x1, y2, zOffset.toFloat()).color(1f, 1f, 1f, 1f).next()
-        bb.vertex(matrix, x2, y2, zOffset.toFloat()).color(color.red / 255f, color.green / 255f, color.blue / 255f, 1f).next()
+        bb.vertex(matrix, x2, y1, 0f).color(color.red / 255f, color.green / 255f, color.blue / 255f, 1f).next()
+        bb.vertex(matrix, x1, y1, 0f).color(1f, 1f, 1f, 1f).next()
+        bb.vertex(matrix, x1, y2, 0f).color(1f, 1f, 1f, 1f).next()
+        bb.vertex(matrix, x2, y2, 0f).color(color.red / 255f, color.green / 255f, color.blue / 255f, 1f).next()
         tessellator.draw()
 
         bb.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
-        bb.vertex(matrix, x2, y1, zOffset.toFloat()).color(0f, 0f, 0f, 0f).next()
-        bb.vertex(matrix, x1, y1, zOffset.toFloat()).color(0f, 0f, 0f, 0f).next()
-        bb.vertex(matrix, x1, y2, zOffset.toFloat()).color(0f, 0f, 0f, 1f).next()
-        bb.vertex(matrix, x2, y2, zOffset.toFloat()).color(0f, 0f, 0f, 1f).next()
+        bb.vertex(matrix, x2, y1, 0f).color(0f, 0f, 0f, 0f).next()
+        bb.vertex(matrix, x1, y1, 0f).color(0f, 0f, 0f, 0f).next()
+        bb.vertex(matrix, x1, y2, 0f).color(0f, 0f, 0f, 1f).next()
+        bb.vertex(matrix, x2, y2, 0f).color(0f, 0f, 0f, 1f).next()
         tessellator.draw()
 
         RenderSystem.disableBlend()
-        RenderSystem.enableTexture()
     }
 
     // https://stackoverflow.com/a/26233318

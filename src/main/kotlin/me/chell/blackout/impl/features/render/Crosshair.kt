@@ -63,7 +63,6 @@ object Crosshair: ToggleFeature("Crosshair", Category.Render) {
         val j = (color and 0xFF).toFloat() / 255.0f
         val bufferBuilder = Tessellator.getInstance().buffer
         RenderSystem.enableBlend()
-        RenderSystem.disableTexture()
         RenderSystem.defaultBlendFunc()
         RenderSystem.setShader { GameRenderer.getPositionColorProgram() }
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR)
@@ -72,7 +71,6 @@ object Crosshair: ToggleFeature("Crosshair", Category.Render) {
         bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(g, h, j, f).next()
         bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(g, h, j, f).next()
         BufferRenderer.drawWithGlobalProgram(bufferBuilder.end())
-        RenderSystem.enableTexture()
         RenderSystem.disableBlend()
     }
 
