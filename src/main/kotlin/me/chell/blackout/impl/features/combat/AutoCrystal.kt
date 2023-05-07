@@ -25,15 +25,12 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Box
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.Vec3d
+import net.minecraft.util.math.*
 import net.minecraft.world.Difficulty
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.RaycastContext.ShapeType
-import net.minecraft.world.explosion.Explosion
 import java.time.Instant
+import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -55,7 +52,9 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
     private val playerRange = register(Setting("Player Range", 12.0, 1.0, 20.0) {page.value == Page.Place})
     private val minDamage = register(Setting("Min Damage", 5.0, 0.0, 20.0) {page.value == Page.Place})
     private val maxSelfDamage = register(Setting("Max Self Damage", 8.0, 0.0, 20.0) {page.value == Page.Place})
-    private val predict = register(Setting("Predict Multiplier", 3.0, 0.0, 5.0) {page.value == Page.Place})
+    private val predict = register(Setting("Predict Movement", true) {page.value == Page.Place})
+    private val predictHorizontal = register(Setting("Horizontal Multiplier", 2.0, 0.0, 5.0, level = 2) {page.value == Page.Place && predict.value})
+    private val predictVertical = register(Setting("Vertical Multiplier", 0.0, 0.0, 5.0, level = 2) {page.value == Page.Place && predict.value})
     private val antiSurround = register(Setting("Anti Surround", AntiSurround.Off) {page.value == Page.Place})
     private val autoSwitch = register(Setting("Auto Switch", SwitchMode.Off) {page.value == Page.Place})
     private val noGappleSwitch = register(Setting("Anti Gapple Switch", true, description = "Don't auto switch while you're eating a golden apple.", level = 2) {page.value == Page.Place && autoSwitch.value != SwitchMode.Off})
@@ -65,9 +64,12 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
     private val facePlaceBind = register(Setting("FacePlace Bind", Bind.Toggle(onEnable={}, onDisable={}), description = "Keybind to ignore min damage.") {page.value == Page.Place})
 
     private val espColor = register(Setting("ESP Color", Color.sync(0.5f)) {page.value == Page.Other})
+    private val espBox = register(Setting("Highlight Target", true) {page.value == Page.Other})
 
     private var renderPos: BlockPos? = null
     private var renderTicks = 0
+
+    private var renderBB: Box? = null
 
     private var tickCounter = 0
     private var crystalCounter = 0
@@ -117,7 +119,10 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {
-        if(renderTicks <= 0) renderPos = null
+        if(renderTicks <= 0) {
+            renderPos = null
+            renderBB = null
+        }
         else renderTicks--
 
         if(tickCounter == 20) {
@@ -170,10 +175,13 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
 
     @EventHandler
     fun onRender(event: RenderWorldEvent) {
-        if(renderPos != null && renderTicks > 0) {
+        if(renderTicks > 0) {
             val a = espColor.value.alpha
             espColor.value.alpha = a * (renderTicks / 10f)
-            drawBox(Box(renderPos), espColor.value)
+
+            if(renderPos != null) drawBox(Box(renderPos), espColor.value)
+            if(renderBB != null && espBox.value) drawBoxOutline(renderBB!!, espColor.value, 1f)
+
             espColor.value.alpha = a
         }
     }
@@ -182,6 +190,7 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
         super.onEnable()
 
         renderPos = null
+        renderBB = null
         renderTicks = 0
 
         tickCounter = 0
@@ -276,9 +285,12 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
                 || (facePlaceHP.value > 0.0 && target.health + target.absorptionAmount <= facePlaceHP.value)
                 || (isArmorLow)
 
-        val oldTargetPos = target.pos
-        if(target != player && predict.value > 0.0 && target.speed > 0.01f) {
-            target.setPosition(oldTargetPos.offset(target.movementDirection, target.speed * predict.value))
+        var vec3d = Vec3d.ZERO
+        if(predict.value) {
+            val x = target.x - target.prevX
+            val y = target.y - target.prevY
+            val z = target.z - target.prevZ
+            vec3d = Vec3d(x * predictHorizontal.value * 10.0, y * predictVertical.value * 10.0, z * predictVertical.value * 10.0)
         }
 
         for(block in list) {
@@ -289,9 +301,9 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
             val maxRange = if(canRaytrace) squaredRange else squaredWAllRange
             if(player.squaredDistanceTo(block.toCenterPos()) > maxRange) continue
 
-            val damage = block.getExplosionDamage(target)
+            val damage = block.getExplosionDamage(target, vec3d)
             if(!shouldFP && damage < minDamage.value) continue
-            if(block.getExplosionDamage(player) > maxSelfDamage.value) continue
+            if(block.getExplosionDamage(player, Vec3d.ZERO) > maxSelfDamage.value) continue
             if(damage > maxDamage) {
                 placePos = block.mutableCopy()
                 maxDamage = damage
@@ -299,11 +311,10 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
             }
         }
 
-        target.setPosition(oldTargetPos)
-
         placePos ?: return false
 
         renderPos = placePos
+        renderBB = target.boundingBox.offset(vec3d)
         renderTicks = 10
 
         val yaw = player.yaw
@@ -364,11 +375,11 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
         return true
     }
 
-    private fun BlockPos.getExplosionDamage(target: LivingEntity): Float {
+    private fun BlockPos.getExplosionDamage(target: LivingEntity, offset: Vec3d): Float {
         val q = 12.0
         val vec3d = Vec3d(x + 0.5, y + 1.0, z + 0.5)
-        val w = sqrt(target.squaredDistanceTo(vec3d)) / q
-        val ac = (1.0 - w) * Explosion.getExposure(vec3d, target)
+        val w = sqrt(target.pos.add(offset).squaredDistanceTo(vec3d)) / q
+        val ac = (1.0 - w) * getExplosionExposure(vec3d, target, target.boundingBox.offset(offset))
 
         var damage = ((ac * ac + ac) / 2.0 * 7.0 * q + 1.0).toInt().toFloat()
 
@@ -391,5 +402,45 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
         //damage = max(damage - target.absorptionAmount, 0.0f)
 
         return damage
+    }
+
+    // Explosion.getExposure()
+    private fun getExplosionExposure(source: Vec3d, entity: Entity, box: Box): Float {
+        val d: Double = 1.0 / ((box.maxX - box.minX) * 2.0 + 1.0)
+        val e: Double = 1.0 / ((box.maxY - box.minY) * 2.0 + 1.0)
+        val f: Double = 1.0 / ((box.maxZ - box.minZ) * 2.0 + 1.0)
+        val g = (1.0 - floor(1.0 / d) * d) / 2.0
+        val h = (1.0 - floor(1.0 / f) * f) / 2.0
+
+        if (d < 0.0 || e < 0.0 || f < 0.0) {
+            return 0.0f
+        }
+
+        var i = 0
+        var j = 0
+
+        var k = 0.0
+        while(k <= 1.0) {
+            k += d
+
+            var l = 0.0
+            while(l <= 1.0) {
+                l += e
+
+                var m = 0.0
+                while(m <= 1.0) {
+                    m += f
+
+                    val vec3d = Vec3d(MathHelper.lerp(k, box.minX, box.maxX) + g, MathHelper.lerp(l, box.minY, box.maxY), MathHelper.lerp(m, box.minZ, box.maxZ) + h)
+
+                    if (entity.world.raycast(RaycastContext(vec3d, source, ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity)).type == HitResult.Type.MISS) {
+                        ++i
+                    }
+                    ++j
+                }
+            }
+        }
+
+        return i.toFloat() / j.toFloat()
     }
 }
