@@ -52,7 +52,7 @@ class SliderButton(private val parent: GuiItem, private val setting: Setting<Num
         RenderSystem.setShaderTexture(0, frame)
         drawTexture(matrices, x, y, 0f, 0f, width, height, width, height)
 
-        val text = setting.value.toString()
+        val text = setting.display.invoke(setting.value)
         textRenderer.drawWithShadow(matrices, text, x + width - textRenderer.getWidth(text).toFloat() - GuiItem.margin, parent.y + textOffset + 1, -1)
 
         super.render(matrices, mouseX, mouseY, delta)

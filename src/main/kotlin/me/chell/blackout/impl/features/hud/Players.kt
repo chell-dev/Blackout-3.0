@@ -13,7 +13,7 @@ class Players: Widget("Players") {
     override var width = 10
     override var height = 10
 
-    private val range = register(Setting("Range", -1, -1, 100))
+    private val range = register(Setting("Range", 0, 0, 100, display = { if(it == 0) "Infinite" else it.toString() }))
     private val friendColor = register(Setting("Friend Color", Color.sync()))
     private val neutralColor = register(Setting("Others Color", Color.white()))
     private val hAlign = register(Setting("Horizontal Align", HAlign.Left))
@@ -33,7 +33,7 @@ class Players: Widget("Players") {
         lines.clear()
 
         for(p in world.players) {
-            if(range.value >= 1 && p.distanceTo(player) > range.value) continue
+            if(range.value > 0 && p.distanceTo(player) > range.value) continue
             if(p == player) continue
 
             val text = p.getText()
