@@ -28,7 +28,7 @@ object EventManager {
     }
 
     fun post(event: Event) {
-        for (pair in (event::class.superclasses + event::class).flatMap {
+        for (pair in event::class.allClasses.flatMap {
             this.registered[it] ?: listOf()
         }) pair.second.call(pair.first, event)
     }
@@ -36,3 +36,6 @@ object EventManager {
 
 private val <T> KFunction<T>.eventType
     get() = this.parameters[1].type.jvmErasure as KClass<out Event>
+
+private val KClass<*>.allClasses: List<KClass<*>>
+    get() = listOf(this) + this.superclasses
