@@ -61,7 +61,7 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
     private val newPlacement = register(Setting("1.13+ Placement", true, description = "${Formatting.GREEN}ON:${Formatting.RESET} Place in 1 block tall spaces\n${Formatting.RED}OFF:${Formatting.RESET} Require 2 blocks of vertical space (for minecraft 1.12.2 and older).") {page.value == Page.Place})
     private val facePlaceHP = register(Setting("FacePlace HP", 8.0, 0.0, 20.0, "Health threshold to ignore min damage.", display = { if(it == 0.0) "Disabled" else it.toString() }) {page.value == Page.Place})
     private val facePlaceArmor = register(Setting("FacePlace Armor%", 10, 0, 50, "Armor percentage threshold to ignore min damage.", display = { if(it == 0) "Disabled" else it.toString() }) {page.value == Page.Place})
-    private val facePlaceBind = register(Setting("FacePlace Bind", Bind.Toggle(onEnable={}, onDisable={}), description = "Keybind to ignore min damage.") {page.value == Page.Place})
+    private val facePlaceBind = register(Setting("FacePlace Bind", Bind.Toggle("FacePlace", onEnable={}, onDisable={}), description = "Keybind to ignore min damage.") {page.value == Page.Place})
 
     private val espColor = register(Setting("ESP Color", Color.sync(0.5f)) {page.value == Page.Other})
     private val espBox = register(Setting("Highlight Target", true) {page.value == Page.Other})

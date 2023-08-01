@@ -18,7 +18,7 @@ import net.minecraft.screen.slot.SlotActionType
 
 object Offhand: ToggleFeature("Offhand", Category.Combat) {
 
-    private val gapple = register(Setting("Gapple", Bind.Toggle(onEnable={}, onDisable={})))
+    private val gapple = register(Setting("Gapple", Bind.Toggle("Offhand Gapple", onEnable={}, onDisable={})))
 
     private val swordGapple = register(Setting("Right click gapple with Sword", false))
     private val pickaxeGapple = register(Setting("Right click gapple with Pickaxe", false))

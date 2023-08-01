@@ -49,7 +49,7 @@ abstract class ToggleFeature(name: String, category: Category, enabled: Boolean 
 @NoRegister
 abstract class ToggleBindFeature(name: String, category: Category, keyCode: Int = GLFW.GLFW_KEY_UNKNOWN, enabled: Boolean = false, mode: Bind.Toggle.Mode = Bind.Toggle.Mode.Toggle): Feature(name, category) {
 
-    override val mainSetting = Setting("Bind", Bind.Toggle(InputUtil.fromKeyCode(keyCode, -1), enabled, mode, {onEnable()}, {onDisable()}))
+    override val mainSetting = (object: Setting<Bind.Toggle>("Bind", Bind.Toggle(name, InputUtil.fromKeyCode(keyCode, -1), enabled, mode, {onEnable()}, {onDisable()})){})
 
     open fun onEnable() {
         EventManager.register(this)
@@ -62,7 +62,7 @@ abstract class ToggleBindFeature(name: String, category: Category, keyCode: Int 
 @NoRegister
 abstract class ActionBindFeature(name: String, category: Category, keyCode: Int = GLFW.GLFW_KEY_UNKNOWN): Feature(name, category) {
 
-    override val mainSetting = Setting("Bind", Bind.Action(InputUtil.fromKeyCode(keyCode, -1)) { activate() })
+    override val mainSetting = Setting("Bind", Bind.Action(name, InputUtil.fromKeyCode(keyCode, -1)) { activate() })
 
     abstract fun activate()
 }

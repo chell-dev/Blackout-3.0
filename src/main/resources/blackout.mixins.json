@@ -23,6 +23,7 @@
     "PlayerEntityRendererMixin",
     "SoundManagerMixin",
     "WorldRendererMixin",
+    "accessors.ChatHudAccessor",
     "accessors.MinecraftClientAccessor"
   ],
   "injectors": {
