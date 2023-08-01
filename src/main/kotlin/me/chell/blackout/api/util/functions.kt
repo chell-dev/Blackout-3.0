@@ -41,6 +41,32 @@ fun TextRenderer.drawWithShadow(matrices: MatrixStack?, text: String, x: Float, 
     drawWithShadow(matrices, text, textX, textY, color)
 }
 
+fun TextRenderer.draw(matrices: MatrixStack, text: String, shadow: Boolean, rectangle: Rectangle, horizontal: HAlign, vertical: VAlign, color: Int, scale: Float = 1f, padding: Vec2f = Vec2f(0f, 0f)) {
+    val textWidth = getWidth(text) * scale
+    val fontHeight = fontHeight * scale
+
+    val textX = when(horizontal) {
+        HAlign.Left -> rectangle.x + padding.x
+        HAlign.Right -> rectangle.x + rectangle.width - textWidth - padding.x
+        HAlign.Center -> rectangle.x + (rectangle.width / 2f) - (textWidth / 2f)
+    }
+
+    val textY = when(vertical) {
+        VAlign.Top -> rectangle.y + padding.y
+        VAlign.Bottom -> rectangle.y + rectangle.height - fontHeight - padding.y
+        VAlign.Middle -> rectangle.y + (rectangle.height / 2f) - (fontHeight / 2f)
+    }
+
+    matrices.push()
+    matrices.scale(scale, scale, 1f)
+
+    if(shadow) drawWithShadow(matrices, text, textX / scale, textY / scale, color)
+    else draw(matrices, text, textX / scale, textY / scale, color)
+
+    matrices.scale(1f, 1f, 1f)
+    matrices.pop()
+}
+
 operator fun Formatting.plus(string: String): String = toString() + string
 
 operator fun Formatting.plus(other: Formatting): String = toString() + other.toString()

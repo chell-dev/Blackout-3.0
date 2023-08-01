@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.features.client.GuiFeature
+import me.chell.blackout.impl.gui.newgui.NewGUI
 import me.chell.blackout.impl.gui.tabs.CategoryTab
 import me.chell.blackout.impl.gui.tabs.FriendsTab
 import net.minecraft.client.MinecraftClient
@@ -174,6 +175,7 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         closing = false
         animationTicks = animationLength
         mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_TOAST_IN, 1.0f, 1.0f))
+        mc.setScreen(NewGUI)
     }
 
     override fun tick() {
