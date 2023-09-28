@@ -10,6 +10,7 @@ import java.io.File
 val clientFile = mc.runDirectory.absolutePath + "/$modName/Client.txt"
 val defaultConfig = mc.runDirectory.absolutePath + "/$modName/Config.txt"
 val defaultFriends = mc.runDirectory.absolutePath + "/$modName/Friends.txt"
+val kdFile = mc.runDirectory.absolutePath + "/$modName/KD"
 
 fun writeClientFile() {
     val file = File(clientFile)
@@ -163,4 +164,30 @@ fun readFriends(fileName: String) {
 
     friends.clear()
     friends.addAll(file.readLines())
+}
+
+private fun readKD() {
+    val file = File(kdFile)
+    file.parentFile.mkdirs()
+    file.createNewFile()
+    CombatTracker.servers.clear()
+
+    for(line in file.readLines()) {
+        try {
+            val split = line.split(" ")
+            CombatTracker.servers[split[0]] = intArrayOf(split[1].toInt(), split[2].toInt())
+        } catch (ignored: Exception) {}
+    }
+}
+
+private fun writeKD() {
+    val file = File(kdFile)
+    file.parentFile.mkdirs()
+    file.createNewFile()
+
+    val sb = StringBuilder()
+    for((ip, kd) in CombatTracker.servers) {
+        sb.append("$ip ${kd[0]} ${kd[1]}")
+        sb.append("\r\n")
+    }
 }

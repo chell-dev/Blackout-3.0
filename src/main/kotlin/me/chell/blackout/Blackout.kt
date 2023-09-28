@@ -18,6 +18,7 @@ object Blackout {
         ClientGUI.clientInit()
         HudEditor.clientInit()
         EventManager.register(Rainbow)
+        EventManager.register(CombatTracker)
 
         Runtime.getRuntime().addShutdownHook(Thread{
             println("Saving config")
