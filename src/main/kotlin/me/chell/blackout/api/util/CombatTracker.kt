@@ -6,11 +6,13 @@ import me.chell.blackout.api.events.AttackEntityEvent
 import me.chell.blackout.api.events.DamageEntityEvent
 import me.chell.blackout.api.events.EntityDamagedEvent
 import me.chell.blackout.api.events.PlayerInteractBlockEvent
+import me.chell.blackout.impl.features.client.Messages
 import me.chell.blackout.impl.features.combat.AutoCrystal.getExplosionDamage
 import net.minecraft.block.BedBlock
 import net.minecraft.block.Blocks
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.decoration.EndCrystalEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
@@ -69,9 +71,13 @@ object CombatTracker {
 
             if (event.entity == player) {
                 if (server != null) servers.getOrPut(server.address) { intArrayOf(0, 1) }[1]++
+                Messages.onDeath()
             } else if ((targets.contains(event.entity) || event.damageSource.attacker == player)) {
                 targets.remove(event.entity)
-                if (server != null) servers.getOrPut(server.address) { intArrayOf(1, 0) }[0]++
+                if(event.entity is PlayerEntity) {
+                    if (server != null) servers.getOrPut(server.address) { intArrayOf(1, 0) }[0]++
+                    Messages.onKill(event.entity)
+                }
             }
         }
     }
