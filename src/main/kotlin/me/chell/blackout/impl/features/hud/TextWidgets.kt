@@ -5,6 +5,7 @@ import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modName
 import me.chell.blackout.api.util.modVersion
 import me.chell.blackout.api.util.player
+import me.chell.blackout.impl.features.client.ConfigFeature
 
 object Watermark: TextWidget("Watermark", { "$modName $modVersion" })
 
@@ -17,3 +18,5 @@ object Welcome: TextWidget("Welcome", { "Welcome, ${mc.session.username}!" })
 object Cps: TextWidget("Crystals Per Second", { "${Cps.value} CPS" }) {
     var value = 0
 }
+
+object Config: TextWidget("Current Config", { ConfigFeature.mainSetting.value.name })
