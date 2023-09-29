@@ -1,6 +1,7 @@
 package me.chell.blackout.api.command
 
 import me.chell.blackout.api.util.*
+import me.chell.blackout.impl.commands.NameHistoryCommand
 import me.chell.blackout.impl.gui.Console
 import net.minecraft.client.gui.screen.ConnectScreen
 import net.minecraft.client.gui.screen.TitleScreen
@@ -113,6 +114,7 @@ object CommandManager {
                 }
             }})
 
+        commands.add(NameHistoryCommand)
     }
 
     fun onCommand(input: String) {
