@@ -375,7 +375,7 @@ object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
         return true
     }
 
-    private fun BlockPos.getExplosionDamage(target: LivingEntity, offset: Vec3d): Float {
+    fun BlockPos.getExplosionDamage(target: LivingEntity, offset: Vec3d): Float {
         val q = 12.0
         val vec3d = Vec3d(x + 0.5, y + 1.0, z + 0.5)
         val w = sqrt(target.pos.add(offset).squaredDistanceTo(vec3d)) / q

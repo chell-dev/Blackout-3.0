@@ -14,6 +14,7 @@ object Blackout {
         val files = readClientFile()
         readFeatures(files[0])
         readFriends(files[1])
+        readKD()
 
         ClientGUI.clientInit()
         HudEditor.clientInit()
@@ -26,6 +27,7 @@ object Blackout {
             val f = readClientFile()
             writeFeatures(f[0])
             writeFriends(f[1])
+            writeKD()
         })
 
         print("""

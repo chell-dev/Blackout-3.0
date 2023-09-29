@@ -1,9 +1,6 @@
 package me.chell.blackout.api.command
 
-import me.chell.blackout.api.util.HackChat
-import me.chell.blackout.api.util.mc
-import me.chell.blackout.api.util.player
-import me.chell.blackout.api.util.plus
+import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.gui.Console
 import net.minecraft.client.gui.screen.ConnectScreen
 import net.minecraft.client.gui.screen.TitleScreen
@@ -103,6 +100,19 @@ object CommandManager {
                 if(args.length !in 1 until 150) Console.print("chat <message>")
                 else HackChat.chat(args)
             }})
+
+        commands.add(object: Command("kd", description = "Get your KD on this server.") {
+            override fun run(args: String) {
+                if(mc.currentServerEntry == null) {
+                    Console.print(Formatting.RED + "You are not in a server!")
+                } else {
+                    val kd = CombatTracker.servers.getOrDefault(mc.currentServerEntry!!.address, intArrayOf(0, 0))
+                    val k = kd[0]
+                    val d = kd[1]
+                    Console.print(if(k == 0) "0.00" else (k / d).toString())
+                }
+            }})
+
     }
 
     fun onCommand(input: String) {

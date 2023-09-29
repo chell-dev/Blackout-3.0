@@ -166,7 +166,7 @@ fun readFriends(fileName: String) {
     friends.addAll(file.readLines())
 }
 
-private fun readKD() {
+fun readKD() {
     val file = File(kdFile)
     file.parentFile.mkdirs()
     file.createNewFile()
@@ -180,7 +180,7 @@ private fun readKD() {
     }
 }
 
-private fun writeKD() {
+fun writeKD() {
     val file = File(kdFile)
     file.parentFile.mkdirs()
     file.createNewFile()
