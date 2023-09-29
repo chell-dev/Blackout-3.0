@@ -91,6 +91,5 @@ After building, the output `.jar` will be in `build/libs/`
 - [Reflections](https://github.com/ronmamo/reflections)
 - [KDiscordIPC](https://github.com/caoimhebyrne/KDiscordIPC)
 - [hack.chat](https://hack.chat/)
-
-
+- [DevLogin](https://github.com/PlanetTeamSpeakk/DevLogin)
 - [Installer](https://github.com/2qb/Blackout-3.0-Installer)
