@@ -48,10 +48,11 @@ abstract class Bind(val name: String, var key: InputUtil.Key) {
         constructor(name: String, keyCode: Int, type: InputUtil.Type, enabled: Boolean = false, mode: Mode = Mode.Toggle, onEnable: () -> Unit, onDisable: () -> Unit) : this(name, type.createFromCode(keyCode), enabled, mode, onEnable, onDisable)
 
         override fun onKey(event: InputEvent) {
+            if(mc.currentScreen != null) return
             when(event.action) {
                 1 -> {
-                    if(key.code != GLFW_KEY_UNKNOWN && event.key == key
-                        && mc.currentScreen == null) enabled = !enabled
+                    if(key.code != GLFW_KEY_UNKNOWN && event.key == key)
+                        enabled = !enabled
                 }
                 0 -> {
                     if(key.code != GLFW_KEY_UNKNOWN && event.key == key

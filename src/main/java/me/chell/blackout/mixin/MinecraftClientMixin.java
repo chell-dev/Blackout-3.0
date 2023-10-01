@@ -3,6 +3,7 @@ package me.chell.blackout.mixin;
 import me.chell.blackout.Blackout;
 import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.ServerEvent;
+import me.chell.blackout.api.events.SetScreenEvent;
 import me.chell.blackout.api.util.FunctionsKt;
 import me.chell.blackout.impl.features.client.WindowTitle;
 import net.minecraft.client.MinecraftClient;
@@ -21,6 +22,11 @@ public class MinecraftClientMixin {
     @Inject(method = "<init>", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"))
     public void init(RunArgs args, CallbackInfo ci) {
         Blackout.INSTANCE.init();
+    }
+
+    @Inject(method = "setScreen", at = @At("HEAD"))
+    public void setScreen(Screen screen, CallbackInfo ci) {
+        EventManager.INSTANCE.post(new SetScreenEvent(screen));
     }
 
     @Inject(method = "getWindowTitle", at = @At(value = "INVOKE", target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;", ordinal = 2, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)

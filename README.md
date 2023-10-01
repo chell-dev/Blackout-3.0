@@ -3,7 +3,10 @@
 
 ![Logo](src/main/resources/assets/blackout/textures/gui/banner.png)
 
-## Minecraft client for Fabric 1.19.4
+## block game utility mod
+
+![Minecraft](https://img.shields.io/badge/Minecraft-1.19.4-488321?style=flat-square)
+[![Fabric](https://img.shields.io/badge/Mod_Loader-Fabric-DBD0B4?style=flat-square)](https://fabricmc.net/use/installer/)
 
 ![Downloads](https://img.shields.io/github/downloads/chell-dev/Blackout-3.0/total?style=flat-square)
 ![Lines of code](https://img.shields.io/tokei/lines/github/chell-dev/Blackout-3.0?label=Lines%20of%20code&style=flat-square&color=blueviolet)

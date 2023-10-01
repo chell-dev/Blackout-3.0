@@ -4,18 +4,23 @@ import me.chell.blackout.api.event.EventHandler
 import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.InputEvent
 import me.chell.blackout.api.events.RenderHudEvent
+import me.chell.blackout.api.events.SetScreenEvent
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.impl.gui.HudEditor
+import net.minecraft.client.util.InputUtil
+import org.lwjgl.glfw.GLFW
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
 
 object FeatureManager {
 
     val features = mutableListOf<Feature>()
+    val binds = mutableListOf<Bind>()
 
     fun init() {
         registerFeatures()
+        collectBinds()
         EventManager.register(this)
     }
 
@@ -25,6 +30,19 @@ object FeatureManager {
         for(c in list) {
             if(!c.isAnnotationPresent(NoRegister::class.java))
                 features.add(c.kotlin.objectInstance as Feature? ?: c.getDeclaredConstructor().newInstance() as Feature)
+        }
+    }
+
+    private fun collectBinds() {
+        for(f in features) {
+            val main = f.mainSetting.value
+            if(main is Bind) binds.add(main)
+
+            for(s in f.settings) {
+                val v = s.value
+                if(v is Bind) binds.add(v)
+            }
+
         }
     }
 
@@ -46,18 +64,22 @@ object FeatureManager {
 
     @EventHandler
     fun onInput(event: InputEvent) {
-        for(f in features) {
+        for(bind in binds) {
+            bind.onKey(event)
+        }
+    }
 
-            if(f.mainSetting.value is Bind) {
-                (f.mainSetting.value as Bind).onKey(event)
+    @EventHandler
+    fun onOpenGui(event: SetScreenEvent) {
+        if(mc.currentScreen != null) return
+        for(bind in binds) {
+            if(bind is Bind.Toggle && bind.mode == Bind.Toggle.Mode.Hold) {
+                if(when(bind.key.category) {
+                    InputUtil.Type.KEYSYM -> GLFW.glfwGetKey(mc.window.handle, bind.key.code) == 1
+                    InputUtil.Type.SCANCODE -> false
+                    InputUtil.Type.MOUSE -> GLFW.glfwGetMouseButton(mc.window.handle, bind.key.code) == 1
+                }) bind.enabled = !bind.enabled
             }
-
-            for(s in f.settings) {
-                if(s.value is Bind) {
-                    (s.value as Bind).onKey(event)
-                }
-            }
-
         }
     }
 
