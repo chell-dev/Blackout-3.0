@@ -4,11 +4,14 @@ import me.chell.blackout.api.event.EventHandler
 import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.events.InputEvent
 import me.chell.blackout.api.events.RenderHudEvent
+import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.events.SetScreenEvent
 import me.chell.blackout.api.setting.Bind
+import me.chell.blackout.api.util.drawBox
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.impl.gui.HudEditor
 import net.minecraft.client.util.InputUtil
+import net.minecraft.util.math.Box
 import org.lwjgl.glfw.GLFW
 import org.reflections.Reflections
 import org.reflections.scanners.Scanners
@@ -81,6 +84,11 @@ object FeatureManager {
                 }) bind.enabled = !bind.enabled
             }
         }
+    }
+
+    @EventHandler
+    fun onRender3D(event: RenderWorldEvent) {
+        for(w in waypoints) drawBox(Box.of(w.pos, 0.5, 1.0, 0.5), w.color)
     }
 
 }

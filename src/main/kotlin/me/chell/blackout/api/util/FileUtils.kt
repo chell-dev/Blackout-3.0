@@ -1,38 +1,66 @@
 package me.chell.blackout.api.util
 
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.feature.FeatureManager
+import me.chell.blackout.api.feature.Waypoint
+import me.chell.blackout.api.feature.waypoints
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
+import me.chell.blackout.impl.features.client.ConfigFeature
 import net.minecraft.client.util.InputUtil
 import java.io.File
+import java.lang.reflect.Type
 
 val clientFile = mc.runDirectory.absolutePath + "/$modName/Client.txt"
 val defaultConfig = mc.runDirectory.absolutePath + "/$modName/Config.txt"
-val defaultFriends = mc.runDirectory.absolutePath + "/$modName/Friends.txt"
-val kdFile = mc.runDirectory.absolutePath + "/$modName/KD"
+val friendsFile = mc.runDirectory.absolutePath + "/$modName/Friends.txt"
+val kdFile = mc.runDirectory.absolutePath + "/$modName/KD.txt"
+val waypointsFile = mc.runDirectory.absolutePath + "/$modName/Waypoints.json"
 
-fun writeClientFile() {
+fun readConfig() {
+    readClientFile()
+    readFeatures()
+    readWaypoints()
+    readFriends()
+    readKD()
+}
+
+fun writeConfig() {
+    writeWaypoints()
+    writeClientFile()
+    writeFeatures()
+    writeFriends()
+    writeKD()
+}
+
+private fun writeClientFile() {
     val file = File(clientFile)
     file.parentFile.mkdirs()
     file.createNewFile()
 
-    file.writeText("$defaultConfig\r\n$defaultFriends")
+    file.writeText(ConfigFeature.mainSetting.value.absolutePath)
 }
 
-fun readClientFile(): List<String> {
+private fun readClientFile(): String {
     val file = File(clientFile)
+    file.parentFile.mkdirs()
+    file.createNewFile()
 
-    return if(file.exists()) file.readLines()
-    else listOf(defaultConfig, defaultFriends)
+    val text = file.readText()
+
+    return if(text.isNotEmpty() && File(text).exists()) text
+    else defaultConfig
+
 }
 
 @Suppress("unchecked_cast")
-fun writeFeatures(fileName: String) {
-    val file = File(fileName)
+fun writeFeatures() {
+    val file = ConfigFeature.mainSetting.value
     file.parentFile.mkdirs()
     file.createNewFile()
-    println("Created" + file.absolutePath + file.name)
+    println("Created " + file.absolutePath + file.name)
 
     val s = "\r\n"
 
@@ -78,8 +106,8 @@ fun writeFeatures(fileName: String) {
     file.writeText(sb.toString())
 }
 
-fun readFeatures(fileName: String) {
-    val file = File(fileName)
+fun readFeatures() {
+    val file = ConfigFeature.mainSetting.value
     if(!file.exists()) return
 
     var feature: Feature? = null
@@ -100,7 +128,7 @@ fun readFeatures(fileName: String) {
 }
 
 @Suppress("unchecked_cast")
-fun parseValue(setting: Setting<*>, text: String) {
+private fun parseValue(setting: Setting<*>, text: String) {
     var error = false
     try {
         when (setting.value) {
@@ -146,8 +174,8 @@ fun parseValue(setting: Setting<*>, text: String) {
     }
 }
 
-fun writeFriends(fileName: String) {
-    val file = File(fileName)
+private fun writeFriends() {
+    val file = File(friendsFile)
     file.parentFile.mkdirs()
     file.createNewFile()
 
@@ -158,15 +186,15 @@ fun writeFriends(fileName: String) {
     file.writeText(sb.toString())
 }
 
-fun readFriends(fileName: String) {
-    val file = File(fileName)
+private fun readFriends() {
+    val file = File(friendsFile)
     if(!file.exists()) return
 
     friends.clear()
     friends.addAll(file.readLines())
 }
 
-fun readKD() {
+private fun readKD() {
     val file = File(kdFile)
     file.parentFile.mkdirs()
     file.createNewFile()
@@ -180,7 +208,7 @@ fun readKD() {
     }
 }
 
-fun writeKD() {
+private fun writeKD() {
     val file = File(kdFile)
     file.parentFile.mkdirs()
     file.createNewFile()
@@ -190,4 +218,33 @@ fun writeKD() {
         sb.append("$ip ${kd[0]} ${kd[1]}")
         sb.append("\r\n")
     }
+}
+
+private fun readWaypoints() {
+    waypoints.clear()
+    waypoints.addAll(waypointsFile.readJson<MutableList<Waypoint>>() ?: emptyList())
+}
+
+private fun writeWaypoints() {
+    waypointsFile.writeJson(waypoints)
+}
+
+private val gson = GsonBuilder().setPrettyPrinting().create()
+
+private fun <T> String.readJson(): T? {
+    val file = File(this)
+    file.parentFile.mkdirs()
+    file.createNewFile()
+
+    val type: Type = object: TypeToken<T>() {}.type
+
+    return gson.fromJson(file.readText(), type)
+}
+
+private fun String.writeJson(src: Any) {
+    val file = File(this)
+    file.parentFile.mkdirs()
+    file.createNewFile()
+
+    file.writeText(gson.toJson(src))
 }

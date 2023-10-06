@@ -11,10 +11,9 @@ object Blackout {
     fun init() {
         FeatureManager.init()
 
-        val files = readClientFile()
-        readFeatures(files[0])
-        readFriends(files[1])
-        readKD()
+        //BaritoneAPI.getProvider().worldScanner.scanChunkRadius()
+
+        readConfig()
 
         ClientGUI.clientInit()
         HudEditor.clientInit()
@@ -22,12 +21,9 @@ object Blackout {
         EventManager.register(CombatTracker)
 
         Runtime.getRuntime().addShutdownHook(Thread{
-            println("Saving config")
-            writeClientFile()
-            val f = readClientFile()
-            writeFeatures(f[0])
-            writeFriends(f[1])
-            writeKD()
+            println("[$modName] Saving config...")
+            writeConfig()
+            println("[$modName] Goodbye.")
         })
 
         print("""

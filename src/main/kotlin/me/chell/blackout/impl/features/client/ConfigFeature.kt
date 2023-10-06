@@ -12,13 +12,8 @@ object ConfigFeature: Feature("Config", Category.Client) {
 
     override val mainSetting = Setting("File", File(defaultConfig))
 
-    val save = register(Setting("Save", Runnable { writeFeatures(mainSetting.value.absolutePath) }))
-    val load = register(Setting("Load", false))
-    val confirmLoad = register(Setting("Confirm Load", Runnable { readFeatures(mainSetting.value.absolutePath); load.value = false }, level = 2) {load.value})
-
-    init {
-        mainSetting.value.parentFile.mkdirs()
-        mainSetting.value.createNewFile()
-    }
+    private val save = register(Setting("Save", Runnable { writeFeatures() }))
+    private val load = register(Setting("Load", false))
+    private val confirmLoad = register(Setting("Confirm Load", Runnable { readFeatures(); load.value = false }, level = 2) {load.value})
 
 }
