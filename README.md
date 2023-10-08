@@ -9,7 +9,7 @@
 [![Fabric](https://img.shields.io/badge/Mod_Loader-Fabric-DBD0B4?style=flat-square)](https://fabricmc.net/use/installer/)
 
 ![Downloads](https://img.shields.io/github/downloads/chell-dev/Blackout-3.0/total?style=flat-square)
-![Lines of code](https://img.shields.io/tokei/lines/github/chell-dev/Blackout-3.0?label=Lines%20of%20code&style=flat-square&color=blueviolet)
+[![Lines of code](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.codetabs.com%2Fv1%2Floc%3Fgithub%3Dchell-dev%2FBlackout-3.0&query=%24%5B9%5D.linesOfCode&label=Lines%20of%20code&style=flat-square&color=blueviolet)](https://api.codetabs.com/v1/loc/?github=chell-dev/Blackout-3.0)
 
 <details>
 <summary>Not to be confused with the Meteor addon called BlackOut</summary>
