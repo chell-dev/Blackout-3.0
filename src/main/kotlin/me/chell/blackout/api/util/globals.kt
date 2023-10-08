@@ -1,6 +1,5 @@
 package me.chell.blackout.api.util
 
-import me.chell.blackout.Blackout
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.network.ClientPlayerEntity
@@ -10,7 +9,7 @@ import net.minecraft.client.world.ClientWorld
 
 const val modName = "Blackout"
 const val modId = "blackout"
-const val modVersion = "3.0"
+const val modVersion = "3.0.0"
 
 val mc get() = MinecraftClient.getInstance()!!
 

@@ -19,6 +19,7 @@ object Blackout {
         HudEditor.clientInit()
         EventManager.register(Rainbow)
         EventManager.register(CombatTracker)
+        Updater.checkUpdates()
 
         Runtime.getRuntime().addShutdownHook(Thread{
             println("[$modName] Saving config...")

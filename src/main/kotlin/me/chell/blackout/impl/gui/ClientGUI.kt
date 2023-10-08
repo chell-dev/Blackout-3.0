@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.features.client.GuiFeature
-import me.chell.blackout.impl.gui.newgui.NewGUI
 import me.chell.blackout.impl.gui.tabs.CategoryTab
 import me.chell.blackout.impl.gui.tabs.FriendsTab
 import net.minecraft.client.MinecraftClient
@@ -42,6 +41,8 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
     private val descX get() = x + Tab.size
     val descY get () = y + uiHeight - (mc.textRenderer.fontHeight * 3) - (descPadding * 2)
     private val descPadding = 5f
+
+    private val updateText = "Version ${Updater.latestVersion} available! Click here to update and restart."
 
     fun clientInit() {
         var tabY = bannerHeight+1
@@ -113,6 +114,9 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         disableScissor()
 
         Console.render(matrices, mouseX, mouseY, delta)
+
+        if(Updater.updateAvailable)
+            textRenderer.drawWithShadow(matrices, updateText, width - textRenderer.getWidth(updateText) - 2f, 2f, Rainbow.color.rgb)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
@@ -123,6 +127,9 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         for(tab in tabs) {
             if(tab.mouseClicked(mouseX, mouseY, button)) return true
         }
+
+        if(Updater.updateAvailable && mouseX >= width - textRenderer.getWidth(updateText) - 2f && mouseY <= textRenderer.fontHeight + 4f)
+            Updater.update()
 
         return false
     }
@@ -175,7 +182,6 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         closing = false
         animationTicks = animationLength
         mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_TOAST_IN, 1.0f, 1.0f))
-        mc.setScreen(NewGUI)
     }
 
     override fun tick() {

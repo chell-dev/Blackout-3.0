@@ -1,14 +1,15 @@
 {
   "schemaVersion": 1,
   "id": "blackout",
-  "version": "3.0",
+  "version": "3.0.0",
   "name": "Blackout",
   "description": "block game cheat",
   "authors": [
     "chell"
   ],
   "contact": {
-    "homepage": "https://github.com/chell-dev/Blackout-3.0"
+    "homepage": "https://github.com/chell-dev/Blackout-3.0",
+    "issues": "https://github.com/chell-dev/Blackout-3.0/issues"
   },
   "license": "GPL-3.0",
   "icon": "assets/blackout/icon.png",
