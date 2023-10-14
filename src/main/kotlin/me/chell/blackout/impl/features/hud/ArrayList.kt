@@ -7,7 +7,7 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.Color
 import me.chell.blackout.api.util.HAlign
 import me.chell.blackout.api.util.textRenderer
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 
 object ArrayList: Widget("ArrayList") {
 
@@ -21,8 +21,8 @@ object ArrayList: Widget("ArrayList") {
     private val hAlign = register(Setting("Horizontal Align", HAlign.Right))
     private val color = register(Setting("Color", Color.white()))
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
 
         var textY = 0
 
@@ -39,7 +39,7 @@ object ArrayList: Widget("ArrayList") {
                 HAlign.Right -> x.value
                 HAlign.Center -> (x.value + width / 2) - (textWidth / 2)
             }
-            textRenderer.drawWithShadow(matrices, feature.name, textX.toFloat(), if(vAlign.value == VAlign.Up) y.value + height - textRenderer.fontHeight - textY.toFloat() else y.value + textY.toFloat(), color.value.rgb)
+            context.drawTextWithShadow(textRenderer, feature.name, textX, if(vAlign.value == VAlign.Up) y.value + height - textRenderer.fontHeight - textY else y.value + textY, color.value.rgb)
 
             textY += textRenderer.fontHeight
         }

@@ -5,7 +5,7 @@ import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.textRenderer
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 import org.lwjgl.glfw.GLFW
 
 object Keybinds: Widget("Keybinds") {
@@ -18,8 +18,8 @@ object Keybinds: Widget("Keybinds") {
     private val disabled = register(Setting("Disabled Color", me.chell.blackout.api.util.Color(1f, 0f, 0f)))
     private val action = register(Setting("Action Color", me.chell.blackout.api.util.Color.white()))
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
 
         val list = mutableMapOf<String, Bind>()
 
@@ -46,7 +46,7 @@ object Keybinds: Widget("Keybinds") {
             val textWidth = textRenderer.getWidth(text)
             if(textWidth > width) width = textWidth
 
-            textRenderer.drawWithShadow(matrices, text, x.value.toFloat(), y.value + textY.toFloat(), color.rgb)
+            context.drawTextWithShadow(textRenderer, text, x.value, y.value + textY, color.rgb)
             textY += textRenderer.fontHeight
         }
 

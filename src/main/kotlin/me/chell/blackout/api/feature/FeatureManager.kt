@@ -61,7 +61,7 @@ object FeatureManager {
         if(mc.currentScreen is HudEditor) return
         for(widget in HudEditor.widgets) {
             if(widget.mainSetting.value)
-                widget.render(event.matrices, -1, -1, event.tickDelta)
+                widget.render(event.context, -1, -1, event.tickDelta)
         }
     }
 

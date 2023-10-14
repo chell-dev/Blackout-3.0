@@ -3,9 +3,8 @@ package me.chell.blackout.api.util
 import me.chell.blackout.impl.features.client.Messages
 import me.chell.blackout.impl.gui.newgui.util.Rectangle
 import me.chell.blackout.mixin.accessors.ChatHudAccessor
-import net.minecraft.client.font.TextRenderer
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.hud.MessageIndicator
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.LiteralTextContent
 import net.minecraft.text.MutableText
 import net.minecraft.text.Style
@@ -16,34 +15,34 @@ import java.util.function.UnaryOperator
 
 fun StringBuilder.setString(text: String): StringBuilder = this.replace(0, this.length, text)
 
-fun TextRenderer.drawTrimmedWithShadow(matrices: MatrixStack?, text: String, x: Float, y: Float, maxWidth: Int, color: Int) {
+fun DrawContext.drawTrimmedTextWithShadow(text: String, x: Float, y: Float, maxWidth: Int, color: Int) {
     var y = y
-    for(line in wrapLines(Text.of(text), maxWidth)) {
-        drawWithShadow(matrices, line, x, y, color)
-        y += fontHeight
+    for(line in textRenderer.wrapLines(Text.of(text), maxWidth)) {
+        drawTextWithShadow(textRenderer, line, x.toInt(), y.toInt(), color)
+        y += textRenderer.fontHeight
     }
 }
 
-fun TextRenderer.drawWithShadow(matrices: MatrixStack?, text: String, x: Float, y: Float, width: Float, height: Float, horizontal: HAlign, vertical: VAlign, color: Int) {
-    val textWidth = getWidth(text)
+fun DrawContext.drawAlignedTextWithShadow(text: String, x: Float, y: Float, width: Float, height: Float, horizontal: HAlign, vertical: VAlign, color: Int) {
+    val textWidth = textRenderer.getWidth(text)
 
     val textX = when(horizontal) {
         HAlign.Left -> x
         HAlign.Right -> x + width - textWidth
-        HAlign.Center -> x + (width / 2) - (textWidth / 2f)
+        HAlign.Center -> x + (width / 2f) - (textWidth / 2f)
     }
 
     val textY = when(vertical) {
         VAlign.Top, VAlign.Middle -> y
-        VAlign.Bottom -> y + height - fontHeight
+        VAlign.Bottom -> y + height - textRenderer.fontHeight
     }
 
-    drawWithShadow(matrices, text, textX, textY, color)
+    drawTextWithShadow(textRenderer, text, textX.toInt(), textY.toInt(), color)
 }
 
-fun TextRenderer.draw(matrices: MatrixStack, text: String, shadow: Boolean, rectangle: Rectangle, horizontal: HAlign, vertical: VAlign, color: Int, scale: Float = 1f, padding: Vec2f = Vec2f(0f, 0f)) {
-    val textWidth = getWidth(text) * scale
-    val fontHeight = fontHeight * scale
+fun DrawContext.drawText(text: String, shadow: Boolean, rectangle: Rectangle, horizontal: HAlign, vertical: VAlign, color: Int, scale: Float = 1f, padding: Vec2f = Vec2f(0f, 0f)) {
+    val textWidth = textRenderer.getWidth(text) * scale
+    val fontHeight = textRenderer.fontHeight * scale
 
     val textX = when(horizontal) {
         HAlign.Left -> rectangle.x + padding.x
@@ -60,8 +59,7 @@ fun TextRenderer.draw(matrices: MatrixStack, text: String, shadow: Boolean, rect
     matrices.push()
     matrices.scale(scale, scale, 1f)
 
-    if(shadow) drawWithShadow(matrices, text, textX / scale, textY / scale, color)
-    else draw(matrices, text, textX / scale, textY / scale, color)
+    drawText(textRenderer, text, (textX / scale).toInt(), (textY / scale).toInt(), color, shadow)
 
     matrices.scale(1f, 1f, 1f)
     matrices.pop()

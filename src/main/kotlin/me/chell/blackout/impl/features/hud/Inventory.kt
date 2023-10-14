@@ -3,9 +3,11 @@ package me.chell.blackout.impl.features.hud
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.*
-import net.minecraft.client.gui.DrawableHelper
-import net.minecraft.client.util.math.MatrixStack
+import me.chell.blackout.api.util.Color
+import me.chell.blackout.api.util.modId
+import me.chell.blackout.api.util.player
+import me.chell.blackout.api.util.textRenderer
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Identifier
 
 object Inventory: Widget("Inventory") {
@@ -22,8 +24,8 @@ object Inventory: Widget("Inventory") {
         Texture, Color
     }
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
 
         when(mode.value) {
             Mode.Texture -> {
@@ -32,12 +34,12 @@ object Inventory: Widget("Inventory") {
                 RenderSystem.enableBlend()
                 RenderSystem.defaultBlendFunc()
                 RenderSystem.enableDepthTest()
-                DrawableHelper.drawTexture(matrices, x.value, y.value, 0f, 0f, width, height, width, height)
+                context.drawTexture(id, x.value, y.value, 0f, 0f, width, height, width, height)
                 RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
             }
             Mode.Color -> {
                 if(color.value.alpha > 0f) {
-                    DrawableHelper.fill(matrices, x.value, y.value, x.value + width, y.value + height, color.value.rgb)
+                    context.fill(x.value, y.value, x.value + width, y.value + height, color.value.rgb)
                 }
             }
         }
@@ -47,8 +49,8 @@ object Inventory: Widget("Inventory") {
 
         for(index in 9 until player.inventory.main.size) {
             val stack = player.inventory.main[index]
-            mc.itemRenderer.renderInGui(matrices, stack, itemX, itemY)
-            mc.itemRenderer.renderGuiItemOverlay(matrices, textRenderer, stack, itemX, itemY)
+            //context.drawItem(stack, x.value, y.value)
+            context.drawItemInSlot(textRenderer, stack, itemX, itemY)
 
             if((index-8) % 9 == 0) {
                 itemX = x.value

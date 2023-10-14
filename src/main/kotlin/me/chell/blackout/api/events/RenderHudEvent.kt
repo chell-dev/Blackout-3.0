@@ -1,7 +1,7 @@
 package me.chell.blackout.api.events
 
 import me.chell.blackout.api.event.Event
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Identifier
 
 abstract class RenderHudEvent(var canceled: Boolean): Event() {

@@ -6,7 +6,7 @@ import me.chell.blackout.api.util.Color
 import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.plus
 import me.chell.blackout.api.util.textRenderer
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Formatting
 import net.minecraft.util.math.Direction
 import net.minecraft.world.dimension.DimensionTypes
@@ -18,8 +18,8 @@ object Coordinates: Widget("Coordinates") {
     private val vAlign = register(Setting("Vertical Align", VAlign.UP))
     private val color = register(Setting("Color", Color.white()))
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
 
         val x = (player.pos.x * 10).toInt() / 10.0
         val y = (player.pos.y * 10).toInt() / 10.0
@@ -38,11 +38,11 @@ object Coordinates: Widget("Coordinates") {
                 width = maxOf(textRenderer.getWidth(a), textRenderer.getWidth(b), width)
 
                 if(vAlign.value == VAlign.UP) {
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat(), color)
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
+                    context.drawTextWithShadow(textRenderer, b, this.x.value, this.y.value, color)
+                    context.drawTextWithShadow(textRenderer, a, this.x.value, this.y.value + textRenderer.fontHeight, color)
                 } else {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), color)
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
+                    context.drawTextWithShadow(textRenderer, a, this.x.value, this.y.value, color)
+                    context.drawTextWithShadow(textRenderer, b, this.x.value, this.y.value + textRenderer.fontHeight, color)
                 }
             }
             DimensionTypes.THE_NETHER -> {
@@ -51,11 +51,11 @@ object Coordinates: Widget("Coordinates") {
                 width = maxOf(textRenderer.getWidth(a), textRenderer.getWidth(b), width)
 
                 if(vAlign.value == VAlign.UP) {
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat(), color)
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
+                    context.drawTextWithShadow(textRenderer, b, this.x.value, this.y.value, color)
+                    context.drawTextWithShadow(textRenderer, a, this.x.value, this.y.value + textRenderer.fontHeight, color)
                 } else {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), color)
-                    textRenderer.drawWithShadow(matrices, b, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
+                    context.drawTextWithShadow(textRenderer, a, this.x.value, this.y.value, color)
+                    context.drawTextWithShadow(textRenderer, b, this.x.value, this.y.value + textRenderer.fontHeight, color)
                 }
             }
             else -> {
@@ -63,9 +63,9 @@ object Coordinates: Widget("Coordinates") {
                 width = maxOf(textRenderer.getWidth(a), width)
 
                 if(vAlign.value == VAlign.UP) {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat() + textRenderer.fontHeight, color)
+                    context.drawTextWithShadow(textRenderer, a, this.x.value, this.y.value + textRenderer.fontHeight, color)
                 } else {
-                    textRenderer.drawWithShadow(matrices, a, this.x.value.toFloat(), this.y.value.toFloat(), color)
+                    context.drawTextWithShadow(textRenderer, a, this.x.value, this.y.value, color)
                 }
             }
         }

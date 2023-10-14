@@ -6,8 +6,8 @@ import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modName
 import me.chell.blackout.impl.features.client.HudEditorFeature
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 import java.awt.Color
@@ -32,36 +32,36 @@ object HudEditor: Screen(Text.of("$modName HUD Editor")) {
         selected = widget
     }
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        drawHorizontalLine(matrices, 0, width, height / 2, Color.CYAN.rgb)
-        drawVerticalLine(matrices, (width / 2) - 1, -1, height, Color.CYAN.rgb)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        context.drawHorizontalLine(0, width, height / 2, Color.CYAN.rgb)
+        context.drawVerticalLine((width / 2) - 1, -1, height, Color.CYAN.rgb)
 
         for(w in widgets) {
-            if(w.mainSetting.value) w.render(matrices, mouseX, mouseY, delta)
+            if(w.mainSetting.value) w.render(context, mouseX, mouseY, delta)
         }
 
-        renderGuides(matrices)
+        renderGuides(context)
     }
 
-    private fun renderGuides(matrices: MatrixStack?) {
+    private fun renderGuides(context: DrawContext) {
         if(lastSelected != null) {
-            drawHorizontalLine(matrices, 0, width, lastSelected!!.y.value, Color.GRAY.rgb)
-            drawHorizontalLine(matrices, 0, width, lastSelected!!.y.value + lastSelected!!.height - 1, Color.GRAY.rgb)
-            drawVerticalLine(matrices, lastSelected!!.x.value, -1, height, Color.GRAY.rgb)
-            drawVerticalLine(matrices, lastSelected!!.x.value + lastSelected!!.width - 1, -1, height, Color.GRAY.rgb)
+            context.drawHorizontalLine(0, width, lastSelected!!.y.value, Color.GRAY.rgb)
+            context.drawHorizontalLine(0, width, lastSelected!!.y.value + lastSelected!!.height - 1, Color.GRAY.rgb)
+            context.drawVerticalLine(lastSelected!!.x.value, -1, height, Color.GRAY.rgb)
+            context.drawVerticalLine(lastSelected!!.x.value + lastSelected!!.width - 1, -1, height, Color.GRAY.rgb)
 
-            drawHorizontalLine(matrices, 0, width, lastSelected!!.y.value + (lastSelected!!.height / 2), Color.GRAY.rgb)
-            drawVerticalLine(matrices, lastSelected!!.x.value + (lastSelected!!.width / 2) - 1, -1, height, Color.GRAY.rgb)
+            context.drawHorizontalLine(0, width, lastSelected!!.y.value + (lastSelected!!.height / 2), Color.GRAY.rgb)
+            context.drawVerticalLine(lastSelected!!.x.value + (lastSelected!!.width / 2) - 1, -1, height, Color.GRAY.rgb)
         }
 
         if(selected != null) {
-            drawHorizontalLine(matrices, 0, width, selected!!.y.value, Color.MAGENTA.rgb)
-            drawHorizontalLine(matrices, 0, width, selected!!.y.value + selected!!.height - 1, Color.MAGENTA.rgb)
-            drawVerticalLine(matrices, selected!!.x.value, -1, height, Color.MAGENTA.rgb)
-            drawVerticalLine(matrices, selected!!.x.value + selected!!.width - 1, -1, height, Color.MAGENTA.rgb)
+            context.drawHorizontalLine(0, width, selected!!.y.value, Color.MAGENTA.rgb)
+            context.drawHorizontalLine(0, width, selected!!.y.value + selected!!.height - 1, Color.MAGENTA.rgb)
+            context.drawVerticalLine(selected!!.x.value, -1, height, Color.MAGENTA.rgb)
+            context.drawVerticalLine(selected!!.x.value + selected!!.width - 1, -1, height, Color.MAGENTA.rgb)
 
-            drawHorizontalLine(matrices, 0, width, selected!!.y.value + (selected!!.height / 2), Color.MAGENTA.rgb)
-            drawVerticalLine(matrices, selected!!.x.value + (selected!!.width / 2) - 1, -1, height, Color.MAGENTA.rgb)
+            context.drawHorizontalLine(0, width, selected!!.y.value + (selected!!.height / 2), Color.MAGENTA.rgb)
+            context.drawVerticalLine(selected!!.x.value + (selected!!.width / 2) - 1, -1, height, Color.MAGENTA.rgb)
         }
     }
 

@@ -3,7 +3,7 @@ package me.chell.blackout.impl.features.hud
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.*
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Formatting
@@ -24,8 +24,8 @@ class Players: Widget("Players") {
     private var oldWidth = 0
     private var oldHeight = 0
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
 
         width = 0
         height = 0
@@ -82,7 +82,7 @@ class Players: Widget("Players") {
                 HAlign.Center -> x.value + (width / 2) - (textWidth / 2f)
             }
 
-            textRenderer.drawWithShadow(matrices, text, textX, textY, color)
+            context.drawTextWithShadow(textRenderer, text, textX.toInt(), textY.toInt(), color)
 
             when(vAlign.value) {
                 VAlign.Top, VAlign.Middle -> textY += textRenderer.fontHeight

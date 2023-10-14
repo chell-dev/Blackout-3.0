@@ -2,10 +2,9 @@ package me.chell.blackout.impl.features.hud
 
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Setting
-import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
 import me.chell.blackout.api.util.textRenderer
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 
 object MainHandItem: Widget("Item Count - Mainhand") {
 
@@ -14,13 +13,13 @@ object MainHandItem: Widget("Item Count - Mainhand") {
 
     private val stackableOnly = register(Setting("Only Stackable Items", true))
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
 
         val stack = player.mainHandStack
         if(!stack.isEmpty && (!stackableOnly.value || stack.isStackable)) {
-            mc.itemRenderer.renderInGui(matrices, stack, x.value, y.value)
-            mc.itemRenderer.renderGuiItemOverlay(matrices, textRenderer, stack, x.value, y.value, player.inventory.count(stack.item).toString())
+            //context.drawItem(stack, x.value, y.value)
+            context.drawItemInSlot(textRenderer, stack, x.value, y.value, player.inventory.count(stack.item).toString())
         }
     }
 }

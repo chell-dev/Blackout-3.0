@@ -8,8 +8,7 @@ import me.chell.blackout.api.events.PlayerTickEvent
 import me.chell.blackout.api.feature.Widget
 import me.chell.blackout.api.setting.Setting;
 import me.chell.blackout.api.util.modId
-import net.minecraft.client.gui.DrawableHelper
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Identifier
 import kotlin.random.Random
 
@@ -51,30 +50,36 @@ object Neko: Widget("Neko") {
     private val asleep = Identifier(modId, "textures/neko/neko_asleep.png")
     private val idle = Identifier(modId, "textures/neko/neko_idle.png")
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
-
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
+        val id: Identifier
         val textureHeight = when(state) {
             0 -> {
-                RenderSystem.setShaderTexture(0, idle)
+                //RenderSystem.setShaderTexture(0, idle)
+                id = idle
                 160
             }
             1 -> {
-                RenderSystem.setShaderTexture(0, asleep)
+                //RenderSystem.setShaderTexture(0, asleep)
+                id = asleep
                 128
             }
             2 -> {
-                RenderSystem.setShaderTexture(0, alert)
+                //RenderSystem.setShaderTexture(0, alert)
+                id = alert
                 32
             }
-            else -> 32
+            else -> {
+                id = idle
+                32
+            }
         }
 
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        DrawableHelper.drawTexture(matrices, x.value, y.value, 0f, texture * 32f, width, height, width, textureHeight)
+        context.drawTexture(id, x.value, y.value, 0f, texture * 32f, width, height, width, textureHeight)
     }
 
     @EventHandler

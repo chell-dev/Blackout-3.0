@@ -3,8 +3,7 @@ package me.chell.blackout.api.feature
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.gui.HudEditor
-import net.minecraft.client.gui.DrawableHelper
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 
 @NoRegister
 abstract class Widget(name: String): Feature(name, Category.Hud) {
@@ -23,7 +22,7 @@ abstract class Widget(name: String): Feature(name, Category.Hud) {
 
     private val background = Color(100, 100, 100, 150).rgb
 
-    open fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
+    open fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float){
         if(grabbed) {
             x.value = mouseX - deltaX
             y.value = mouseY - deltaY
@@ -35,7 +34,7 @@ abstract class Widget(name: String): Feature(name, Category.Hud) {
         if(y.value + height > mc.window.scaledHeight) y.value = mc.window.scaledHeight - height
 
         if(mc.currentScreen is HudEditor) {
-            DrawableHelper.fill(matrices, x.value, y.value, x.value + width, y.value + height, background)
+            context.fill(x.value, y.value, x.value + width, y.value + height, background)
         }
     }
 
@@ -71,7 +70,7 @@ abstract class TextWidget(name: String, val text: () -> String): Widget(name) {
 
     override var height = textRenderer.fontHeight
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         when(hAlign.value) {
             HAlign.Left -> {}
             HAlign.Right -> if (width != oldWidth) x.value -= width - oldWidth
@@ -79,8 +78,8 @@ abstract class TextWidget(name: String, val text: () -> String): Widget(name) {
         }
         oldWidth = width
 
-        super.render(matrices, mouseX, mouseY, delta)
+        super.render(context, mouseX, mouseY, delta)
 
-        textRenderer.drawWithShadow(matrices, text.invoke(), x.value.toFloat(), y.value.toFloat(), width.toFloat(), height.toFloat(), hAlign.value, VAlign.Top, color.value.rgb)
+        context.drawAlignedTextWithShadow(text.invoke(), x.value.toFloat(), y.value.toFloat(), width.toFloat(), height.toFloat(), hAlign.value, VAlign.Top, color.value.rgb)
     }
 }
