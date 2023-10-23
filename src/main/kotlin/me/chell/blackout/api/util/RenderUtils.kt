@@ -20,7 +20,7 @@ fun drawBox(box: Box, color: Color) {
     val box = box.offset(mc.gameRenderer.camera.pos.negate())
 
     bb.begin(VertexFormat.DrawMode.TRIANGLE_STRIP, VertexFormats.POSITION_COLOR)
-    WorldRenderer.method_3258(MatrixStack(), bb, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, color.red, color.green, color.blue, color.alpha)
+    WorldRenderer.drawBox(MatrixStack(), bb, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, color.red, color.green, color.blue, color.alpha)
     tessellator.draw()
 
     RenderSystem.enableDepthTest()

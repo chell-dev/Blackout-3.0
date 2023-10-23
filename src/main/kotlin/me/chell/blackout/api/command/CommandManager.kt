@@ -51,7 +51,7 @@ object CommandManager {
                     return
                 }
                 mc.networkHandler?.connection?.disconnect(Text.of("Connecting to another server."))
-                ConnectScreen.connect(MultiplayerScreen(TitleScreen()), mc, ServerAddress.parse(args), ServerInfo("Server", args, false))
+                ConnectScreen.connect(MultiplayerScreen(TitleScreen()), mc, ServerAddress.parse(args), ServerInfo("Server", args, ServerInfo.ServerType.OTHER), false)
             }})
 
         commands.add(object: Command("yaw", "setyaw", description = "Set your yaw.") {
