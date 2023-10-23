@@ -1,18 +1,20 @@
 package me.chell.blackout.impl.gui
 
 import me.chell.blackout.api.command.CommandManager
-import me.chell.blackout.api.util.*
-import net.minecraft.client.gui.DrawableHelper
-import net.minecraft.client.util.math.MatrixStack
+import me.chell.blackout.api.util.Color
+import me.chell.blackout.api.util.mc
+import me.chell.blackout.api.util.plus
+import me.chell.blackout.api.util.textRenderer
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Formatting
 import org.lwjgl.glfw.GLFW
 import java.text.SimpleDateFormat
 import java.time.Instant
-import java.util.Date
+import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
-object Console: DrawableHelper() {
+object Console {
 
     private var x = 350
     private var y = 50
@@ -56,7 +58,7 @@ object Console: DrawableHelper() {
         lines.add(message)
     }
 
-    fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
+    fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         if(grabbed) {
             x = mouseX - grabX
             y = mouseY - grabY
@@ -68,33 +70,33 @@ object Console: DrawableHelper() {
 
         if(y + (if(isOpen) height else titleHeight) > mc.window.scaledHeight) y = mc.window.scaledHeight - (if(isOpen) height else titleHeight)
 
-        fill(matrices, x+border, y, x+width-border, y+titleHeight, borderColor.rgb)
-        textRenderer.draw(matrices, Formatting.GREEN + "Console", x + border + padding.toFloat(), y + (titleHeight / 2f) - (textRenderer.fontHeight / 2f), -1)
+        context.fill(x+border, y, x+width-border, y+titleHeight, borderColor.rgb)
+        context.drawText(textRenderer, Formatting.GREEN + "Console", x + border + padding, y + (titleHeight / 2) - (textRenderer.fontHeight / 2), -1, false)
 
         if(!isOpen) return
 
         // border
-        fill(matrices, x, y, x+border, y+height, borderColor.rgb)
-        fill(matrices, x+width-border, y, x+width, y+height, borderColor.rgb)
-        fill(matrices, x+border, y+height-border, x+width-border, y+height, borderColor.rgb)
+        context.fill(x, y, x+border, y+height, borderColor.rgb)
+        context.fill(x+width-border, y, x+width, y+height, borderColor.rgb)
+        context.fill(x+border, y+height-border, x+width-border, y+height, borderColor.rgb)
 
         // background
-        fill(matrices, x+border, y+titleHeight, x+width-border, y+height-border, background.rgb)
+        context.fill(x+border, y+titleHeight, x+width-border, y+height-border, background.rgb)
 
-        enableScissor(x + border, y + titleHeight, x + width - border, y + height - border - inputHeight - padding)
+        context.enableScissor(x + border, y + titleHeight, x + width - border, y + height - border - inputHeight - padding)
 
         // lines
-        var lineY = y + height - border - inputHeight - padding.toFloat() - (lines.size * textRenderer.fontHeight) + scroll
+        var lineY = y + height - border - inputHeight - padding - (lines.size * textRenderer.fontHeight) + scroll
 
         for(string in lines) {
-            textRenderer.draw(matrices, string, x + border + padding.toFloat(), lineY, -1)
+            context.drawText(textRenderer, string, x + border + padding, lineY, -1, false)
             lineY += textRenderer.fontHeight
         }
 
-        disableScissor()
+        context.disableScissor()
 
         // input box
-        fill(matrices, x + border, y + height - border - inputHeight, x + width - border, y + height - inputHeight, borderColor.rgb)
+        context.fill(x + border, y + height - border - inputHeight, x + width - border, y + height - inputHeight, borderColor.rgb)
 
         var renderInput = input
 
@@ -104,7 +106,7 @@ object Console: DrawableHelper() {
             renderInput = Formatting.DARK_GREEN + "Click here to type."
         }
 
-        textRenderer.draw(matrices, renderInput, x + border + padding.toFloat(), y + height - (inputHeight / 2f) - (textRenderer.fontHeight / 2f), -1)
+        context.drawText(textRenderer, renderInput, x + border + padding, y + height - (inputHeight / 2) - (textRenderer.fontHeight / 2), -1, false)
     }
 
     fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
