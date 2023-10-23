@@ -5,7 +5,7 @@
 
 ## block game utility mod
 
-![Minecraft](https://img.shields.io/badge/Minecraft-1.19.4-488321?style=flat-square)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.20.2-488321?style=flat-square)
 [![Fabric](https://img.shields.io/badge/Mod_Loader-Fabric-DBD0B4?style=flat-square)](https://fabricmc.net/use/installer/)
 
 ![Downloads](https://img.shields.io/github/downloads/chell-dev/Blackout-3.0/total?style=flat-square)
@@ -51,9 +51,8 @@ Discord RPC
 <details>
 <summary>Recommended mods</summary>
 
-- [MultiConnect](https://github.com/Earthcomputer/multiconnect/releases) to play on servers that use an older minecraft version
-- [Sodium](https://www.curseforge.com/minecraft/mc-mods/sodium/download/4381988) to make the game playable
-- [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu/download/4159524) if you want the Mods button that's in forge
+- [ViaFabricPlus](https://modrinth.com/mod/viafabricplus/versions?l=fabric&g=1.20.2)
+- [Mod Menu](https://modrinth.com/mod/modmenu/versions?l=fabric&g=1.20.2)
 
 </details>
 
