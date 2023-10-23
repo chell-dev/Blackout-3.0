@@ -5,12 +5,15 @@ import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.ChatSendEvent;
 import me.chell.blackout.api.events.PlayerKnockbackEvent;
 import me.chell.blackout.api.util.GlobalsKt;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientCommonNetworkHandler;
+import net.minecraft.client.network.ClientConnectionState;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.SignedArgumentList;
+import net.minecraft.network.ClientConnection;
 import net.minecraft.network.encryption.NetworkEncryptionUtils;
 import net.minecraft.network.message.*;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.c2s.play.CommandExecutionC2SPacket;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
@@ -24,13 +27,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.time.Instant;
 
 @Mixin(ClientPlayNetworkHandler.class)
-public abstract class ClientPlayNetworkHandlerMixin {
+public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkHandler {
 
     @Shadow private LastSeenMessagesCollector lastSeenMessagesCollector;
 
     @Shadow private MessageChain.Packer messagePacker;
 
-    @Shadow public abstract void sendPacket(Packet<?> packet);
+    protected ClientPlayNetworkHandlerMixin(MinecraftClient client, ClientConnection connection, ClientConnectionState connectionState) {
+        super(client, connection, connectionState);
+    }
 
     @Shadow protected abstract ParseResults<CommandSource> parse(String command);
 

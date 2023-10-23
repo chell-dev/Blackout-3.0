@@ -30,7 +30,7 @@ public abstract class Deadmau5FeatureRendererMixin extends FeatureRenderer<Abstr
         ci.cancel();
         if(!Cosmetics.INSTANCE.getEars(abstractClientPlayerEntity.getName().getString()) || abstractClientPlayerEntity.isInvisible()) return;
 
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntitySolid(abstractClientPlayerEntity.getSkinTexture()));
+        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntitySolid(abstractClientPlayerEntity.getSkinTextures().texture()));
         int m = LivingEntityRenderer.getOverlay(abstractClientPlayerEntity, 0.0f);
         for (int n = 0; n < 2; ++n) {
             float o = MathHelper.lerp(h, abstractClientPlayerEntity.prevYaw, abstractClientPlayerEntity.getYaw()) - MathHelper.lerp(h, abstractClientPlayerEntity.prevBodyYaw, abstractClientPlayerEntity.bodyYaw);
