@@ -7,7 +7,7 @@ import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.Tab
 import me.chell.blackout.impl.gui.items.AddFriendItem
 import me.chell.blackout.impl.gui.items.FriendItem
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Identifier
 
 class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifier(modId, "textures/gui/categories/friends.png")) {
@@ -28,10 +28,10 @@ class FriendsTab(x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, Identifie
         addButton = AddFriendItem(size +1+ GuiItem.margin, bY, this)
     }
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
         if(parent.currentTab == this)
-            addButton.render(matrices, mouseX, mouseY, delta)
+            addButton.render(context, mouseX, mouseY, delta)
     }
 
     override fun onClose() {

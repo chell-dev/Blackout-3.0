@@ -6,7 +6,7 @@ import me.chell.blackout.api.util.modId
 import me.chell.blackout.api.util.textRenderer
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Identifier
 import kotlin.math.max
 import kotlin.math.min
@@ -25,12 +25,12 @@ class SliderButton(private val parent: GuiItem, private val setting: Setting<Num
     override val height = 18
     private var dragging = false
 
-    private val textOffset = (parent.height / 2f) - (textRenderer.fontHeight / 2f)
+    private val textOffset = (parent.height / 2) - (textRenderer.fontHeight / 2)
 
     private val frame = Identifier(modId, "textures/gui/slider_frame.png")
     private val fill = Identifier(modId, "textures/gui/slider_fill.png")
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         if(dragging) {
             val normalized = min(max((mouseX - x) / width.toFloat(), 0f), 1f)
             val value = min + ((max - min) * normalized)
@@ -48,14 +48,14 @@ class SliderButton(private val parent: GuiItem, private val setting: Setting<Num
         RenderSystem.enableDepthTest()
 
         RenderSystem.setShaderTexture(0, fill)
-        drawTexture(matrices, x, y, 0f, 0f, sliderWith, height, width, height)
+        context.drawTexture(fill, x, y, 0f, 0f, sliderWith, height, width, height)
         RenderSystem.setShaderTexture(0, frame)
-        drawTexture(matrices, x, y, 0f, 0f, width, height, width, height)
+        context.drawTexture(frame, x, y, 0f, 0f, width, height, width, height)
 
         val text = setting.display.invoke(setting.value)
-        textRenderer.drawWithShadow(matrices, text, x + width - textRenderer.getWidth(text).toFloat() - GuiItem.margin, parent.y + textOffset + 1, -1)
+        context.drawTextWithShadow(textRenderer, text, x + width - textRenderer.getWidth(text) - GuiItem.margin, parent.y + textOffset + 1, -1)
 
-        super.render(matrices, mouseX, mouseY, delta)
+        super.render(context, mouseX, mouseY, delta)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

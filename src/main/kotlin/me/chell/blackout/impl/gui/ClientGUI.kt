@@ -7,10 +7,10 @@ import me.chell.blackout.impl.features.client.GuiFeature
 import me.chell.blackout.impl.gui.tabs.CategoryTab
 import me.chell.blackout.impl.gui.tabs.FriendsTab
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.InputUtil
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
@@ -63,7 +63,7 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         currentTab = tabs[0]
     }
 
-    override fun render(matrices: MatrixStack, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         // animation linear interpolation
         val scissorWidth = if(animationTicks > 0) {
             val t = if (closing) animationTicks + delta else animationLength - animationTicks + delta
@@ -74,10 +74,10 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
 
         hoveredItem = null
 
-        enableScissor(x, y, x + scissorWidth, y + uiHeight)
+        context.enableScissor(x, y, x + scissorWidth, y + uiHeight)
 
         // background
-        fill(matrices, x, y, x + uiWidth, y + uiHeight, background)
+        context.fill(x, y, x + uiWidth, y + uiHeight, background)
 
         // banner
         RenderSystem.setShaderTexture(0, bannerTexture)
@@ -85,16 +85,16 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        drawTexture(matrices, x, y, 0f, 0f, uiWidth, bannerHeight, uiWidth, bannerHeight)
+        context.drawTexture(bannerTexture, x, y, 0f, 0f, uiWidth, bannerHeight, uiWidth, bannerHeight)
 
         // line under banner
-        drawHorizontalLine(matrices, x, x + uiWidth, bannerHeight, color)
+        context.drawHorizontalLine(x, x + uiWidth, bannerHeight, color)
 
         val mouseTab = mouseX <= x + Tab.size
 
         // tabs
         for(tab in tabs) {
-            tab.render(matrices, mouseX, mouseY, delta)
+            tab.render(context, mouseX, mouseY, delta)
 
             if(mouseTab && tab is CategoryTab && mouseY >= tab.y && mouseY <= tab.y + Tab.size)
                 hoveredItem = tab.category
@@ -105,18 +105,18 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         }
 
         // line next to icons
-        drawVerticalLine(matrices, Tab.size, bannerHeight, y + uiHeight, color)
+        context.drawVerticalLine(Tab.size, bannerHeight, y + uiHeight, color)
 
-        drawHorizontalLine(matrices, descX, x + uiWidth, descY.toInt(), color)
+        context.drawHorizontalLine(descX, x + uiWidth, descY.toInt(), color)
 
-        mc.textRenderer.drawTrimmedWithShadow(matrices, hoveredItem?.description ?: "Hover over an item to see it's description.", descX + descPadding, descY + descPadding, (uiWidth - Tab.size - 1 - descPadding - descPadding).toInt(), -1)
+        context.drawTrimmedTextWithShadow(hoveredItem?.description ?: "Hover over an item to see it's description.", descX + descPadding, descY + descPadding, (uiWidth - Tab.size - 1 - descPadding - descPadding).toInt(), -1)
 
-        disableScissor()
+        context.disableScissor()
 
-        Console.render(matrices, mouseX, mouseY, delta)
+        Console.render(context, mouseX, mouseY, delta)
 
         if(Updater.updateAvailable)
-            textRenderer.drawWithShadow(matrices, updateText, width - textRenderer.getWidth(updateText) - 2f, 2f, Rainbow.color.rgb)
+            context.drawTextWithShadow(textRenderer, updateText, width - textRenderer.getWidth(updateText) - 2, 2, Rainbow.color.rgb)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
@@ -168,11 +168,11 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         return false
     }
 
-    override fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
-        if(Console.mouseScrolled(mouseX, mouseY, amount)) return true
+    override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
+        if(Console.mouseScrolled(mouseX, mouseY, horizontalAmount)) return true
 
         for(tab in tabs) {
-            if(tab.mouseScrolled(mouseX, mouseY, amount)) return true
+            if(tab.mouseScrolled(mouseX, mouseY, horizontalAmount)) return true
         }
 
         return false
@@ -231,8 +231,8 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         super.removed()
     }
 
-    override fun renderBackground(matrices: MatrixStack?) {
-        super.renderBackground(matrices)
+    override fun renderBackground(context: DrawContext?, mouseX: Int, mouseY: Int, delta: Float) {
+        super.renderBackground(context, mouseX, mouseY, delta)
     }
 
     override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, deltaX: Double, deltaY: Double): Boolean {

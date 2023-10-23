@@ -3,15 +3,16 @@ package me.chell.blackout.impl.gui.items
 import com.mojang.logging.LogUtils
 import me.chell.blackout.api.feature.Feature
 import me.chell.blackout.api.setting.Bind
-import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.setting.Setting
+import me.chell.blackout.api.util.mc
+import me.chell.blackout.api.util.textRenderer
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.Tab
 import me.chell.blackout.impl.gui.buttons.*
 import me.chell.blackout.impl.gui.tabs.CategoryTab
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.sound.PositionedSoundInstance
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import java.io.File
 
@@ -59,11 +60,11 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
 
     fun updateItems() {}
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float){
+        super.render(context, mouseX, mouseY, delta)
 
-        val center = y.toFloat() + (height /2) - (mc.textRenderer.fontHeight/2)
-        mc.textRenderer.drawWithShadow(matrices, feature.name, x + margin.toFloat(), center, -1)
+        val center = y + (height /2) - (mc.textRenderer.fontHeight/2)
+        context.drawTextWithShadow(textRenderer, feature.name, x + margin, center, -1)
 
         val oldHeight = fullHeight
         if(expanded) {
@@ -71,7 +72,7 @@ class FeatureItem(val feature: Feature, override var x: Int, override var y: Int
             for(item in settings) {
                 if(!item.setting.visible.test(null)) continue
                 item.y = itemY
-                item.render(matrices, mouseX, mouseY, delta)
+                item.render(context, mouseX, mouseY, delta)
                 itemY += item.height + margin
 
 

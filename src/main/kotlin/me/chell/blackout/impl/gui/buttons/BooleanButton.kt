@@ -1,13 +1,13 @@
 package me.chell.blackout.impl.gui.buttons
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.modId
-import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.sound.PositionedSoundInstance
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 
@@ -24,17 +24,18 @@ class BooleanButton(private val parent: GuiItem, private val setting: Setting<Bo
     override val x get() = parent.x + parent.width - GuiItem.margin - width
     override val y get() = parent.y + (parent.height / 2) - (height / 2)
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        if (setting.value) RenderSystem.setShaderTexture(0, on)
-        else RenderSystem.setShaderTexture(0, off)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        val texture = if (setting.value) on else off
+
+        RenderSystem.setShaderTexture(0, texture)
 
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        drawTexture(matrices, x, (parent.y + (parent.height / 2) - (height / 2)), 0f, 0f, width, height, width, height)
+        context.drawTexture(texture, x, (parent.y + (parent.height / 2) - (height / 2)), 0f, 0f, width, height, width, height)
 
-        super.render(matrices, mouseX, mouseY, delta)
+        super.render(context, mouseX, mouseY, delta)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

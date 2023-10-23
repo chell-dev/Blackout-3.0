@@ -4,11 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.mc
+import me.chell.blackout.api.util.textRenderer
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.client.util.InputUtil
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import org.lwjgl.glfw.GLFW
 
@@ -29,26 +30,26 @@ class ToggleBindButton(private val parent: GuiItem, setting: Setting<Bind.Toggle
     private val bindY get() = parent.y + (parent.height / 2) - (bindHeight / 2)
     private var buttonWidth = 32
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         var text = if(listening) " [ . . . ]" else " [ ${bind.key.localizedText.string} ]"
         if(text.length == 6) text = text.uppercase()
         val mode = if(bind.key.code == GLFW.GLFW_KEY_UNKNOWN) "" else bind.mode.name
 
         bindWidth = mc.textRenderer.getWidth(mode + text)
-        mc.textRenderer.drawWithShadow(matrices, mode + text, x.toFloat(), bindY.toFloat(), -1) // 0xa100ff
+        context.drawTextWithShadow(textRenderer, mode + text, x, bindY, -1) // 0xa100ff
 
         width = bindWidth + buttonWidth + GuiItem.margin
 
-        if (bind.enabled) RenderSystem.setShaderTexture(0, BooleanButton.on)
-        else RenderSystem.setShaderTexture(0, BooleanButton.off)
+        val texture = if (bind.enabled) BooleanButton.on else BooleanButton.off
 
+        RenderSystem.setShaderTexture(0, texture)
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        drawTexture(matrices, x + bindWidth + GuiItem.margin, y, 0f, 0f, buttonWidth, height, buttonWidth, height)
+        context.drawTexture(texture, x + bindWidth + GuiItem.margin, y, 0f, 0f, buttonWidth, height, buttonWidth, height)
 
-        super.render(matrices, mouseX, mouseY, delta)
+        super.render(context, mouseX, mouseY, delta)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

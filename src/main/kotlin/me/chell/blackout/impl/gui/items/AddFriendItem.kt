@@ -4,10 +4,11 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.friends
 import me.chell.blackout.api.util.isFriend
 import me.chell.blackout.api.util.mc
+import me.chell.blackout.api.util.textRenderer
 import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.Tab
 import me.chell.blackout.impl.gui.buttons.RunnableButton
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.gui.DrawContext
 import org.lwjgl.glfw.GLFW
 
 class AddFriendItem(override var x: Int, override var y: Int, tab: Tab): GuiItem(tab) {
@@ -20,11 +21,11 @@ class AddFriendItem(override var x: Int, override var y: Int, tab: Tab): GuiItem
 
     override val button = RunnableButton(this, Setting("Add", Runnable{}), false, "+")
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
-        super.render(matrices, mouseX, mouseY, delta)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+        super.render(context, mouseX, mouseY, delta)
 
-        val center = y.toFloat() + (height / 2) - (mc.textRenderer.fontHeight / 2)
-        mc.textRenderer.drawWithShadow(matrices, if(listening) input + "_" else "Add Friend:", x + margin.toFloat(), center, if(listening) -1 else 0xcacaca)
+        val center = y + (height / 2) - (mc.textRenderer.fontHeight / 2)
+        context.drawTextWithShadow(textRenderer, if(listening) input + "_" else "Add Friend:", x + margin, center, if(listening) -1 else 0xcacaca)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

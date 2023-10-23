@@ -6,11 +6,11 @@ import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
 import me.chell.blackout.impl.gui.items.SettingItem
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.GameRenderer
 import net.minecraft.client.render.Tessellator
 import net.minecraft.client.render.VertexFormat
 import net.minecraft.client.render.VertexFormats
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import kotlin.math.max
@@ -34,16 +34,16 @@ class ColorButton(private val parent: GuiItem, private val setting: Setting<Colo
 
     private val hueTexture = Identifier(modId, "textures/gui/hue.png")
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         RenderSystem.setShaderTexture(0, icon)
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        drawTexture(matrices, parent.x + parent.width - GuiItem.margin - 32 - GuiItem.margin - iconSize, parent.y + GuiItem.margin, 0f, 0f, iconSize, iconSize, iconSize, iconSize)
+        context.drawTexture(icon, parent.x + parent.width - GuiItem.margin - 32 - GuiItem.margin - iconSize, parent.y + GuiItem.margin, 0f, 0f, iconSize, iconSize, iconSize, iconSize)
 
         // Small Rectangle
-        fill(matrices, parent.x + parent.width - GuiItem.margin - 32, parent.y + GuiItem.margin,
+        context.fill(parent.x + parent.width - GuiItem.margin - 32, parent.y + GuiItem.margin,
             parent.x + parent.width - GuiItem.margin, parent.y + GuiItem.margin + 16, setting.value.rgb)
 
         if(!extended) return
@@ -92,37 +92,37 @@ class ColorButton(private val parent: GuiItem, private val setting: Setting<Colo
         var itemY = parent.y + 26 + GuiItem.margin
 
         // Hue Slider
-        drawHueSlider(matrices, itemX, itemY, 12, 100)
+        drawHueSlider(context, itemX, itemY, 12, 100)
         itemX -= 100 + GuiItem.margin
 
         // Saturation/Brightness Picker
-        drawSB(matrices, itemX.toFloat(), itemY.toFloat(), itemX + 100f, itemY + 100f)
+        drawSB(context, itemX.toFloat(), itemY.toFloat(), itemX + 100f, itemY + 100f)
 
         // Opacity Slider
-        drawAlphaSlider(matrices, itemX.toFloat(), itemY.toFloat() + 100f + GuiItem.margin, itemX + 100f, itemY + 100f + GuiItem.margin + 12f)
+        drawAlphaSlider(context, itemX.toFloat(), itemY.toFloat() + 100f + GuiItem.margin, itemX + 100f, itemY + 100f + GuiItem.margin + 12f)
 
         // RGB Text
-        drawBorder(matrices, parent.x + GuiItem.margin, itemY, itemX - (parent.x + GuiItem.margin) - GuiItem.margin, 14)
-        textRenderer.drawWithShadow(matrices, "RGB", parent.x + GuiItem.margin.toFloat() + 3, itemY.toFloat() + 3, -1)
-        textRenderer.drawWithShadow(matrices, "${Formatting.GRAY}${Integer.toHexString(setting.value.rgb)}", itemX - GuiItem.margin - 3f - textRenderer.getWidth(Integer.toHexString(setting.value.rgb)), itemY.toFloat() + 3, -1)
+        drawBorder(context, parent.x + GuiItem.margin, itemY, itemX - (parent.x + GuiItem.margin) - GuiItem.margin, 14)
+        context.drawTextWithShadow(textRenderer, "RGB", parent.x + GuiItem.margin + 3, itemY + 3, -1)
+        context.drawTextWithShadow(textRenderer, "${Formatting.GRAY}${Integer.toHexString(setting.value.rgb)}", itemX - GuiItem.margin - 3 - textRenderer.getWidth(Integer.toHexString(setting.value.rgb)), itemY + 3, -1)
 
         // Opacity Text
         itemY += 14 + GuiItem.margin
-        drawBorder(matrices, parent.x + GuiItem.margin, itemY, itemX - (parent.x + GuiItem.margin) - GuiItem.margin, 14)
-        textRenderer.drawWithShadow(matrices, "Opacity", parent.x + GuiItem.margin.toFloat() + 3, itemY.toFloat() + 3, -1)
-        textRenderer.drawWithShadow(matrices, "${Formatting.GRAY}${(setting.value.alpha * 100).toInt()}%", itemX - GuiItem.margin - 3f - textRenderer.getWidth("${(setting.value.alpha * 100).toInt()}%"), itemY.toFloat() + 3, -1)
+        drawBorder(context, parent.x + GuiItem.margin, itemY, itemX - (parent.x + GuiItem.margin) - GuiItem.margin, 14)
+        context.drawTextWithShadow(textRenderer, "Opacity", parent.x + GuiItem.margin + 3, itemY + 3, -1)
+        context.drawTextWithShadow(textRenderer, "${Formatting.GRAY}${(setting.value.alpha * 100).toInt()}%", itemX - GuiItem.margin - 3 - textRenderer.getWidth("${(setting.value.alpha * 100).toInt()}%"), itemY + 3, -1)
 
         // Rainbow Button
         itemY += 14 + GuiItem.margin + 20
-        if(!setting.value.rainbow) drawBorder(matrices, parent.x + GuiItem.margin, itemY, itemX - (parent.x + GuiItem.margin) - GuiItem.margin, 14)
-        else fill(matrices, parent.x + GuiItem.margin, itemY, itemX - GuiItem.margin, itemY + 14, Color(161, 0, 255).rgb)
-        textRenderer.drawWithShadow(matrices, "Rainbow", parent.x + GuiItem.margin.toFloat() + 3, itemY.toFloat() + 3, -1)
+        if(!setting.value.rainbow) drawBorder(context, parent.x + GuiItem.margin, itemY, itemX - (parent.x + GuiItem.margin) - GuiItem.margin, 14)
+        else context.fill(parent.x + GuiItem.margin, itemY, itemX - GuiItem.margin, itemY + 14, Color(161, 0, 255).rgb)
+        context.drawTextWithShadow(textRenderer, "Rainbow", parent.x + GuiItem.margin + 3, itemY + 3, -1)
 
         // Sync Button
         itemY += 14 + GuiItem.margin
-        if(!setting.value.sync) drawBorder(matrices, parent.x + GuiItem.margin, itemY, itemX - (parent.x + GuiItem.margin) - GuiItem.margin, 14)
-        else fill(matrices, parent.x + GuiItem.margin, itemY, itemX - GuiItem.margin, itemY + 14, Color(161, 0, 255).rgb)
-        textRenderer.drawWithShadow(matrices, "Sync", parent.x + GuiItem.margin.toFloat() + 3, itemY.toFloat() + 3, -1)
+        if(!setting.value.sync) drawBorder(context, parent.x + GuiItem.margin, itemY, itemX - (parent.x + GuiItem.margin) - GuiItem.margin, 14)
+        else context.fill(parent.x + GuiItem.margin, itemY, itemX - GuiItem.margin, itemY + 14, Color(161, 0, 255).rgb)
+        context.drawTextWithShadow(textRenderer, "Sync", parent.x + GuiItem.margin + 3, itemY + 3, -1)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
@@ -180,20 +180,20 @@ class ColorButton(private val parent: GuiItem, private val setting: Setting<Colo
         return super.mouseReleased(mouseX, mouseY, button)
     }
 
-    private fun drawBorder(matrices: MatrixStack?, x: Int, y: Int, width: Int, height: Int) {
+    private fun drawBorder(context: DrawContext, x: Int, y: Int, width: Int, height: Int) {
         val border = 1
         val color = Color(161, 0, 255).rgb
 
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
 
-        fill(matrices, x, y, x + width, y + border, color)
-        fill(matrices, x + width - border, y + border, x + width, y + height, color)
-        fill(matrices, x, y + height, x + width, y + height - border, color)
-        fill(matrices, x, y + border, x + border, y + height, color)
+        context.fill( x, y, x + width, y + border, color)
+        context.fill(x + width - border, y + border, x + width, y + height, color)
+        context.fill(x, y + height, x + width, y + height - border, color)
+        context.fill(x, y + border, x + border, y + height, color)
     }
 
-    private fun drawAlphaSlider(matrices: MatrixStack?, x1: Float, y1: Float, x2: Float, y2: Float) {
-        val matrix = matrices!!.peek().positionMatrix
+    private fun drawAlphaSlider(context: DrawContext, x1: Float, y1: Float, x2: Float, y2: Float) {
+        val matrix = context.matrices.peek().positionMatrix
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.setShader { GameRenderer.getPositionColorProgram() }
@@ -212,17 +212,17 @@ class ColorButton(private val parent: GuiItem, private val setting: Setting<Colo
         RenderSystem.disableBlend()
     }
 
-    private fun drawHueSlider(matrices: MatrixStack?, x: Int, y: Int, width: Int, height: Int) {
+    private fun drawHueSlider(context: DrawContext, x: Int, y: Int, width: Int, height: Int) {
         RenderSystem.setShaderTexture(0, hueTexture)
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        drawTexture(matrices, x, y, 0f, 0f, width, height, width, height)
+        context.drawTexture(hueTexture, x, y, 0f, 0f, width, height, width, height)
     }
 
-    private fun drawSB(matrices: MatrixStack?, x1: Float, y1: Float, x2: Float, y2: Float) {
-        val matrix = matrices!!.peek().positionMatrix
+    private fun drawSB(context: DrawContext, x1: Float, y1: Float, x2: Float, y2: Float) {
+        val matrix = context.matrices.peek().positionMatrix
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.setShader { GameRenderer.getPositionColorProgram() }

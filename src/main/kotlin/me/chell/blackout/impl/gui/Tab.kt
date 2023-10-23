@@ -3,14 +3,13 @@ package me.chell.blackout.impl.gui
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.impl.gui.items.FeatureItem
-import net.minecraft.client.gui.DrawableHelper
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.sound.PositionedSoundInstance
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import kotlin.math.min
 
-open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifier): DrawableHelper() {
+open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifier) {
 
     companion object {
         const val size = 43
@@ -22,25 +21,25 @@ open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifi
 
     open val items = mutableListOf<GuiItem>()
 
-    open fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float){
+    open fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float){
         RenderSystem.setShaderTexture(0, icon)
         if(parent.currentTab == this) RenderSystem.setShaderColor(161f/255f, 0f, 1f, 1f)
         else RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
-        drawTexture(matrices, x+margin, y+margin, 0f, 0f, size -(margin*2), size -(margin*2), size -(margin*2), size -(margin*2))
+        context.drawTexture(icon, x+margin, y+margin, 0f, 0f, size -(margin*2), size -(margin*2), size -(margin*2), size -(margin*2))
 
         if(parent.currentTab == this) {
-            enableScissor(size + 1, parent.bannerHeight + 1, x + parent.uiWidth, parent.descY.toInt())
+            context.enableScissor(size + 1, parent.bannerHeight + 1, x + parent.uiWidth, parent.descY.toInt())
             val mouse = mouseX >= size +1+ GuiItem.margin && mouseX <= parent.uiWidth - GuiItem.margin
             for(item in items) {
-                item.render(matrices, mouseX, mouseY, delta)
+                item.render(context, mouseX, mouseY, delta)
 
                 if(mouse && item is FeatureItem && mouseY >= item.y && mouseY <= item.y + item.height)
                     parent.hoveredItem = item.feature
             }
-            disableScissor()
+            context.disableScissor()
         }
     }
 

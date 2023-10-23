@@ -5,8 +5,8 @@ import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.textRenderer
 import me.chell.blackout.impl.gui.Button
 import me.chell.blackout.impl.gui.GuiItem
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.sound.PositionedSoundInstance
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 
 class EnumButton(private val parent: GuiItem, private val setting: Setting<Enum<*>>, expandable: Boolean): Button(parent, expandable) {
@@ -19,11 +19,11 @@ class EnumButton(private val parent: GuiItem, private val setting: Setting<Enum<
 
     private val constants = setting.value::class.java.enumConstants
 
-    override fun render(matrices: MatrixStack?, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         width = textRenderer.getWidth(setting.value.name)
-        textRenderer.drawWithShadow(matrices, setting.value.name, x.toFloat(), y.toFloat(), -1)
+        context.drawTextWithShadow(textRenderer, setting.value.name, x, y, -1)
 
-        super.render(matrices, mouseX, mouseY, delta)
+        super.render(context, mouseX, mouseY, delta)
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
