@@ -25,8 +25,7 @@ object FakePlayer: ToggleFeature("Fake Player", Category.Misc) {
         entity.inventory.clone(player.inventory)
         entity.attributes.setFrom(player.attributes)
 
-        id = entity.id
-        world.addEntity(id, entity)
+        world.addEntity(entity)
     }
 
     override fun onDisable() {
