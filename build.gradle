@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.4-SNAPSHOT'
+    id 'fabric-loom' version "${loom_version}"
     id "org.jetbrains.kotlin.jvm" version "${kotlin_version}"
 }
 
@@ -32,11 +32,11 @@ dependencies {
     //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm'))
     //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8'))
 
-    include(implementation('com.github.caoimhebyrne:KDiscordIPC:0.2.1'))
+    include(implementation("com.github.caoimhebyrne:KDiscordIPC:${project.kdiscordipc_version}"))
     include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
-    include(implementation('org.reflections:reflections:0.10.2')); include 'org.javassist:javassist:3.28.0-GA'
+    include(implementation("org.reflections:reflections:${project.reflections_version}")); include "org.javassist:javassist:${project.javassist_version}"
 
-    modImplementation "com.ptsmods:devlogin:3.3.2"
+    modImplementation "com.ptsmods:devlogin:${project.devlogin_version}"
 
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
