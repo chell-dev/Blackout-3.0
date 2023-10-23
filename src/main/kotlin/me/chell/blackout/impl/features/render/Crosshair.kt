@@ -30,14 +30,14 @@ object Crosshair: ToggleFeature("Crosshair", Category.Render) {
         val y = mc.window.scaledHeight / 2f
         val w = (width.value / 2f)
 
-        if(dot.value) fill(event.matrices, x - w, y - w, x + w, y + w, rgb)
+        if(dot.value) fill(event.context.matrices, x - w, y - w, x + w, y + w, rgb)
 
         if(width.value == 0f || length.value == 0f) return
 
-        if(!tShape.value) fill(event.matrices, x - w, y - gap.value - length.value, x + w, y - gap.value, rgb) // top
-        fill(event.matrices, x - gap.value - length.value, y - w, x - gap.value, y + w, rgb) // left
-        fill(event.matrices, x + gap.value, y - w, x + gap.value + length.value, y + w, rgb) // right
-        fill(event.matrices, x - w, y + gap.value, x + w, y + gap.value + length.value, rgb) // bottom
+        if(!tShape.value) fill(event.context.matrices, x - w, y - gap.value - length.value, x + w, y - gap.value, rgb) // top
+        fill(event.context.matrices, x - gap.value - length.value, y - w, x - gap.value, y + w, rgb) // left
+        fill(event.context.matrices, x + gap.value, y - w, x + gap.value + length.value, y + w, rgb) // right
+        fill(event.context.matrices, x - w, y + gap.value, x + w, y + gap.value + length.value, rgb) // bottom
     }
 
     private fun fill(matrices: MatrixStack, x1: Float, y1: Float, x2: Float, y2: Float, color: Int) {

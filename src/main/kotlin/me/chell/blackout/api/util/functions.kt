@@ -1,7 +1,6 @@
 package me.chell.blackout.api.util
 
 import me.chell.blackout.impl.features.client.Messages
-import me.chell.blackout.impl.gui.newgui.util.Rectangle
 import me.chell.blackout.mixin.accessors.ChatHudAccessor
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.hud.MessageIndicator
@@ -10,7 +9,6 @@ import net.minecraft.text.MutableText
 import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
-import net.minecraft.util.math.Vec2f
 import java.util.function.UnaryOperator
 
 fun StringBuilder.setString(text: String): StringBuilder = this.replace(0, this.length, text)
@@ -40,6 +38,7 @@ fun DrawContext.drawAlignedTextWithShadow(text: String, x: Float, y: Float, widt
     drawTextWithShadow(textRenderer, text, textX.toInt(), textY.toInt(), color)
 }
 
+/*
 fun DrawContext.drawText(text: String, shadow: Boolean, rectangle: Rectangle, horizontal: HAlign, vertical: VAlign, color: Int, scale: Float = 1f, padding: Vec2f = Vec2f(0f, 0f)) {
     val textWidth = textRenderer.getWidth(text) * scale
     val fontHeight = textRenderer.fontHeight * scale
@@ -64,6 +63,7 @@ fun DrawContext.drawText(text: String, shadow: Boolean, rectangle: Rectangle, ho
     matrices.scale(1f, 1f, 1f)
     matrices.pop()
 }
+*/
 
 operator fun Formatting.plus(string: String): String = toString() + string
 

@@ -45,11 +45,11 @@ object Tracers: ToggleFeature("Tracers", Category.Render) {
             val x = centerX + radius * -cos(radians)
             val y = centerY + radius * sin(radians)
 
-            event.matrices.push()
-            event.matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-MathHelper.wrapDegrees(angle + 90f)), x.toFloat(), y.toFloat(), 0f)
-            drawTriangle(event.matrices, x.toFloat(), y.toFloat(), size.value.toFloat(), target.isFriend())
+            event.context.matrices.push()
+            event.context.matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-MathHelper.wrapDegrees(angle + 90f)), x.toFloat(), y.toFloat(), 0f)
+            drawTriangle(event.context.matrices, x.toFloat(), y.toFloat(), size.value.toFloat(), target.isFriend())
             //textRenderer.draw(event.matrices, a.toString(), x.toFloat(), y.toFloat(), -1)
-            event.matrices.pop()
+            event.context.matrices.pop()
         }
     }
 
