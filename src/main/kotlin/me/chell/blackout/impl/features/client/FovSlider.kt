@@ -3,25 +3,15 @@ package me.chell.blackout.impl.features.client
 import com.mojang.serialization.Codec
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleFeature
-import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.mc
 import net.minecraft.client.option.GameOptions
 import net.minecraft.client.option.SimpleOption
 import net.minecraft.client.option.SimpleOption.ValidatingIntSliderCallbacks
 import net.minecraft.text.Text
 
-object FovSlider: ToggleFeature("Custom FOV", Category.Client) {
+object FovSlider: ToggleFeature("Unlock FOV Slider", Category.Client) {
 
-    private val slider = register(object : Setting<Int>("Value", 90, 2, 179) {
-        override fun onValueChanged(oldValue: Int, newValue: Int) {
-            setting.value = newValue
-        }
-    })
-
-    override fun onEnable() {
-        setting.value = slider.value
-    }
-
+    override fun onEnable() {}
     override fun onDisable() {}
 
     val setting = SimpleOption("options.fov", SimpleOption.emptyTooltip(),
