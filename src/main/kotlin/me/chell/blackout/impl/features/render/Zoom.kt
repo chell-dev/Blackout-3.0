@@ -3,6 +3,7 @@ package me.chell.blackout.impl.features.render
 import me.chell.blackout.api.event.EventHandler
 import me.chell.blackout.api.events.FovEvent
 import me.chell.blackout.api.events.InputEvent
+import me.chell.blackout.api.events.RenderArmEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.ToggleBindFeature
 import me.chell.blackout.api.setting.Setting
@@ -19,6 +20,7 @@ object Zoom: ToggleBindFeature("Zoom", Category.Render) {
             if(mainSetting.value.enabled) mc.options.smoothCameraEnabled = newValue
         }
     })
+    private val hideHands = register(Setting("Hide hands", true))
 
     private var multiplier = 0.0
 
@@ -40,11 +42,15 @@ object Zoom: ToggleBindFeature("Zoom", Category.Render) {
 
     @EventHandler
     fun onScroll(event: InputEvent.Scroll) {
-        println(multiplier)
         if(scroll.value) {
             event.canceled = true
             multiplier = min(max(0.01, multiplier + (event.amount * -0.025)), 1.0)
         }
+    }
+
+    @EventHandler
+    fun onRenderHands(event: RenderArmEvent) {
+        if(hideHands.value) event.canceled = true
     }
 
 }
