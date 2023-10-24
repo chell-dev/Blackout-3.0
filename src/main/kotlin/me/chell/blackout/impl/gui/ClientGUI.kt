@@ -1,6 +1,9 @@
 package me.chell.blackout.impl.gui
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.chell.blackout.api.event.EventHandler
+import me.chell.blackout.api.event.EventManager
+import me.chell.blackout.api.events.InputEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.features.client.GuiFeature
@@ -168,20 +171,32 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
         return false
     }
 
-    override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
-        if(Console.mouseScrolled(mouseX, mouseY, horizontalAmount)) return true
+    @EventHandler
+    fun onScroll(event: InputEvent.Scroll) {
+        if(Console.mouseScrolled(mc.mouse.x, mc.mouse.y, event.amount)) return
 
         for(tab in tabs) {
-            if(tab.mouseScrolled(mouseX, mouseY, horizontalAmount)) return true
+            if(tab.mouseScrolled(mc.mouse.x, mc.mouse.y, event.amount)) return
+        }
+    }
+
+    /*
+    override fun mouseScrolled(mouseX: Double, mouseY: Double, horizontalAmount: Double, verticalAmount: Double): Boolean {
+        if(Console.mouseScrolled(mouseX, mouseY, verticalAmount)) return true
+
+        for(tab in tabs) {
+            if(tab.mouseScrolled(mouseX, mouseY, verticalAmount)) return true
         }
 
         return false
     }
+    */
 
     override fun init() {
         closing = false
         animationTicks = animationLength
         mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_TOAST_IN, 1.0f, 1.0f))
+        EventManager.register(this)
     }
 
     override fun tick() {
@@ -194,6 +209,7 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
     }
 
     override fun close() {
+        EventManager.unregister(this)
         for(tab in tabs) {
             tab.onClose()
         }
