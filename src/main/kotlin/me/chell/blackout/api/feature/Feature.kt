@@ -9,7 +9,7 @@ import net.minecraft.client.util.InputUtil
 import net.minecraft.util.Identifier
 import org.lwjgl.glfw.GLFW
 
-abstract class Feature(val name: String, val category: Category): Description {
+abstract class Feature(val name: String, var category: Category): Description {
     abstract val mainSetting: Setting<*>
     val settings = mutableListOf<Setting<*>>()
 
@@ -76,5 +76,6 @@ enum class Category(val icon: Identifier): Description {
     Movement(Identifier(modId, "textures/gui/categories/movement.png")) { override var description = "Movement"},
     Misc(Identifier(modId, "textures/gui/categories/misc.png")) { override var description = "Misc"},
     Client(Identifier(modId, "textures/gui/categories/client.png")) { override var description = "Client"},
-    Hud(Identifier(modId, "textures/gui/categories/hud.png")) { override var description = "HUD"}
+    Hud(Identifier(modId, "textures/gui/categories/hud.png")) { override var description = "HUD"},
+    Addons(Identifier(modId, "textures/gui/categories/addons.png")) { override var description = "Addons"}
 }
