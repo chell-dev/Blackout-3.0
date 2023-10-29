@@ -2,7 +2,7 @@ package me.chell.blackout.api.feature
 
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.*
-import me.chell.blackout.impl.gui.HudEditor
+import me.chell.blackout.impl.gui.old.HudEditor
 import net.minecraft.client.gui.DrawContext
 
 @NoRegister

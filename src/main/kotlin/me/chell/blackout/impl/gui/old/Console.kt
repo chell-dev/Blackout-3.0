@@ -1,4 +1,4 @@
-package me.chell.blackout.impl.gui
+package me.chell.blackout.impl.gui.old
 
 import me.chell.blackout.api.command.CommandManager
 import me.chell.blackout.api.util.Color
@@ -70,18 +70,18 @@ object Console {
 
         if(y + (if(isOpen) height else titleHeight) > mc.window.scaledHeight) y = mc.window.scaledHeight - (if(isOpen) height else titleHeight)
 
-        context.fill(x+border, y, x+width-border, y+titleHeight, borderColor.rgb)
+        context.fill(x + border, y, x + width - border, y + titleHeight, borderColor.rgb)
         context.drawText(textRenderer, Formatting.GREEN + "Console", x + border + padding, y + (titleHeight / 2) - (textRenderer.fontHeight / 2), -1, false)
 
         if(!isOpen) return
 
         // border
-        context.fill(x, y, x+border, y+height, borderColor.rgb)
-        context.fill(x+width-border, y, x+width, y+height, borderColor.rgb)
-        context.fill(x+border, y+height-border, x+width-border, y+height, borderColor.rgb)
+        context.fill(x, y, x + border, y + height, borderColor.rgb)
+        context.fill(x + width - border, y, x + width, y + height, borderColor.rgb)
+        context.fill(x + border, y + height - border, x + width - border, y + height, borderColor.rgb)
 
         // background
-        context.fill(x+border, y+titleHeight, x+width-border, y+height-border, background.rgb)
+        context.fill(x + border, y + titleHeight, x + width - border, y + height - border, background.rgb)
 
         context.enableScissor(x + border, y + titleHeight, x + width - border, y + height - border - inputHeight - padding)
 

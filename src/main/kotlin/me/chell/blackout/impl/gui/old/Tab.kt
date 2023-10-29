@@ -1,8 +1,8 @@
-package me.chell.blackout.impl.gui
+package me.chell.blackout.impl.gui.old
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.util.mc
-import me.chell.blackout.impl.gui.items.FeatureItem
+import me.chell.blackout.impl.gui.old.items.FeatureItem
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.sound.SoundEvents
@@ -23,35 +23,35 @@ open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifi
 
     open fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float){
         RenderSystem.setShaderTexture(0, icon)
-        if(parent.currentTab == this) RenderSystem.setShaderColor(161f/255f, 0f, 1f, 1f)
+        if(ClientGUI.currentTab == this) RenderSystem.setShaderColor(161f/255f, 0f, 1f, 1f)
         else RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.enableDepthTest()
         context.drawTexture(icon, x+margin, y+margin, 0f, 0f, size -(margin*2), size -(margin*2), size -(margin*2), size -(margin*2))
 
-        if(parent.currentTab == this) {
-            context.enableScissor(size + 1, parent.bannerHeight + 1, x + parent.uiWidth, parent.descY.toInt())
-            val mouse = mouseX >= size +1+ GuiItem.margin && mouseX <= parent.uiWidth - GuiItem.margin
+        if(ClientGUI.currentTab == this) {
+            context.enableScissor(size + 1, ClientGUI.bannerHeight + 1, x + ClientGUI.uiWidth, ClientGUI.descY.toInt())
+            val mouse = mouseX >= size +1+ GuiItem.margin && mouseX <= ClientGUI.uiWidth - GuiItem.margin
             for(item in items) {
                 item.render(context, mouseX, mouseY, delta)
 
                 if(mouse && item is FeatureItem && mouseY >= item.y && mouseY <= item.y + item.height)
-                    parent.hoveredItem = item.feature
+                    ClientGUI.hoveredItem = item.feature
             }
             context.disableScissor()
         }
     }
 
     open fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(parent.currentTab != this && mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
-            parent.currentTab.onClose()
-            parent.currentTab = this
+        if(ClientGUI.currentTab != this && mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size) {
+            ClientGUI.currentTab.onClose()
+            ClientGUI.currentTab = this
             mc.soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f))
             return true
         }
 
-        if(parent.currentTab == this) {
+        if(ClientGUI.currentTab == this) {
             for(item in items) {
                 if(item.mouseClicked(mouseX, mouseY, button)) return true
             }
@@ -61,7 +61,7 @@ open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifi
     }
 
     open fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
-        if(parent.currentTab == this) {
+        if(ClientGUI.currentTab == this) {
             for(item in items) {
                 if(item.mouseReleased(mouseX, mouseY, button)) return true
             }
@@ -71,7 +71,7 @@ open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifi
     }
 
     open fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-        if(parent.currentTab == this) {
+        if(ClientGUI.currentTab == this) {
             for(item in items) {
                 if(item.keyPressed(keyCode, scanCode, modifiers)) return true
             }
@@ -89,7 +89,7 @@ open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifi
     }
 
     open fun mouseScrolled(mouseX: Double, mouseY: Double, amount: Double): Boolean {
-        if(parent.currentTab == this) {
+        if(ClientGUI.currentTab == this) {
             scrollAmount += amount.toInt() * 10
             scrollAmount = min(200, scrollAmount)
             updateItems()
@@ -105,7 +105,7 @@ open class Tab(var x: Int, var y: Int, val parent: ClientGUI, val icon: Identifi
     }
 
     open fun updateItems() {
-        var itemY = parent.bannerHeight+1+ GuiItem.margin + scrollAmount
+        var itemY = ClientGUI.bannerHeight +1+ GuiItem.margin + scrollAmount
 
         for(item in items) {
             item.y = itemY

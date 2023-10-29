@@ -1,11 +1,11 @@
-package me.chell.blackout.impl.gui.tabs
+package me.chell.blackout.impl.gui.old.tabs
 
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.FeatureManager
-import me.chell.blackout.impl.gui.ClientGUI
-import me.chell.blackout.impl.gui.GuiItem
-import me.chell.blackout.impl.gui.Tab
-import me.chell.blackout.impl.gui.items.FeatureItem
+import me.chell.blackout.impl.gui.old.ClientGUI
+import me.chell.blackout.impl.gui.old.GuiItem
+import me.chell.blackout.impl.gui.old.Tab
+import me.chell.blackout.impl.gui.old.items.FeatureItem
 
 class CategoryTab(val category: Category, x: Int, y: Int, parent: ClientGUI): Tab(x, y, parent, category.icon) {
 

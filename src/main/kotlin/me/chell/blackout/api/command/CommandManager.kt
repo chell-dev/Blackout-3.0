@@ -2,7 +2,7 @@ package me.chell.blackout.api.command
 
 import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.commands.NameHistoryCommand
-import me.chell.blackout.impl.gui.Console
+import me.chell.blackout.impl.gui.old.Console
 import net.minecraft.client.gui.screen.ConnectScreen
 import net.minecraft.client.gui.screen.TitleScreen
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen

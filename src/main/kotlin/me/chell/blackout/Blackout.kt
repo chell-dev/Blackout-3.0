@@ -4,8 +4,8 @@ import me.chell.blackout.api.addon.AddonManager
 import me.chell.blackout.api.event.EventManager
 import me.chell.blackout.api.feature.FeatureManager
 import me.chell.blackout.api.util.*
-import me.chell.blackout.impl.gui.ClientGUI
-import me.chell.blackout.impl.gui.HudEditor
+import me.chell.blackout.impl.gui.old.ClientGUI
+import me.chell.blackout.impl.gui.old.HudEditor
 
 object Blackout {
 

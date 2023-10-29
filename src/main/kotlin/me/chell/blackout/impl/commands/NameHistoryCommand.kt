@@ -3,7 +3,7 @@ package me.chell.blackout.impl.commands
 import com.google.gson.JsonArray
 import me.chell.blackout.api.command.Command
 import me.chell.blackout.api.util.plus
-import me.chell.blackout.impl.gui.Console
+import me.chell.blackout.impl.gui.old.Console
 import net.minecraft.util.Formatting
 import net.minecraft.util.JsonHelper
 import java.net.URL

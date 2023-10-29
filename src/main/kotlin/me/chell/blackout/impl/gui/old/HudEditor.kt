@@ -1,4 +1,4 @@
-package me.chell.blackout.impl.gui
+package me.chell.blackout.impl.gui.old
 
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.feature.FeatureManager

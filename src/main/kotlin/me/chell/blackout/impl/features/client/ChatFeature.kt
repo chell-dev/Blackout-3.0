@@ -9,7 +9,7 @@ import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.HackChat
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.player
-import me.chell.blackout.impl.gui.Console
+import me.chell.blackout.impl.gui.old.Console
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 

@@ -1,4 +1,4 @@
-package me.chell.blackout.impl.gui
+package me.chell.blackout.impl.gui.old
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.util.modId

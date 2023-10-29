@@ -1,12 +1,12 @@
-package me.chell.blackout.impl.gui.tabs
+package me.chell.blackout.impl.gui.old.tabs
 
 import me.chell.blackout.api.util.friends
 import me.chell.blackout.api.util.modId
-import me.chell.blackout.impl.gui.ClientGUI
-import me.chell.blackout.impl.gui.GuiItem
-import me.chell.blackout.impl.gui.Tab
-import me.chell.blackout.impl.gui.items.AddFriendItem
-import me.chell.blackout.impl.gui.items.FriendItem
+import me.chell.blackout.impl.gui.old.ClientGUI
+import me.chell.blackout.impl.gui.old.GuiItem
+import me.chell.blackout.impl.gui.old.Tab
+import me.chell.blackout.impl.gui.old.items.AddFriendItem
+import me.chell.blackout.impl.gui.old.items.FriendItem
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Identifier
 

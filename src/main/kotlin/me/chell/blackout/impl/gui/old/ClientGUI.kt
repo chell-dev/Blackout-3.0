@@ -1,4 +1,4 @@
-package me.chell.blackout.impl.gui
+package me.chell.blackout.impl.gui.old
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.event.EventHandler
@@ -7,8 +7,8 @@ import me.chell.blackout.api.events.InputEvent
 import me.chell.blackout.api.feature.Category
 import me.chell.blackout.api.util.*
 import me.chell.blackout.impl.features.client.GuiFeature
-import me.chell.blackout.impl.gui.tabs.CategoryTab
-import me.chell.blackout.impl.gui.tabs.FriendsTab
+import me.chell.blackout.impl.gui.old.tabs.CategoryTab
+import me.chell.blackout.impl.gui.old.tabs.FriendsTab
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -48,7 +48,7 @@ object ClientGUI: Screen(Text.literal("$modName GUI")) {
     private val updateText = "Version ${Updater.latestVersion} available! Click here to update and restart."
 
     fun clientInit() {
-        var tabY = bannerHeight+1
+        var tabY = bannerHeight +1
 
         for(category in Category.values()) {
             tabs.add(CategoryTab(category, 0, tabY, this))

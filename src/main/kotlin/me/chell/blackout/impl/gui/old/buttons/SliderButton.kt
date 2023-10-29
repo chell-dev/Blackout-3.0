@@ -1,11 +1,11 @@
-package me.chell.blackout.impl.gui.buttons
+package me.chell.blackout.impl.gui.old.buttons
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.modId
 import me.chell.blackout.api.util.textRenderer
-import me.chell.blackout.impl.gui.Button
-import me.chell.blackout.impl.gui.GuiItem
+import me.chell.blackout.impl.gui.old.Button
+import me.chell.blackout.impl.gui.old.GuiItem
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Identifier
 import kotlin.math.max

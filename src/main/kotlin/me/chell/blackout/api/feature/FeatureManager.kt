@@ -9,7 +9,7 @@ import me.chell.blackout.api.events.SetScreenEvent
 import me.chell.blackout.api.setting.Bind
 import me.chell.blackout.api.util.drawBox
 import me.chell.blackout.api.util.mc
-import me.chell.blackout.impl.gui.HudEditor
+import me.chell.blackout.impl.gui.old.HudEditor
 import net.minecraft.client.util.InputUtil
 import net.minecraft.util.math.Box
 import org.lwjgl.glfw.GLFW

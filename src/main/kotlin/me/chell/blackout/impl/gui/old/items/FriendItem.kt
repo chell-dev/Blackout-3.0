@@ -1,13 +1,13 @@
-package me.chell.blackout.impl.gui.items
+package me.chell.blackout.impl.gui.old.items
 
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.friends
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.api.util.textRenderer
-import me.chell.blackout.impl.gui.GuiItem
-import me.chell.blackout.impl.gui.Tab
-import me.chell.blackout.impl.gui.buttons.RunnableButton
-import me.chell.blackout.impl.gui.tabs.FriendsTab
+import me.chell.blackout.impl.gui.old.GuiItem
+import me.chell.blackout.impl.gui.old.Tab
+import me.chell.blackout.impl.gui.old.buttons.RunnableButton
+import me.chell.blackout.impl.gui.old.tabs.FriendsTab
 import net.minecraft.client.gui.DrawContext
 
 class FriendItem(val friend: String, override var x: Int, override var y: Int, val parent: FriendsTab): GuiItem(parent) {

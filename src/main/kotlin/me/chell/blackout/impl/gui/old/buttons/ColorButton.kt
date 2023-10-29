@@ -1,11 +1,11 @@
-package me.chell.blackout.impl.gui.buttons
+package me.chell.blackout.impl.gui.old.buttons
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.*
-import me.chell.blackout.impl.gui.Button
-import me.chell.blackout.impl.gui.GuiItem
-import me.chell.blackout.impl.gui.items.SettingItem
+import me.chell.blackout.impl.gui.old.Button
+import me.chell.blackout.impl.gui.old.GuiItem
+import me.chell.blackout.impl.gui.old.items.SettingItem
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.GameRenderer
 import net.minecraft.client.render.Tessellator
