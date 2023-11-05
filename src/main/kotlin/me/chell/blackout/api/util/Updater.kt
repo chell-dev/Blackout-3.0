@@ -2,9 +2,9 @@ package me.chell.blackout.api.util
 
 import net.fabricmc.loader.impl.FabricLoaderImpl
 import net.minecraft.util.JsonHelper
-import java.io.File
 import java.net.URL
 import java.nio.file.Files
+import java.util.zip.ZipFile
 import kotlin.io.path.Path
 
 object Updater {
@@ -28,13 +28,17 @@ object Updater {
     }
 
     private fun deleteOld() {
-        val tags = JsonHelper.deserialize(URL("https://api.github.com/repos/${repo}/tags").readText()).asJsonArray
+        val files = FabricLoaderImpl.INSTANCE.modsDirectory.listFiles()!!.filter { it.extension.equals("jar", true) }
 
-        val files = FabricLoaderImpl.INSTANCE.modsDirectory.listFiles()!!
+        for(file in files) {
+            val zip = ZipFile(file)
+            val entry = zip.getEntry("fabric.mod.json") ?: continue
+            val json = JsonHelper.deserialize(zip.getInputStream(entry).bufferedReader())
 
-        for(tagJson in tags) {
-            val tag = tagJson.asJsonObject.get("name").asString
-            if(files.any { it.name == "${modId}-${tag}.jar" }) File(FabricLoaderImpl.INSTANCE.modsDirectory.absolutePath + "/${modId}-${tag}.jar").delete()
+            if(json.get("id").asString == modId) {
+                file.delete()
+                break
+            }
         }
     }
 
