@@ -7,7 +7,6 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version
 group = project.maven_group
 
 repositories {
@@ -42,11 +41,9 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
+    def json = new groovy.json.JsonSlurper().parse(file("src/main/resources/fabric.mod.json"))
 
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
+    version = json.version
 }
 
 jar {

@@ -9,6 +9,8 @@ import me.chell.blackout.impl.gui.old.HudEditor
 
 object Blackout {
 
+    var initialized = false
+
     fun init() {
         AddonManager.preInit()
         FeatureManager.init()
@@ -32,6 +34,8 @@ object Blackout {
             println("[$modName] Goodbye.")
         })
 
+        initialized = true
+
         print("""
             
              ▄▄▄▄    ██▓    ▄▄▄       ▄████▄   ██ ▄█▀ ▒█████   █    ██ ▄▄▄█████▓
@@ -45,6 +49,7 @@ object Blackout {
              ░          ░  ░     ░  ░░ ░      ░  ░       ░ ░     ░              
                   ░                  ░                                          
             
+            made by chell with love, pain and suffering
             
             """.trimIndent())
     }

@@ -1,15 +1,15 @@
 package me.chell.blackout.api.util
 
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.network.ClientPlayerInteractionManager
 import net.minecraft.client.world.ClientWorld
 
-
-const val modName = "Blackout"
 const val modId = "blackout"
-const val modVersion = "3.0.0"
+val modName: String = FabricLoader.getInstance().getModContainer(modId).get().metadata.name
+val modVersion: String = FabricLoader.getInstance().getModContainer(modId).get().metadata.version.friendlyString
 
 val mc get() = MinecraftClient.getInstance()!!
 
