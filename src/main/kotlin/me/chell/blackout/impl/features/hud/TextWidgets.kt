@@ -20,3 +20,5 @@ object Cps: TextWidget("Crystals Per Second", { "${Cps.value} CPS" }) {
 }
 
 object Config: TextWidget("Current Config", { ConfigFeature.mainSetting.value.name })
+
+object Server: TextWidget("Server IP", { mc.currentServerEntry?.address ?: mc.server?.saveProperties?.levelName ?: "error" })
