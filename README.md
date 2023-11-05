@@ -94,4 +94,5 @@ After building, the output `.jar` will be in `build/libs/`
 - [KDiscordIPC](https://github.com/caoimhebyrne/KDiscordIPC)
 - [hack.chat](https://hack.chat/)
 - [DevLogin](https://github.com/PlanetTeamSpeakk/DevLogin)
+- [Fabric Language Kotlin](https://github.com/FabricMC/fabric-language-kotlin)
 - [Installer](https://github.com/2qb/Blackout-3.0-Installer)

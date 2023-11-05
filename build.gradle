@@ -23,19 +23,20 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    include(implementation('org.jetbrains.kotlin:kotlin-stdlib'))
+    ////include(implementation('org.jetbrains.kotlin:kotlin-stdlib'))
     //include(implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8'))
     //include(implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7'))
-    include(implementation('org.jetbrains.kotlin:kotlin-reflect'))
-    include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'))
+    ////include(implementation('org.jetbrains.kotlin:kotlin-reflect'))
+    ////include(implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${project.coroutines_version}"))
     //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm'))
     //include(implementation('org.jetbrains.kotlinx:kotlinx-coroutines-jdk8'))
+    include(modImplementation("net.fabricmc:fabric-language-kotlin:${flk_version}"))
 
     include(implementation("com.github.caoimhebyrne:KDiscordIPC:${project.kdiscordipc_version}"))
     include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
     include(implementation("org.reflections:reflections:${project.reflections_version}")); include "org.javassist:javassist:${project.javassist_version}"
 
-    modImplementation "com.ptsmods:devlogin:${project.devlogin_version}"
+    modImplementation("com.ptsmods:devlogin:${project.devlogin_version}")
 
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
