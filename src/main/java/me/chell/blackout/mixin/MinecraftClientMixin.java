@@ -4,6 +4,7 @@ import me.chell.blackout.Blackout;
 import me.chell.blackout.api.event.EventManager;
 import me.chell.blackout.api.events.ServerEvent;
 import me.chell.blackout.api.events.SetScreenEvent;
+import me.chell.blackout.api.events.WindowFocusChangedEvent;
 import me.chell.blackout.api.util.FunctionsKt;
 import me.chell.blackout.impl.features.client.WindowTitle;
 import me.chell.blackout.impl.features.player.InteractTweaks;
@@ -68,6 +69,11 @@ public class MinecraftClientMixin {
     public boolean isUsingItem(ClientPlayerEntity instance) {
         if(InteractTweaks.INSTANCE.multiTaskEnabled()) return false;
         else return instance.isUsingItem();
+    }
+
+    @Inject(method = "onWindowFocusChanged", at = @At("TAIL"))
+    public void onWindowFocusChanged(boolean focused, CallbackInfo ci) {
+        EventManager.INSTANCE.post(new WindowFocusChangedEvent(focused));
     }
 
 }
