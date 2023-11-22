@@ -37,7 +37,7 @@ Discord RPC
 
 ## Installation
 
-[Click here](https://github.com/2qb/Blackout-3.0-Installer/releases/download/1.2/BlackoutInstaller.exe) to download the installer.
+[Click here](https://github.com/2qb/Blackout-3.0-Installer/releases/download/1.4/BlackoutInstaller.exe) to download the installer.
 
 <details>
 <summary>Manual installation</summary>
