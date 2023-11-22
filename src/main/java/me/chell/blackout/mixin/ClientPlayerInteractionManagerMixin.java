@@ -5,6 +5,7 @@ import me.chell.blackout.api.events.AttackEntityEvent;
 import me.chell.blackout.api.events.PlayerBreakBlockEvent;
 import me.chell.blackout.api.events.PlayerInteractBlockEvent;
 import me.chell.blackout.impl.features.combat.Reach;
+import me.chell.blackout.impl.features.player.InteractTweaks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -67,6 +68,17 @@ public class ClientPlayerInteractionManagerMixin {
     @Inject(method = "attackEntity", at = @At("TAIL"))
     public void postAttackEntity(PlayerEntity player, Entity target, CallbackInfo ci) {
         EventManager.INSTANCE.post(new AttackEntityEvent.Post(target));
+    }
+
+    @Inject(method = "cancelBlockBreaking", at = @At("HEAD"), cancellable = true)
+    public void cancelBlockBreaking(CallbackInfo ci) {
+        if(InteractTweaks.INSTANCE.stickyBreakEnabled())
+            ci.cancel();
+    }
+
+    @Inject(method = "isBreakingBlock", at = @At("HEAD"), cancellable = true)
+    public void isBreakingBlock(CallbackInfoReturnable<Boolean> cir) {
+        if(InteractTweaks.INSTANCE.stickyBreakEnabled()) cir.setReturnValue(false);
     }
 
 }

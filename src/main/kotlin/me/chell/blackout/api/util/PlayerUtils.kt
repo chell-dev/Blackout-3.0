@@ -1,5 +1,6 @@
 package me.chell.blackout.api.util
 
+import me.chell.blackout.mixin.accessors.MinecraftClientAccessor
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.command.argument.EntityAnchorArgumentType
 import net.minecraft.entity.Entity
@@ -19,4 +20,10 @@ fun ClientPlayerEntity.attackEntity(target: Entity, rotate: Boolean) {
 
     yaw = oldYaw
     pitch = oldPitch
+}
+
+fun ClientPlayerEntity.attackAir() {
+    if (interactionManager.hasLimitedAttackSpeed()) (mc as MinecraftClientAccessor).setAttackCooldown(0)
+    resetLastAttackedTicks()
+    swingHand(Hand.MAIN_HAND)
 }

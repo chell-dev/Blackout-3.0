@@ -6,12 +6,15 @@ import me.chell.blackout.api.events.ServerEvent;
 import me.chell.blackout.api.events.SetScreenEvent;
 import me.chell.blackout.api.util.FunctionsKt;
 import me.chell.blackout.impl.features.client.WindowTitle;
+import me.chell.blackout.impl.features.player.InteractTweaks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -59,6 +62,12 @@ public class MinecraftClientMixin {
     @Inject(method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V", at = @At("TAIL"))
     public void disconnect(Screen screen, CallbackInfo ci) {
         EventManager.INSTANCE.post(new ServerEvent.Disconnect());
+    }
+
+    @Redirect(method = "handleBlockBreaking", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
+    public boolean isUsingItem(ClientPlayerEntity instance) {
+        if(InteractTweaks.INSTANCE.multiTaskEnabled()) return false;
+        else return instance.isUsingItem();
     }
 
 }
