@@ -23,6 +23,21 @@
 <br>
 
 <details>
+<summary>Cool features</summary>
+
+- Features aimed at anarchy, vanilla and even creative
+- Automatic update checking
+- Baritone integration (TODO)
+- Global in-game [chat](https://hack.chat) for all Blackout users
+- Code is 99% original, we don't copy & paste from copy & pasted clients here (credit for the 1% is in comments)
+- Written in kotlin, java fans seethe and cope
+- Using reflections to automatically register modules and settings
+- Lua scripting (TODO)
+- Java/Kotlin Addons
+
+</details>
+
+<details>
 <summary>Screenshots</summary>
 
 GUI
@@ -67,10 +82,8 @@ Discord RPC
 ## Usage
 
 - Open the GUI by pressing the `\` key
+  - If you have Mod Menu installed, you can open the GUI by pressing the config button
 - Left / Right / Middle Click buttons to configure everything
-- If you forget your GUI bind you can:
-  - Change it in your config file (`.minecraft/Blackout/Config.txt`) under the line `Feature: GUI Bind`
-  - If you have Mod Menu installed, open the GUI by pressing the config button
 
 ### Building
 
