@@ -27,7 +27,15 @@
 
 GUI
 
-![GUI](assets/gui.gif)
+![GUI](assets/gui.png)
+
+Customizable HUD
+
+![HUD](assets/hud.png)
+
+Nametags
+
+![Nametags](assets/nametags.png)
 
 Discord RPC
 
