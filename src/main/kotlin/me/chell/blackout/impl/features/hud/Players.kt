@@ -13,11 +13,11 @@ class Players: Widget("Players") {
     override var width = 10
     override var height = 10
 
-    private val range = register(Setting("Range", 0, 0, 100, display = { if(it == 0) "Infinite" else it.toString() }))
-    private val friendColor = register(Setting("Friend Color", Color.sync()))
-    private val neutralColor = register(Setting("Others Color", Color.white()))
-    private val hAlign = register(Setting("Horizontal Align", HAlign.Left))
-    private val vAlign = register(Setting("Vertical Align", VAlign.Top))
+    private val range = Setting("Range", 0, 0, 100, display = { if(it == 0) "Infinite" else it.toString() })
+    private val friendColor = Setting("Friend Color", Color.sync())
+    private val neutralColor = Setting("Others Color", Color.white())
+    private val hAlign = Setting("Horizontal Align", HAlign.Left)
+    private val vAlign = Setting("Vertical Align", VAlign.Top)
 
     private val lines = mutableMapOf<String, Int>()
 

@@ -17,9 +17,9 @@ object XpBind: ToggleBindFeature("XP Bind", Category.Combat) {
 
     override var description = "Throw XP bottles"
 
-    private val armor = register(Setting("Stop on 100% durability", true))
-    private val feet = register(Setting("Throw at feet", true))
-    private val fast = register(Setting("Fast", true))
+    private val armor = Setting("Stop on 100% durability", true)
+    private val feet = Setting("Throw at feet", true)
+    private val fast = Setting("Fast", true)
 
     private val accessor = mc as MinecraftClientAccessor
 

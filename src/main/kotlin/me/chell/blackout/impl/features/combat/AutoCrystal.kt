@@ -37,34 +37,34 @@ import kotlin.math.sqrt
 
 object AutoCrystal: ToggleBindFeature("AutoCrystal", Category.Combat) {
 
-    private val page = register(Setting("Settings", Page.Place))
+    private val page = Setting("Settings", Page.Place)
 
-    private val hitRange = register(Setting("Hit Range", 5.5, 0.0, 8.0, "Hit range when the crystal is visible.", display = { if(it == 0.0) "Don't hit" else it.toString() }) {page.value == Page.Hit})
-    private val hitWallRange = register(Setting("Hit Wall Range", 5.5, 0.0, 8.0, "Hit range when the crystal is behind a wall.", level = 2) {page.value == Page.Hit})
-    private val hitRotate = register(Setting("Hit Rotate", true) {page.value == Page.Hit})
-    private val hitDelay = register(Setting("Hit Delay", 50, 10, 250, "Crystal hit delay in milliseconds.", display = {"${it}ms"}) {page.value == Page.Hit})
+    private val hitRange = Setting("Hit Range", 5.5, 0.0, 8.0, "Hit range when the crystal is visible.", display = { if(it == 0.0) "Don't hit" else it.toString() }) {page.value == Page.Hit}
+    private val hitWallRange = Setting("Hit Wall Range", 5.5, 0.0, 8.0, "Hit range when the crystal is behind a wall.", level = 2) {page.value == Page.Hit}
+    private val hitRotate = Setting("Hit Rotate", true) {page.value == Page.Hit}
+    private val hitDelay = Setting("Hit Delay", 50, 10, 250, "Crystal hit delay in milliseconds.", display = {"${it}ms"}) {page.value == Page.Hit}
 
-    private val placeRange = register(Setting("Place Range", 6.0, 0.0, 8.0, "Place range when the block is visible.", display = { if(it == 0.0) "Don't place" else it.toString() }) {page.value == Page.Place})
-    private val placeWallRange = register(Setting("Place Wall Range", 6.0, 0.0, 8.0, "Place range when the block is behind a wall.", level = 2) {page.value == Page.Place})
-    private val placeRotate = register(Setting("Place Rotate", true) {page.value == Page.Place})
-    private val placeDelay = register(Setting("Place Delay", 50, 10, 250, "Crystal place delay in milliseconds.", display = {"${it}ms"}) {page.value == Page.Place})
-    private val wait = register(Setting("Await", true, description = "Prevent multiplacing.") {page.value == Page.Place})
-    private val playerRange = register(Setting("Player Range", 12.0, 1.0, 20.0) {page.value == Page.Place})
-    private val minDamage = register(Setting("Min Damage", 5.0, 0.0, 20.0) {page.value == Page.Place})
-    private val maxSelfDamage = register(Setting("Max Self Damage", 8.0, 0.0, 20.0) {page.value == Page.Place})
-    private val predict = register(Setting("Predict Movement", true) {page.value == Page.Place})
-    private val predictHorizontal = register(Setting("Horizontal Multiplier", 2.0, 0.0, 5.0, level = 2, display = { "${it}x" }) {page.value == Page.Place && predict.value})
-    private val predictVertical = register(Setting("Vertical Multiplier", 0.0, 0.0, 5.0, level = 2, display = { "${it}x" }) {page.value == Page.Place && predict.value})
-    private val antiSurround = register(Setting("Anti Surround", AntiSurround.Off) {page.value == Page.Place})
-    private val autoSwitch = register(Setting("Auto Switch", SwitchMode.Off) {page.value == Page.Place})
-    private val noGappleSwitch = register(Setting("Anti Gapple Switch", true, description = "Don't auto switch while you're eating a golden apple.", level = 2) {page.value == Page.Place && autoSwitch.value != SwitchMode.Off})
-    private val newPlacement = register(Setting("1.13+ Placement", true, description = "${Formatting.GREEN}ON:${Formatting.RESET} Place in 1 block tall spaces\n${Formatting.RED}OFF:${Formatting.RESET} Require 2 blocks of vertical space (for minecraft 1.12.2 and older).") {page.value == Page.Place})
-    private val facePlaceHP = register(Setting("FacePlace HP", 8.0, 0.0, 20.0, "Health threshold to ignore min damage.", display = { if(it == 0.0) "Disabled" else it.toString() }) {page.value == Page.Place})
-    private val facePlaceArmor = register(Setting("FacePlace Armor%", 10, 0, 50, "Armor percentage threshold to ignore min damage.", display = { if(it == 0) "Disabled" else it.toString() }) {page.value == Page.Place})
-    private val facePlaceBind = register(Setting("FacePlace Bind", Bind.Toggle("FacePlace", onEnable={}, onDisable={}), description = "Keybind to ignore min damage.") {page.value == Page.Place})
+    private val placeRange = Setting("Place Range", 6.0, 0.0, 8.0, "Place range when the block is visible.", display = { if(it == 0.0) "Don't place" else it.toString() }) {page.value == Page.Place}
+    private val placeWallRange = Setting("Place Wall Range", 6.0, 0.0, 8.0, "Place range when the block is behind a wall.", level = 2) {page.value == Page.Place}
+    private val placeRotate = Setting("Place Rotate", true) {page.value == Page.Place}
+    private val placeDelay = Setting("Place Delay", 50, 10, 250, "Crystal place delay in milliseconds.", display = {"${it}ms"}) {page.value == Page.Place}
+    private val wait = Setting("Await", true, description = "Prevent multiplacing.") {page.value == Page.Place}
+    private val playerRange = Setting("Player Range", 12.0, 1.0, 20.0) {page.value == Page.Place}
+    private val minDamage = Setting("Min Damage", 5.0, 0.0, 20.0) {page.value == Page.Place}
+    private val maxSelfDamage = Setting("Max Self Damage", 8.0, 0.0, 20.0) {page.value == Page.Place}
+    private val predict = Setting("Predict Movement", true) {page.value == Page.Place}
+    private val predictHorizontal = Setting("Horizontal Multiplier", 2.0, 0.0, 5.0, level = 2, display = { "${it}x" }) {page.value == Page.Place && predict.value}
+    private val predictVertical = Setting("Vertical Multiplier", 0.0, 0.0, 5.0, level = 2, display = { "${it}x" }) {page.value == Page.Place && predict.value}
+    private val antiSurround = Setting("Anti Surround", AntiSurround.Off) {page.value == Page.Place}
+    private val autoSwitch = Setting("Auto Switch", SwitchMode.Off) {page.value == Page.Place}
+    private val noGappleSwitch = Setting("Anti Gapple Switch", true, description = "Don't auto switch while you're eating a golden apple.", level = 2) {page.value == Page.Place && autoSwitch.value != SwitchMode.Off}
+    private val newPlacement = Setting("1.13+ Placement", true, description = "${Formatting.GREEN}ON:${Formatting.RESET} Place in 1 block tall spaces\n${Formatting.RED}OFF:${Formatting.RESET} Require 2 blocks of vertical space (for minecraft 1.12.2 and older).") {page.value == Page.Place}
+    private val facePlaceHP = Setting("FacePlace HP", 8.0, 0.0, 20.0, "Health threshold to ignore min damage.", display = { if(it == 0.0) "Disabled" else it.toString() }) {page.value == Page.Place}
+    private val facePlaceArmor = Setting("FacePlace Armor%", 10, 0, 50, "Armor percentage threshold to ignore min damage.", display = { if(it == 0) "Disabled" else it.toString() }) {page.value == Page.Place}
+    private val facePlaceBind = Setting("FacePlace Bind", Bind.Toggle("FacePlace", onEnable={}, onDisable={}), description = "Keybind to ignore min damage.") {page.value == Page.Place}
 
-    private val espColor = register(Setting("ESP Color", Color.sync(0.5f)) {page.value == Page.Other})
-    private val espBox = register(Setting("Highlight Target", true) {page.value == Page.Other})
+    private val espColor = Setting("ESP Color", Color.sync(0.5f)) {page.value == Page.Other}
+    private val espBox = Setting("Highlight Target", true) {page.value == Page.Other}
 
     private var renderPos: BlockPos? = null
     private var renderTicks = 0

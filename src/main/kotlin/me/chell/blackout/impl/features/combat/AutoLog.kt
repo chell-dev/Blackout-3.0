@@ -12,7 +12,7 @@ object AutoLog: ToggleFeature("AutoLog", Category.Combat) {
 
     override var description = "Disconnect when your health goes below the threshold"
 
-    private val health = register(Setting("Health", 13.0f, 0.0f, 36.0f))
+    private val health = Setting("Health", 13.0f, 0.0f, 36.0f)
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {

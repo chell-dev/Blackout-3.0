@@ -16,10 +16,10 @@ object ArrayList: Widget("ArrayList") {
     override var width = 50
     override var height = 9
 
-    private val whitelist = register(Setting("Whitelist", FeatureManager.features))
-    private val vAlign = register(Setting("Vertical Align", VAlign.Down))
-    private val hAlign = register(Setting("Horizontal Align", HAlign.Right))
-    private val color = register(Setting("Color", Color.white()))
+    private val whitelist = Setting("Whitelist", FeatureManager.features)
+    private val vAlign = Setting("Vertical Align", VAlign.Down)
+    private val hAlign = Setting("Horizontal Align", HAlign.Right)
+    private val color = Setting("Color", Color.white())
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)

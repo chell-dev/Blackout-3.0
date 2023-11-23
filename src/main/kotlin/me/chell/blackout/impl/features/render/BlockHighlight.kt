@@ -15,9 +15,9 @@ import net.minecraft.util.math.Box
 
 object BlockHighlight: ToggleFeature("Block Highlight", Category.Render) {
 
-    private val lineWidth = register(Setting("Outline Width", 1f, 0f, 10f, display = { if(it == 0f) "Disabled" else it.toString() }))
-    private val lineColor = register(Setting("Outline Color", Color.sync()) {lineWidth.value != 0f})
-    private val fillColor = register(Setting("Fill Color", Color.sync(0.5f)))
+    private val lineWidth = Setting("Outline Width", 1f, 0f, 10f, display = { if(it == 0f) "Disabled" else it.toString() })
+    private val lineColor = Setting("Outline Color", Color.sync()) {lineWidth.value != 0f}
+    private val fillColor = Setting("Fill Color", Color.sync(0.5f))
 
     override fun onDisable() {
         super.onDisable()

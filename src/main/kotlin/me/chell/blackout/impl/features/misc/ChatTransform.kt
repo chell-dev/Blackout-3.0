@@ -11,9 +11,9 @@ import kotlin.random.Random
 
 object ChatTransform: ToggleFeature("Chat Transform", Category.Misc) {
 
-    private val uwuify = register(Setting("UwUify", false))
-    private val prefix = register(Setting("Prefix", ""))
-    private val suffix = register(Setting("Suffix", " | ʙʟᴀᴄᴋᴏᴜᴛ"))
+    private val uwuify = Setting("UwUify", false)
+    private val prefix = Setting("Prefix", "")
+    private val suffix = Setting("Suffix", " | ʙʟᴀᴄᴋᴏᴜᴛ")
 
     override fun onEnable() {
         EventManager.register(this)

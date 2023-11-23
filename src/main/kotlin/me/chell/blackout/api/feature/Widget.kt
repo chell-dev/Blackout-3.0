@@ -10,8 +10,8 @@ abstract class Widget(name: String): Feature(name, Category.Hud) {
 
     override val mainSetting = Setting("Enabled", false)
 
-    val x = register(Setting("X", 0, 0, 0){false})
-    val y = register(Setting("Y", 0, 0, 0){false})
+    val x = Setting("X", 0, 0, 0){false}.register()
+    val y = Setting("Y", 0, 0, 0){false}.register()
 
     abstract var width: Int
     abstract var height: Int
@@ -59,9 +59,9 @@ abstract class Widget(name: String): Feature(name, Category.Hud) {
 @NoRegister
 abstract class TextWidget(name: String, val text: () -> String): Widget(name) {
 
-    val color = register(Setting("Color", Color.white()))
-    private val hAlign = register(Setting("Horizontal Align", HAlign.Left))
-    //val vAlign = register(Setting("Vertical Align", VAlign.Top))
+    val color = Setting("Color", Color.white()).register()
+    private val hAlign = Setting("Horizontal Align", HAlign.Left).register()
+    //val vAlign = register(Setting("Vertical Align", VAlign.Top)).register()
 
     private var oldWidth = 0
 

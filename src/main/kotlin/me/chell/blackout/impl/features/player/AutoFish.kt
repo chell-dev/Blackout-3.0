@@ -18,7 +18,7 @@ object AutoFish: ToggleFeature("Auto Fish", Category.PLayer) {
 
     override var description = "Automatically recasts when you catch a fish"
 
-    private val rotate = register(Setting("Rotate", false))
+    private val rotate = Setting("Rotate", false)
 
     private var interact = 0;
 

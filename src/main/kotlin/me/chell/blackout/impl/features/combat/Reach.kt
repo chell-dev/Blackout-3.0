@@ -9,5 +9,5 @@ object Reach: ToggleFeature("Reach", Category.Combat) {
 
     override var description = "Increase your reach distance"
 
-    val range = register(Setting("Range", 6.0f, 0.0f, 12.0f))
+    val range = Setting("Range", 6.0f, 0.0f, 12.0f)
 }

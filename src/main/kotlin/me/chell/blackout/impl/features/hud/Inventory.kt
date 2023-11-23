@@ -15,8 +15,8 @@ object Inventory: Widget("Inventory") {
     override var width = 144
     override var height = 48
 
-    private val mode = register(Setting("Mode", Mode.Texture))
-    private val color = register(Setting("Background", Color(0.5f, 0.5f, 0.5f, 0.5f)))
+    private val mode = Setting("Mode", Mode.Texture)
+    private val color = Setting("Background", Color(0.5f, 0.5f, 0.5f, 0.5f))
 
     private val id = Identifier(modId, "textures/inventory.png")
 

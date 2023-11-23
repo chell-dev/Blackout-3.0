@@ -9,7 +9,7 @@ object Step: ToggleBindFeature("Step", Category.Movement) {
 
     override var description = "Increase your step height"
 
-    private val height = register(Setting("Height", 2.2f, 0.6f, 3f))
+    private val height = Setting("Height", 2.2f, 0.6f, 3f)
 
     override fun onEnable() {
         mc.player?.stepHeight = height.value

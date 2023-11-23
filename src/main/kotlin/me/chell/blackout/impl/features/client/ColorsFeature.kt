@@ -9,7 +9,7 @@ object ColorsFeature: Feature("Colors", Category.Client) {
 
     override val mainSetting = Setting("Empty", null)
 
-    val sync = register(Setting("Sync", Color(161, 0, 255)))
-    val rainbowSpeed = register(Setting("Rainbow Speed", 1f, 0.1f, 5f))
+    val sync = Setting("Sync", Color(161, 0, 255))
+    val rainbowSpeed = Setting("Rainbow Speed", 1f, 0.1f, 5f)
 
 }

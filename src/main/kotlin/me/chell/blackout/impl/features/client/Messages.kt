@@ -19,33 +19,33 @@ object Messages: Feature("Messages", Category.Client) {
 
     override val mainSetting = Setting("Empty", null)
 
-    val permanent = register(Setting("Permanent", true))
+    val permanent = Setting("Permanent", true)
 
-    private val keybinds = register(Setting("Keybinds", false))
-    private val deathCoords = register(Setting("Death Location", false))
-    private val kd = register(Setting("K/D", false))
+    private val keybinds = Setting("Keybinds", false)
+    private val deathCoords = Setting("Death Location", false)
+    private val kd = Setting("K/D", false)
 
     /*
-    private val deathLocation = register(Setting("Death Location", null))
-    private val deathSelf = register(Setting("D Self", false, level = 2))
-    private val deathFriends = register(Setting("D Friends", false, level = 2))
-    private val deathOthers = register(Setting("D Others", false, level = 2))
+    private val deathLocation = Setting("Death Location", null))
+    private val deathSelf = Setting("D Self", false, level = 2))
+    private val deathFriends = Setting("D Friends", false, level = 2))
+    private val deathOthers = Setting("D Others", false, level = 2))
 
-    private val strength = register(Setting("Strength Potion", null))
-    private val strengthFriends = register(Setting("St Friends", false, level = 2))
-    private val strengthOthers = register(Setting("St Others", false, level = 2))
+    private val strength = Setting("Strength Potion", null))
+    private val strengthFriends = Setting("St Friends", false, level = 2))
+    private val strengthOthers = Setting("St Others", false, level = 2))
 
-    private val speed = register(Setting("Speed Potion", null))
-    private val speedFriends = register(Setting("Sp Friends", false, level = 2))
-    private val speedOthers = register(Setting("Sp Others", false, level = 2))
+    private val speed = Setting("Speed Potion", null))
+    private val speedFriends = Setting("Sp Friends", false, level = 2))
+    private val speedOthers = Setting("Sp Others", false, level = 2))
 
-    private val rd = register(Setting("Render Distance", null))
-    private val rdFriends = register(Setting("Rd Friends", false, level = 2))
-    private val rdOthers = register(Setting("Rd Others", false, level = 2))
+    private val rd = Setting("Render Distance", null))
+    private val rdFriends = Setting("Rd Friends", false, level = 2))
+    private val rdOthers = Setting("Rd Others", false, level = 2))
 
-    private val totem = register(Setting("Totem pop", null))
-    private val totemFriends = register(Setting("Rd Friends", false, level = 2))
-    private val totemOthers = register(Setting("Rd Others", false, level = 2))
+    private val totem = Setting("Totem pop", null))
+    private val totemFriends = Setting("Rd Friends", false, level = 2))
+    private val totemOthers = Setting("Rd Others", false, level = 2))
     */
 
     init {

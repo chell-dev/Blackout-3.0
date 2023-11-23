@@ -16,7 +16,7 @@ object Doll: Widget("Doll") {
     override var height = 0
         get() = (60 * scale.value).toInt()
 
-    private val scale = register(Setting("Scale", 1.0, 0.5, 2.0))
+    private val scale = Setting("Scale", 1.0, 0.5, 2.0)
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)

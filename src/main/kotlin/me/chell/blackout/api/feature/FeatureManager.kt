@@ -7,6 +7,7 @@ import me.chell.blackout.api.events.RenderHudEvent
 import me.chell.blackout.api.events.RenderWorldEvent
 import me.chell.blackout.api.events.SetScreenEvent
 import me.chell.blackout.api.setting.Bind
+import me.chell.blackout.api.setting.Setting
 import me.chell.blackout.api.util.drawBox
 import me.chell.blackout.api.util.mc
 import me.chell.blackout.impl.gui.old.HudEditor
@@ -31,8 +32,21 @@ object FeatureManager {
         val list = Reflections("me.chell.blackout.impl.features").get(Scanners.SubTypes.of(Feature::class.java).asClass<Feature>())
 
         for(c in list) {
-            if(!c.isAnnotationPresent(NoRegister::class.java))
-                features.add(c.kotlin.objectInstance as Feature? ?: c.getDeclaredConstructor().newInstance() as Feature)
+            if(c.isAnnotationPresent(NoRegister::class.java)) continue
+
+            val feature = c.kotlin.objectInstance as Feature? ?: c.getDeclaredConstructor().newInstance() as Feature
+            features.add(feature)
+
+            for(field in c.declaredFields) {
+                if(field.type == Setting::class.java) {
+                    if(field.isAnnotationPresent(NoRegister::class.java) || field.name == "mainSetting") continue
+
+                    val wasAccessible = field.isAccessible
+                    field.isAccessible = true
+                    feature.settings.add(field.get(feature) as Setting<*>)
+                    field.isAccessible = wasAccessible
+                }
+            }
         }
     }
 

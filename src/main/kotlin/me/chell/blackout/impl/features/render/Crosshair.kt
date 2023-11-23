@@ -13,12 +13,12 @@ import net.minecraft.client.util.math.MatrixStack
 
 object Crosshair: ToggleFeature("Crosshair", Category.Render) {
 
-    private val color = register(Setting("Color", Color.sync()))
-    private val width = register(Setting("Width", 1f, 0f, 5f))
-    private val length = register(Setting("Length", 5f, 0f, 10f))
-    private val gap = register(Setting("Gap", 1f, 0f, 5f))
-    private val tShape = register(Setting("T Shape", false))
-    private val dot = register(Setting("Dot", false))
+    private val color = Setting("Color", Color.sync())
+    private val width = Setting("Width", 1f, 0f, 5f)
+    private val length = Setting("Length", 5f, 0f, 10f)
+    private val gap = Setting("Gap", 1f, 0f, 5f)
+    private val tShape = Setting("T Shape", false)
+    private val dot = Setting("Dot", false)
 
     @EventHandler
     fun onRenderCrosshair(event: RenderHudEvent.Crosshair) {

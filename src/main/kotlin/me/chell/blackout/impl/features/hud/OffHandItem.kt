@@ -11,7 +11,7 @@ object OffHandItem: Widget("Item Count - Offhand") {
     override var width = 16
     override var height = 16
 
-    private val stackableOnly = register(Setting("Only Stackable Items", true))
+    private val stackableOnly = Setting("Only Stackable Items", true)
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)

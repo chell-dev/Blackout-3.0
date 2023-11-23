@@ -12,11 +12,11 @@ import me.chell.blackout.mixin.accessors.MinecraftClientAccessor
 
 object InteractTweaks: ToggleBindFeature("Interaction Tweaks", Category.PLayer) {
 
-    private val placeDelay = register(Setting("No Place/Use Delay", false))
-    private val breakDelay = register(Setting("No Break Delay", false))
-    private val attackDelay = register(Setting("No Attack Delay", false))
-    private val multiTask = register(Setting("Multi Task", false)) // MinecraftClientMixin.isUsingItem()
-    private val stickyBreak = register(Setting("Sticky Block Breaking", false)) // ClientPlayerInteractionManager.cancelBlockBreaking()
+    private val placeDelay = Setting("No Place/Use Delay", false)
+    private val breakDelay = Setting("No Break Delay", false)
+    private val attackDelay = Setting("No Attack Delay", false)
+    private val multiTask = Setting("Multi Task", false) // MinecraftClientMixin.isUsingItem()
+    private val stickyBreak = Setting("Sticky Block Breaking", false) // ClientPlayerInteractionManager.cancelBlockBreaking()
 
     @EventHandler
     fun onTick(event: PlayerTickEvent) {

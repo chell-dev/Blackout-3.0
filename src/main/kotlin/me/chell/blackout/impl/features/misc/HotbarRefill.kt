@@ -15,7 +15,7 @@ object HotbarRefill: ToggleFeature("Hotbar Refill", Category.Misc) {
 
     override var description = "Refills stacks in your hotbar"
 
-    private val whitelist = register(Setting("Whitelist", mutableListOf(Items.EXPERIENCE_BOTTLE, Items.ENCHANTED_GOLDEN_APPLE)))
+    private val whitelist = Setting("Whitelist", mutableListOf(Items.EXPERIENCE_BOTTLE, Items.ENCHANTED_GOLDEN_APPLE))
 
     override fun onEnable() {
         EventManager.register(this)

@@ -13,16 +13,16 @@ abstract class Feature(val name: String, var category: Category): Description {
     abstract val mainSetting: Setting<*>
     val settings = mutableListOf<Setting<*>>()
 
-    fun <T> register(setting: Setting<T>): Setting<T> {
-        settings.add(setting)
-        return setting
-    }
-
     fun getSettingByName(name: String): Setting<*>? {
         for(setting in settings) {
             if(setting.name == name) return setting
         }
         return null
+    }
+
+    fun <T> Setting<T>.register(): Setting<T> {
+        settings.add(this)
+        return this
     }
 
     override var description = "No description."

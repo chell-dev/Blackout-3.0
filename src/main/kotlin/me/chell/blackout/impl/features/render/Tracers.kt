@@ -16,11 +16,11 @@ import kotlin.math.sin
 
 object Tracers: ToggleFeature("Tracers", Category.Render) {
 
-    private val range = register(Setting("Player Range", 30, -1, 100, display = {if(it == -1) "Infinite" else "$it blocks"}))
-    private val radiusSetting = register(Setting("Circle Radius", 20, 1, 30))
-    private val size = register(Setting("Arrow Size", 20, 5, 50))
-    private val enemyColor = register(Setting("Enemy Color", Color(1f, 0f, 0f, 0.5f)))
-    private val friendColor = register(Setting("Friend Color", Color.sync(0f)))
+    private val range = Setting("Player Range", 30, -1, 100, display = {if(it == -1) "Infinite" else "$it blocks"})
+    private val radiusSetting = Setting("Circle Radius", 20, 1, 30)
+    private val size = Setting("Arrow Size", 20, 5, 50)
+    private val enemyColor = Setting("Enemy Color", Color(1f, 0f, 0f, 0.5f))
+    private val friendColor = Setting("Friend Color", Color.sync(0f))
 
     @EventHandler
     fun onRender2D(event: RenderHudEvent.Post) {

@@ -18,12 +18,12 @@ import net.minecraft.screen.slot.SlotActionType
 
 object Offhand: ToggleFeature("Offhand", Category.Combat) {
 
-    private val gapple = register(Setting("Gapple", Bind.Toggle("Offhand Gapple", onEnable={}, onDisable={})))
+    private val gapple = Setting("Gapple", Bind.Toggle("Offhand Gapple", onEnable={}, onDisable={}))
 
-    private val swordGapple = register(Setting("Right click gapple with Sword", false))
-    private val pickaxeGapple = register(Setting("Right click gapple with Pickaxe", false))
+    private val swordGapple = Setting("Right click gapple with Sword", false)
+    private val pickaxeGapple = Setting("Right click gapple with Pickaxe", false)
 
-    private val health = register(Setting("Totem HP", 16.0, 0.0, 40.0))
+    private val health = Setting("Totem HP", 16.0, 0.0, 40.0)
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {

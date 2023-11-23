@@ -12,8 +12,8 @@ object ConfigFeature: Feature("Config", Category.Client) {
 
     override val mainSetting = Setting("File", File(defaultConfig))
 
-    private val save = register(Setting("Save", Runnable { writeFeatures() }))
-    private val load = register(Setting("Load", false))
-    private val confirmLoad = register(Setting("Confirm Load", Runnable { readFeatures(); load.value = false }, level = 2) {load.value})
+    private val save = Setting("Save", Runnable { writeFeatures() })
+    private val load = Setting("Load", false)
+    private val confirmLoad = Setting("Confirm Load", Runnable { readFeatures(); load.value = false }, level = 2) {load.value}
 
 }

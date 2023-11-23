@@ -13,14 +13,14 @@ import kotlin.math.min
 
 object Zoom: ToggleBindFeature("Zoom", Category.Render) {
 
-    private val base = register(Setting("Multiplier", 0.5, 0.1, 1.0))
-    private val scroll = register(Setting("Scroll", true))
-    private val cinematic = register(object: Setting<Boolean>("Smooth camera", true) {
+    private val base = Setting("Multiplier", 0.5, 0.1, 1.0)
+    private val scroll = Setting("Scroll", true)
+    private val cinematic = object: Setting<Boolean>("Smooth camera", true) {
         override fun onValueChanged(oldValue: Boolean, newValue: Boolean) {
             if(mainSetting.value.enabled) mc.options.smoothCameraEnabled = newValue
         }
-    })
-    private val hideHands = register(Setting("Hide hands", true))
+    }
+    private val hideHands = Setting("Hide hands", true)
 
     private var multiplier = 0.0
 

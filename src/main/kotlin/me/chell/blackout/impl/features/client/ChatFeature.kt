@@ -17,7 +17,7 @@ object ChatFeature: ToggleFeature("Chat", Category.Client) {
 
     override var description = "Chat with other blackout users using the console or mc chat."
 
-    private val prefix = register(Setting("Prefix", "@", description = "Prefix to send messages from minecraft chat."))
+    private val prefix = Setting("Prefix", "@", description = "Prefix to send messages from minecraft chat.")
 
     override fun onEnable() {
         HackChat.join()

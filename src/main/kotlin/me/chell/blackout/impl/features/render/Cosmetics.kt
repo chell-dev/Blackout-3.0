@@ -10,9 +10,9 @@ object Cosmetics: ToggleFeature("Cosmetics", Category.Render) {
 
     override var description = "Client-side player cosmetics"
 
-    private val cape = register(Setting("Cape", true))
-    private val ears = register(Setting("Ears", false))
-    private val mode = register(Setting("Mode", Mode.Self))
+    private val cape = Setting("Cape", true)
+    private val ears = Setting("Ears", false)
+    private val mode = Setting("Mode", Mode.Self)
 
     fun getCape(name: String) = get(name) && mainSetting.value && cape.value
     fun getEars(name: String) = get(name) && mainSetting.value && ears.value

@@ -13,8 +13,8 @@ object PullDown: ToggleFeature("PullDown", Category.Movement) {
 
     override var description = "Step down blocks almost instantly"
 
-    private val maxHeight = register(Setting("Max Height", 4.0, 0.1, 5.0))
-    private val minHeight = register(Setting("Min Height", 0.1, 0.01, 2.0))
+    private val maxHeight = Setting("Max Height", 4.0, 0.1, 5.0)
+    private val minHeight = Setting("Min Height", 0.1, 0.01, 2.0)
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {

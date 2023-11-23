@@ -18,7 +18,7 @@ object Speed: TextWidget("Movement Speed", {
     private var speed = 0.0
     private var lastPos = Vec3d.ZERO
 
-    private val units = register(Setting("Units", Units.KMH, description = "Meters (Blocks) per second / Kilometers per hour / Miles per hour"))
+    private val units = Setting("Units", Units.KMH, description = "Meters (Blocks) per second / Kilometers per hour / Miles per hour")
 
     init {
         EventManager.register(this)

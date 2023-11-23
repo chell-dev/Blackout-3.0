@@ -13,23 +13,23 @@ import net.minecraft.entity.projectile.thrown.ExperienceBottleEntity
 
 object BoxEsp: ToggleFeature("ESP", Category.Render) {
 
-    private val players = register(Setting("Players", false))
-    private val playersOutline = register(Setting("Normal Outline", Color.white(), level = 2) {players.value})
-    private val playersFill = register(Setting("Normal Fill", Color.white(0f), level = 2) {players.value})
-    private val friendsOutline = register(Setting("Friend Outline", Color.sync(), level = 2) {players.value})
-    private val friendsFill = register(Setting("Friend Fill", Color.white(0f), level = 2) {players.value})
+    private val players = Setting("Players", false)
+    private val playersOutline = Setting("Normal Outline", Color.white(), level = 2) {players.value}
+    private val playersFill = Setting("Normal Fill", Color.white(0f), level = 2) {players.value}
+    private val friendsOutline = Setting("Friend Outline", Color.sync(), level = 2) {players.value}
+    private val friendsFill = Setting("Friend Fill", Color.white(0f), level = 2) {players.value}
 
-    private val items = register(Setting("Items", false))
-    private val itemsOutline = register(Setting("Item Outline", Color.white(), level = 2) {items.value})
-    private val itemsFill = register(Setting("Item Fill", Color.white(0f), level = 2) {items.value})
+    private val items = Setting("Items", false)
+    private val itemsOutline = Setting("Item Outline", Color.white(), level = 2) {items.value}
+    private val itemsFill = Setting("Item Fill", Color.white(0f), level = 2) {items.value}
 
-    private val pearls = register(Setting("Ender Pearls", false))
-    private val pearlsOutline = register(Setting("Pearl Outline", Color.white(), level = 2) {pearls.value})
-    private val pearlsFill = register(Setting("Pearl Fill", Color.white(0f), level = 2) {pearls.value})
+    private val pearls = Setting("Ender Pearls", false)
+    private val pearlsOutline = Setting("Pearl Outline", Color.white(), level = 2) {pearls.value}
+    private val pearlsFill = Setting("Pearl Fill", Color.white(0f), level = 2) {pearls.value}
 
-    private val xpBottles = register(Setting("XP Bottles", false))
-    private val xpBottlesOutline = register(Setting("XP Outline", Color.white(), level = 2) {xpBottles.value})
-    private val xpBottlesFill = register(Setting("XP Fill", Color.white(0f), level = 2) {xpBottles.value})
+    private val xpBottles = Setting("XP Bottles", false)
+    private val xpBottlesOutline = Setting("XP Outline", Color.white(), level = 2) {xpBottles.value}
+    private val xpBottlesFill = Setting("XP Fill", Color.white(0f), level = 2) {xpBottles.value}
 
     @EventHandler
     fun onRender(event: RenderWorldEvent) {

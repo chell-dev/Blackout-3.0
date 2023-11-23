@@ -21,21 +21,21 @@ object KillAura: ToggleBindFeature("KillAura", Category.Combat) {
 
     override var description = "Attack entities around you"
 
-    private val delay = register(Setting("Attack Delay", true))
-    private val using = register(Setting("While Using Item", true))
-    private val rotate = register(Setting("Rotate", true))
-    private val crits = register(Setting("Criticals", false))
+    private val delay = Setting("Attack Delay", true)
+    private val using = Setting("While Using Item", true)
+    private val rotate = Setting("Rotate", true)
+    private val crits = Setting("Criticals", false)
 
-    private val players = register(Setting("Target Players", true))
-    private val hostile = register(Setting("Target Hostile", false))
-    private val passive = register(Setting("Target Passive", false))
+    private val players = Setting("Target Players", true)
+    private val hostile = Setting("Target Hostile", false)
+    private val passive = Setting("Target Passive", false)
 
-    private val priority = register(Setting("Priority", Priority.Health))
+    private val priority = Setting("Priority", Priority.Health)
 
-    private val range = register(Setting("Range", 6.0, 3.0, 8.0))
-    private val wallRange = register(Setting("Wall Range", 6.0, 3.0, 8.0, level = 2))
+    private val range = Setting("Range", 6.0, 3.0, 8.0)
+    private val wallRange = Setting("Wall Range", 6.0, 3.0, 8.0, level = 2)
 
-    private val weaponOnly = register(Setting("Sword/Axe Only", false))
+    private val weaponOnly = Setting("Sword/Axe Only", false)
 
     @EventHandler
     fun onPlayerTick(event: PlayerTickEvent) {

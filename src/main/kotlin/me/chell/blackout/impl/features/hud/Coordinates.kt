@@ -15,8 +15,8 @@ object Coordinates: Widget("Coordinates") {
 
     override var width = 10
     override var height = textRenderer.fontHeight * 2
-    private val vAlign = register(Setting("Vertical Align", VAlign.UP))
-    private val color = register(Setting("Color", Color.white()))
+    private val vAlign = Setting("Vertical Align", VAlign.UP)
+    private val color = Setting("Color", Color.white())
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)

@@ -13,10 +13,10 @@ object Keybinds: Widget("Keybinds") {
     override var width = 50
     override var height = textRenderer.fontHeight
 
-    private val blacklist = register(Setting("Blacklist", mutableListOf(FeatureManager.getFeatureByName("GUI Bind"))))
-    private val enabled = register(Setting("Enabled Color", me.chell.blackout.api.util.Color(0f, 1f, 0f)))
-    private val disabled = register(Setting("Disabled Color", me.chell.blackout.api.util.Color(1f, 0f, 0f)))
-    private val action = register(Setting("Action Color", me.chell.blackout.api.util.Color.white()))
+    private val blacklist = Setting("Blacklist", mutableListOf(FeatureManager.getFeatureByName("GUI Bind")))
+    private val enabled = Setting("Enabled Color", me.chell.blackout.api.util.Color(0f, 1f, 0f))
+    private val disabled = Setting("Disabled Color", me.chell.blackout.api.util.Color(1f, 0f, 0f))
+    private val action = Setting("Action Color", me.chell.blackout.api.util.Color.white())
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
         super.render(context, mouseX, mouseY, delta)

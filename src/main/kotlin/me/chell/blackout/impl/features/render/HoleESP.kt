@@ -17,11 +17,11 @@ import net.minecraft.util.math.Box
 
 object HoleESP: ToggleFeature("Hole ESP", Category.Render) {
 
-    private val range = register(Setting("Range", 10, 1, 20))
-    private val height = register(Setting("Render Height", 1.0, -1.0, 1.0))
-    private val mode = register(Setting("Render Mode", Mode.Gradient))
-    private val obbyColor = register(Setting("Obsidian Color", Color(255, 0, 0, 100)))
-    private val bedrockColor = register(Setting("Bedrock Color",  Color(0, 255, 0, 100)))
+    private val range = Setting("Range", 10, 1, 20)
+    private val height = Setting("Render Height", 1.0, -1.0, 1.0)
+    private val mode = Setting("Render Mode", Mode.Gradient)
+    private val obbyColor = Setting("Obsidian Color", Color(255, 0, 0, 100))
+    private val bedrockColor = Setting("Bedrock Color",  Color(0, 255, 0, 100))
 
     private val obby = mutableListOf<Box>()
     private val bedrock = mutableListOf<Box>()

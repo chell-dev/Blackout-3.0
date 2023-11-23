@@ -13,7 +13,7 @@ object Sprint: ToggleBindFeature("Sprint", Category.Movement) {
 
     override var description = "Sprint automatically"
 
-    private val mode = register(Setting("Mode", Mode.Rage))
+    private val mode = Setting("Mode", Mode.Rage)
 
     override fun onEnable() {
         EventManager.register(this)
